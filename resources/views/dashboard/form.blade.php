@@ -1,0 +1,93 @@
+@extends('layouts.app')
+@section('content')
+@include('layouts.headers.cards')
+
+<div class="container-fluid mt--7 ">
+  <div class="row justify-content-center">
+
+    {{-- Bagian form pengajuan cuti --}}
+    <div class="col-lg-8 col-md-7">
+      <div class="card bg-secondary shadow border-0 xl-12">
+        <div class="card-body">
+          <div class="text-center ">
+            <h1>Form Pengajuan Cuti</h1>
+          </div>
+          <div class="col">
+            <form role="form" method="post" action="">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-address-card"></i></span>
+                  </div>
+                  <input class="form-control" placeholder="{{ __('NIP') }}" type="text" disabled>
+                </div>
+                <div class="row justify-content-center align-items-center input-daterange datepicker mb-3 ">
+                  <div class="input-group col-lg-5">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                    </div>
+                    <input class="form-control" placeholder="{{ __('Tanggal Mulai') }}" type="text">
+                  </div>
+                  <span class="my-2 mb-2"><small>{{ __('Sampai Dengan') }}</small></span>
+                  <div class="input-group col-lg-5">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                    </div>
+                    <input class="form-control" placeholder="{{ __('Tanggal Selesai') }}" type="text">
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-clipboard"></i></span>
+                  </div>
+                  <input class="form-control" placeholder="{{ __('Jenis Cuti') }}" type="text">
+                </div>
+                <div class="input-group">
+                  {{-- utk attrib textarea Class="form-control" biasa, menyebabkan bug saat di resize --}}
+                  <textarea class="form-control" style="resize:none;" rows="5" placeholder="{{ __('Alasan Cuti') }}"></textarea>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary my-4">{{ __('Submit') }}</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{-- Bagian tampilan sisa cuti --}}
+    <div class="col-lg-4 md-7">
+      <div class="card bg-secondary shadow border-0 xl-4">
+        <div class="card-body">
+          <div class="text-center mb-4">
+              <strong>Sisa Cuti</strong>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">{{ __('Jenis Cuti') }}</th>
+                  <th scope="col">{{ __('Sisa Cuti') }}</th>
+                </tr>
+              </thead>
+
+              {{-- TODO : generate stuffs --}}
+              <tbody class="list">
+                <tr>
+                  <th scope="col">Tahunan</th>
+                  <th scope="col">99999</th>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  @include('layouts.footers.nav')
+</div>
+
+@endsection
