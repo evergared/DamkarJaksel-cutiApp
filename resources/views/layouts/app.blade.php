@@ -6,8 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="description" content="{{ __('Aplikasi web pengajuan cuti pegawai Disgulkarmat Kota Administrasi Jakarta Selatan') }}">
 
-        <title>{{ config('app.name', 'Argon Dashboard') }}</title>
+        @guest
+        <title>{{ config('app.name', 'Web Cuti') }}</title>
+        @endguest
+
+        @auth
+        <title>{{ config('app.name', 'Web Cuti') }} | {{ Auth::user()->name }}</title>
+        @endauth
         <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon') }}/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicon') }}/apple-icon-60x60.png">
