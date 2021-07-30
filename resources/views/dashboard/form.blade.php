@@ -15,12 +15,16 @@
           <div class="col">
             <form role="form" method="post" action="">
               <div class="form-group">
+
+                {{-- Bagian NRK --}}
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                   </div>
                   <input class="form-control" placeholder="{{ __('NIP') }}" type="text" disabled>
                 </div>
+
+                {{-- Bagian datepicker --}}
                 <div class="row justify-content-center align-items-center input-daterange datepicker mb-3 ">
                   <div class="input-group col-lg-5">
                     <div class="input-group-prepend">
@@ -36,19 +40,27 @@
                     <input class="form-control" placeholder="{{ __('Tanggal Selesai') }}" type="text">
                   </div>
                 </div>
+
+                {{-- Bagian Dropdown Jenis Cuti --}}
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-clipboard"></i></span>
                   </div>
                   <input class="form-control" placeholder="{{ __('Jenis Cuti') }}" type="text">
                 </div>
+
+                {{-- Bagian Alasan Cuti --}}
                 <div class="input-group">
                   {{-- utk attrib textarea Class="form-control" biasa, menyebabkan bug saat di resize --}}
                   <textarea class="form-control" style="resize:none;" rows="5" placeholder="{{ __('Alasan Cuti') }}"></textarea>
                 </div>
+
+                {{-- Bagian tombol submit --}}
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary my-4">{{ __('Submit') }}</button>
                 </div>
+
+                
               </div>
             </form>
           </div>
