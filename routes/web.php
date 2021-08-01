@@ -34,6 +34,8 @@ Route::get('/kepegawaian','App\Http\Controllers\DashboardController@loadKepegawa
 Route::get('/report','App\Http\Controllers\DashboardController@loadReport')->name('report');
 Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('form');
 
+// TODO : benahi middleware untuk routing, jika database sudah selesai
+
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
@@ -44,3 +46,5 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
+
+Route::post('form','App\Http\Controllers\FormCutiController@submitCutiPegawai')->name('form_cuti');

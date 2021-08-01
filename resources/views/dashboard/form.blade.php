@@ -13,7 +13,8 @@
             <h1>Form Pengajuan Cuti</h1>
           </div>
           <div class="col">
-            <form role="form" method="post" action="">
+            <form role="form" method="post" >
+            @csrf
               <div class="form-group">
 
                 {{-- Bagian NRK --}}
@@ -21,7 +22,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                   </div>
-                  <input class="form-control" placeholder="{{ __('NIP') }}" type="text" disabled>
+                  <input class="form-control" name="nrk" placeholder="{{ __('NRK') }}" type="text" disabled>
                 </div>
 
                 {{-- Bagian datepicker --}}
@@ -30,14 +31,14 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input class="form-control" placeholder="{{ __('Tanggal Mulai') }}" type="text">
+                    <input class="form-control" name="tMulai" placeholder="{{ __('Tanggal Mulai') }}" type="text">
                   </div>
                   <span class="my-2 mb-2"><small>{{ __('Sampai Dengan') }}</small></span>
                   <div class="input-group col-lg-5">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input class="form-control" placeholder="{{ __('Tanggal Selesai') }}" type="text">
+                    <input class="form-control" name="tSelesai" placeholder="{{ __('Tanggal Selesai') }}" type="text">
                   </div>
                 </div>
 
@@ -46,27 +47,32 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-clipboard"></i></span>
                   </div>
-                  <input class="form-control" placeholder="{{ __('Jenis Cuti') }}" type="text">
+                  <input class="form-control" name="jCuti" placeholder="{{ __('Jenis Cuti') }}" type="text">
                 </div>
 
                 {{-- Bagian Alasan Cuti --}}
                 <div class="input-group">
                   {{-- utk attrib textarea Class="form-control" biasa, menyebabkan bug saat di resize --}}
-                  <textarea class="form-control" style="resize:none;" rows="5" placeholder="{{ __('Alasan Cuti') }}"></textarea>
+                  <textarea class="form-control" name="aCuti" style="resize:none;" rows="5" placeholder="{{ __('Alasan Cuti') }}"></textarea>
                 </div>
 
-                {{-- Bagian tombol submit --}}
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary my-4">{{ __('Submit') }}</button>
-                </div>
+               
 
-                
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+
+    {{-- Bagian tombol submit --}}
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary my-4" data-toggle="modal" data-target="#notif">{{ __('Submit') }}</button>
+                </div>
+
+                <x-modal id="notif">
+
+                </x-modal> 
 
     {{-- Bagian tampilan sisa cuti --}}
     <div class="col-lg-4 md-7">
