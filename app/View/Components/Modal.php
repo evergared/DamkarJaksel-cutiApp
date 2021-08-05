@@ -6,18 +6,18 @@ use Illuminate\View\Component;
 
 class Modal extends Component
 {
+    public $id;
     public $title;
-    public $message;
     public $type;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($title = 'tes', $message = 'tes', $type = 'dialog')
+    public function __construct( $id = "modal", $title = "Notifikasi", $type = 'dialog')
     {
+        $this->id = $id;
         $this->title = $title;
-        $this->message = $message;
         $this->type = $type;
     }
 

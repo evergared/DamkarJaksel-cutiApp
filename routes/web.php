@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
-Route::get('/kepegawaian','App\Http\Controllers\DashboardController@loadKepegawaian')->name('kepegawaian');
+Route::get('/kepegawaian','App\Http\Controllers\DashboardController@loadKepegawaian')->name('pegawaian');
 Route::get('/report','App\Http\Controllers\DashboardController@loadReport')->name('report');
 Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('form');
 
@@ -47,4 +48,4 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
-Route::post('form','App\Http\Controllers\FormCutiController@submitCutiPegawai')->name('form_cuti');
+Route::post(null,[App\Http\Controllers\FormCutiController::class,'submitCutiPegawai'])->name('form_cuti');

@@ -10,7 +10,7 @@ class FormCutiController extends Controller
 {
     public function submitCutiPegawai(Request $request)
     {
-        
+
 
         $nrk = $request->input('nrk');
         $tglMulai = $request->input('tMulai');
@@ -19,8 +19,11 @@ class FormCutiController extends Controller
         $alasanCuti = $request->input('aCuti');
 
         $message = "NRK : " . $nrk . "Tanggal : " . $tglMulai . " hingga " . $tglSelesai . "Jenis Cuti : " . $jenisCuti . "Dengan Alasan : " . $alasanCuti;
-
+/*
         $modal = new Modal("Test", $message);
         $modal->render();
+        */
+
+        echo $message;
     }
 }

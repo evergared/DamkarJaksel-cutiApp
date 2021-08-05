@@ -9,11 +9,11 @@
     <div class="col-lg-8 col-md-7">
       <div class="card bg-secondary shadow border-0 xl-12">
         <div class="card-body">
-          <div class="text-center ">
+          <div class="text-center">
             <h1>Form Pengajuan Cuti</h1>
           </div>
           <div class="col">
-            <form role="form" method="post" >
+            <form role="form" method="post" action="{{ route('form_cuti') }}">
             @csrf
               <div class="form-group">
 
@@ -56,7 +56,15 @@
                   <textarea class="form-control" name="aCuti" style="resize:none;" rows="5" placeholder="{{ __('Alasan Cuti') }}"></textarea>
                 </div>
 
-               
+                {{-- Bagian tombol submit --}}
+                <div class="text-center">
+                  <button class="btn btn-primary my-4 text-white" data-toggle="modal" data-target="#notif" form-target="{{ route('form') }}">{{ __('Submit') }}</button>
+                </div>
+
+                <x-modal id="notif">
+
+
+                </x-modal>
 
               </div>
             </form>
@@ -65,14 +73,7 @@
       </div>
     </div>
 
-    {{-- Bagian tombol submit --}}
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary my-4" data-toggle="modal" data-target="#notif">{{ __('Submit') }}</button>
-                </div>
 
-                <x-modal id="notif">
-
-                </x-modal> 
 
     {{-- Bagian tampilan sisa cuti --}}
     <div class="col-lg-4 md-7">
