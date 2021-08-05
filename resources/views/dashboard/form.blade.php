@@ -13,7 +13,7 @@
             <h1>Form Pengajuan Cuti</h1>
           </div>
           <div class="col">
-            <form role="form" method="post" action="{{ route('form_cuti') }}">
+            <form role="form" method="post" action="{{ route('submit_cuti') }}">
             @csrf
               <div class="form-group">
 
@@ -58,7 +58,7 @@
 
                 {{-- Bagian tombol submit --}}
                 <div class="text-center">
-                  <button class="btn btn-primary my-4 text-white" data-toggle="modal" data-target="#notif" form-target="{{ route('form') }}">{{ __('Submit') }}</button>
+                  <button class="btn btn-primary my-4 text-white" data-toggle="modal" data-target="#notif">{{ __('Submit') }}</button>
                 </div>
 
                 <x-modal id="notif">

@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\View\Components\Modal;
 use Illuminate\Http\Request;
+use App\Http\Controllers\DashboardController;
 
 class FormCutiController extends Controller
 {
+
     public function submitCutiPegawai(Request $request)
     {
-
 
         $nrk = $request->input('nrk');
         $tglMulai = $request->input('tMulai');
@@ -23,7 +24,6 @@ class FormCutiController extends Controller
         $modal = new Modal("Test", $message);
         $modal->render();
         */
-
-        echo $message;
+        return view('dashboard/form');
     }
 }

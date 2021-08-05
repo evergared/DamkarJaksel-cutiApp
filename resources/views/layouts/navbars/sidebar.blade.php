@@ -55,9 +55,9 @@
       <hr class = "my-2">
       <ul class="navbar-nav ">
         <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="ni ni-shop text-blue"></i><span class="nav-link-text">{{ __('Home')}}</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('pegawaian') }}"><i class="ni ni-briefcase-24 text-orange"></i><span class="nav-link-text">{{ __('Kepegawaian')}}</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('kepegawaian') }}"><i class="ni ni-briefcase-24 text-orange"></i><span class="nav-link-text">{{ __('Kepegawaian')}}</span></a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('report') }}"><i class="ni ni-calendar-grid-58 text-red"></i><span class="nav-link-text">{{ __('Report Daftar Cuti')}}</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('form') }}"><i class="ni ni-single-copy-04 text-gray"></i><span class="nav-link-text">{{ __('Form Pengajuan Cuti')}}</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('form_cuti') }}"><i class="ni ni-single-copy-04 text-gray"></i><span class="nav-link-text">{{ __('Form Pengajuan Cuti')}}</span></a></li>
       </ul>
       <hr class = "my-2">
       <a class="nav-link" href="#"><strong class="nav-link-text">{{ __('Petunjuk Penggunaan')}}</strong></a>
