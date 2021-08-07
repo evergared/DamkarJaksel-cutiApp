@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\View\Components\Modal;
 use Illuminate\Http\Request;
-use App\Http\Controllers\DashboardController;
 
 class FormCutiController extends Controller
 {
@@ -23,6 +21,7 @@ class FormCutiController extends Controller
 
         // TODO : buat query untuk input, lalu tampilkan alert berhasil atau gagal
         
-        return view('dashboard/form');
+        return redirect()->back();
+        //return view('dashboard/form');
     }
 }

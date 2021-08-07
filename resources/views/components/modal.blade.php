@@ -3,9 +3,9 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title">
+                <h4 class="modal-title">
                   {{ $title }}
-                </h5>
+                </h4>
                 <button type="button" class="close" data-dismiss="modal" data-target="{{ $id }}">
                     <span>&times;</span>
                 </button>

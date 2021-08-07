@@ -65,12 +65,12 @@
                 <x-modal id="notif" title="Cek Kembali Data Anda">
                 <x-slot name="message">
                   <div class="align-items-left" id="modal-message">
-                    <span>NRK        : </span><span id="modal-nrk"></span><br>
-                    <span>Mulai Cuti : </span><span id="modal-mCuti"></span>
+                    <label><strong>NRK : </strong></label><span id="modal-nrk"></span><br>
+                    <label><strong>Waktu : </strong></label><span id="modal-mCuti"></span>
                     <span> s.d. </span><span id="modal-sCuti"></span><br>
-                    <span>Jenis Cuti : </span><span id="modal-jCuti"></span><br>
-                    <span>Alasan     : </span><span id="modal-aCuti"></span><br>
-                    <p class="mt-2">Submit permintaan cuti dengan data diatas?
+                    <label><strong>Jenis Cuti : </strong></label><span id="modal-jCuti"></span><br>
+                    <label><strong>Alasan : </strong></label><span id="modal-aCuti"></span><br>
+                    <p class="mt-2"><strong>Submit permintaan cuti dengan data diatas?</strong>
                   </div>
                 </x-slot>
                 <x-slot name="footer">
@@ -82,29 +82,18 @@
                 {{-- Script untuk fungsi modal dan form submit --}}
                 <script>
                   function updateModal()
-                  {
-                    
-                    var $nrk = document.getElementById('nrk').value;
-                    var $tanggalMulai = document.getElementById('tMulai').value;
-                    var $tanggalSelesai = document.getElementById('tSelesai').value;
-                    var $jenisCuti = document.getElementById('jCuti').value;
-                    var $alasanCuti = document.getElementById('aCuti').value;
+                  { 
+                    var $nrk = " " + document.getElementById('nrk').value;
+                    var $tanggalMulai = " " + document.getElementById('tMulai').value;
+                    var $tanggalSelesai = " " + document.getElementById('tSelesai').value;
+                    var $jenisCuti = " " + document.getElementById('jCuti').value;
+                    var $alasanCuti = " " + document.getElementById('aCuti').value;
 
                     document.getElementById('modal-nrk').innerHTML = $nrk;
                     document.getElementById('modal-mCuti').innerHTML = $tanggalMulai;
                     document.getElementById('modal-sCuti').innerHTML = $tanggalSelesai;
                     document.getElementById('modal-jCuti').innerHTML = $jenisCuti;
                     document.getElementById('modal-aCuti').innerHTML = $alasanCuti;
-                    
-                  }
-                  function submitForm()
-                  {
-
-                  }
-                  function test()
-                  {
-                    var $alasanCuti = document.getElementById('aCuti').value;
-                    alert($alasanCuti);
                   }
                 </script>
 
