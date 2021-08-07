@@ -9,11 +9,12 @@
     <div class="col-lg-8 col-md-7">
       <div class="card bg-secondary shadow border-0 xl-12">
         <div class="card-body">
-          <div class="text-center ">
+          <div class="text-center">
             <h1>Form Pengajuan Cuti</h1>
           </div>
           <div class="col">
-            <form role="form" method="post" action="">
+            <form role="form" method="post" action="{{ route('submit_cuti') }}">
+            @csrf
               <div class="form-group">
 
                 {{-- Bagian NRK --}}
@@ -21,7 +22,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                   </div>
-                  <input class="form-control" placeholder="{{ __('NIP') }}" type="text" disabled>
+                  <input class="form-control" id="nrk" name="nrk" placeholder="{{ __('NRK') }}" type="text" disabled>
                 </div>
 
                 {{-- Bagian datepicker --}}
@@ -30,14 +31,14 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input class="form-control" placeholder="{{ __('Tanggal Mulai') }}" type="text">
+                    <input class="form-control" id="tMulai" name="tMulai" placeholder="{{ __('Tanggal Mulai') }}" type="text">
                   </div>
                   <span class="my-2 mb-2"><small>{{ __('Sampai Dengan') }}</small></span>
                   <div class="input-group col-lg-5">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input class="form-control" placeholder="{{ __('Tanggal Selesai') }}" type="text">
+                    <input class="form-control" id="tSelesai" name="tSelesai" placeholder="{{ __('Tanggal Selesai') }}" type="text">
                   </div>
                 </div>
 
@@ -46,27 +47,64 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-clipboard"></i></span>
                   </div>
-                  <input class="form-control" placeholder="{{ __('Jenis Cuti') }}" type="text">
+                  <input class="form-control" id="jCuti" name="jCuti" placeholder="{{ __('Jenis Cuti') }}" type="text">
                 </div>
 
                 {{-- Bagian Alasan Cuti --}}
                 <div class="input-group">
                   {{-- utk attrib textarea Class="form-control" biasa, menyebabkan bug saat di resize --}}
-                  <textarea class="form-control" style="resize:none;" rows="5" placeholder="{{ __('Alasan Cuti') }}"></textarea>
+                  <textarea class="form-control" id="aCuti" name="aCuti" style="resize:none;" rows="5" placeholder="{{ __('Alasan Cuti') }}"></textarea>
                 </div>
 
                 {{-- Bagian tombol submit --}}
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary my-4">{{ __('Submit') }}</button>
+                  <a class="btn btn-primary my-4 text-white" data-toggle="modal" data-target="#notif" onclick="updateModal()">{{ __('Submit') }}</a>
                 </div>
 
-                
+                {{-- Bagian modal konfirmasi --}}
+                <x-modal id="notif" title="Cek Kembali Data Anda">
+                <x-slot name="message">
+                  <div class="align-items-left" id="modal-message">
+                    <label><strong>NRK : </strong></label><span id="modal-nrk"></span><br>
+                    <label><strong>Waktu : </strong></label><span id="modal-mCuti"></span>
+                    <span> s.d. </span><span id="modal-sCuti"></span><br>
+                    <label><strong>Jenis Cuti : </strong></label><span id="modal-jCuti"></span><br>
+                    <label><strong>Alasan : </strong></label><span id="modal-aCuti"></span><br>
+                    <p class="mt-2"><strong>Submit permintaan cuti dengan data diatas?</strong>
+                  </div>
+                </x-slot>
+                <x-slot name="footer">
+                  <a class="btn btn-secondary my-2" data-toggle="modal" data-target="#notif">{{ __('Batal') }}</a>
+                  <button class="btn btn-primary my-2 text-white" type='submit'>{{ __('OK') }}</button>
+                </x-slot>
+                </x-modal>
+
+                {{-- Script untuk fungsi modal dan form submit --}}
+                <script>
+                  function updateModal()
+                  { 
+                    var $nrk = " " + document.getElementById('nrk').value;
+                    var $tanggalMulai = " " + document.getElementById('tMulai').value;
+                    var $tanggalSelesai = " " + document.getElementById('tSelesai').value;
+                    var $jenisCuti = " " + document.getElementById('jCuti').value;
+                    var $alasanCuti = " " + document.getElementById('aCuti').value;
+
+                    document.getElementById('modal-nrk').innerHTML = $nrk;
+                    document.getElementById('modal-mCuti').innerHTML = $tanggalMulai;
+                    document.getElementById('modal-sCuti').innerHTML = $tanggalSelesai;
+                    document.getElementById('modal-jCuti').innerHTML = $jenisCuti;
+                    document.getElementById('modal-aCuti').innerHTML = $alasanCuti;
+                  }
+                </script>
+
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+
+
 
     {{-- Bagian tampilan sisa cuti --}}
     <div class="col-lg-4 md-7">
