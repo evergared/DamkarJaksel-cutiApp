@@ -20,10 +20,9 @@ class FormCutiController extends Controller
         $alasanCuti = $request->input('aCuti');
 
         $message = "NRK : " . $nrk . "Tanggal : " . $tglMulai . " hingga " . $tglSelesai . "Jenis Cuti : " . $jenisCuti . "Dengan Alasan : " . $alasanCuti;
-/*
-        $modal = new Modal("Test", $message);
-        $modal->render();
-        */
+
+        // TODO : buat query untuk input, lalu tampilkan alert berhasil atau gagal
+        
         return view('dashboard/form');
     }
 }

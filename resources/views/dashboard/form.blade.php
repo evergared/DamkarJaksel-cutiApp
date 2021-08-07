@@ -22,7 +22,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                   </div>
-                  <input class="form-control" name="nrk" placeholder="{{ __('NRK') }}" type="text" disabled>
+                  <input class="form-control" id="nrk" name="nrk" placeholder="{{ __('NRK') }}" type="text" disabled>
                 </div>
 
                 {{-- Bagian datepicker --}}
@@ -31,14 +31,14 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input class="form-control" name="tMulai" placeholder="{{ __('Tanggal Mulai') }}" type="text">
+                    <input class="form-control" id="tMulai" name="tMulai" placeholder="{{ __('Tanggal Mulai') }}" type="text">
                   </div>
                   <span class="my-2 mb-2"><small>{{ __('Sampai Dengan') }}</small></span>
                   <div class="input-group col-lg-5">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input class="form-control" name="tSelesai" placeholder="{{ __('Tanggal Selesai') }}" type="text">
+                    <input class="form-control" id="tSelesai" name="tSelesai" placeholder="{{ __('Tanggal Selesai') }}" type="text">
                   </div>
                 </div>
 
@@ -47,24 +47,66 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-clipboard"></i></span>
                   </div>
-                  <input class="form-control" name="jCuti" placeholder="{{ __('Jenis Cuti') }}" type="text">
+                  <input class="form-control" id="jCuti" name="jCuti" placeholder="{{ __('Jenis Cuti') }}" type="text">
                 </div>
 
                 {{-- Bagian Alasan Cuti --}}
                 <div class="input-group">
                   {{-- utk attrib textarea Class="form-control" biasa, menyebabkan bug saat di resize --}}
-                  <textarea class="form-control" name="aCuti" style="resize:none;" rows="5" placeholder="{{ __('Alasan Cuti') }}"></textarea>
+                  <textarea class="form-control" id="aCuti" name="aCuti" style="resize:none;" rows="5" placeholder="{{ __('Alasan Cuti') }}"></textarea>
                 </div>
 
                 {{-- Bagian tombol submit --}}
                 <div class="text-center">
-                  <button class="btn btn-primary my-4 text-white" data-toggle="modal" data-target="#notif">{{ __('Submit') }}</button>
+                  <a class="btn btn-primary my-4 text-white" data-toggle="modal" data-target="#notif" onclick="updateModal()">{{ __('Submit') }}</a>
                 </div>
 
-                <x-modal id="notif">
-
-
+                {{-- Bagian modal konfirmasi --}}
+                <x-modal id="notif" title="Cek Kembali Data Anda">
+                <x-slot name="message">
+                  <div class="align-items-left" id="modal-message">
+                    <span>NRK        : </span><span id="modal-nrk"></span><br>
+                    <span>Mulai Cuti : </span><span id="modal-mCuti"></span>
+                    <span> s.d. </span><span id="modal-sCuti"></span><br>
+                    <span>Jenis Cuti : </span><span id="modal-jCuti"></span><br>
+                    <span>Alasan     : </span><span id="modal-aCuti"></span><br>
+                    <p class="mt-2">Submit permintaan cuti dengan data diatas?
+                  </div>
+                </x-slot>
+                <x-slot name="footer">
+                  <a class="btn btn-secondary my-2" data-toggle="modal" data-target="#notif">{{ __('Batal') }}</a>
+                  <button class="btn btn-primary my-2 text-white" type='submit'>{{ __('OK') }}</button>
+                </x-slot>
                 </x-modal>
+
+                {{-- Script untuk fungsi modal dan form submit --}}
+                <script>
+                  function updateModal()
+                  {
+                    
+                    var $nrk = document.getElementById('nrk').value;
+                    var $tanggalMulai = document.getElementById('tMulai').value;
+                    var $tanggalSelesai = document.getElementById('tSelesai').value;
+                    var $jenisCuti = document.getElementById('jCuti').value;
+                    var $alasanCuti = document.getElementById('aCuti').value;
+
+                    document.getElementById('modal-nrk').innerHTML = $nrk;
+                    document.getElementById('modal-mCuti').innerHTML = $tanggalMulai;
+                    document.getElementById('modal-sCuti').innerHTML = $tanggalSelesai;
+                    document.getElementById('modal-jCuti').innerHTML = $jenisCuti;
+                    document.getElementById('modal-aCuti').innerHTML = $alasanCuti;
+                    
+                  }
+                  function submitForm()
+                  {
+
+                  }
+                  function test()
+                  {
+                    var $alasanCuti = document.getElementById('aCuti').value;
+                    alert($alasanCuti);
+                  }
+                </script>
 
               </div>
             </form>
