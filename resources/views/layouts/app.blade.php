@@ -63,12 +63,6 @@
         <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
         <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-        {{-- Datepicker --}}
-        @if(Route::is('form'))
-        <script src="{{ asset('assets') }}/vendor/js-cookie/js.cookie.js"></script>
-        <script src="{{ asset('assets') }}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-        @endif
-
         @stack('js')
 
         <!-- Argon JS -->

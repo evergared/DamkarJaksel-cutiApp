@@ -13,7 +13,7 @@
             <h1>Form Pengajuan Cuti</h1>
           </div>
           <div class="col">
-            <form role="form" method="post" action="{{ route('submit_cuti') }}">
+            <form role="form" method="post" action="{{ route('form_cuti') }}">
             @csrf
               <div class="form-group">
 
@@ -141,3 +141,9 @@
 </div>
 
 @endsection
+
+@push('js')
+{{-- Datepicker --}}
+<script src="{{ asset('assets') }}/vendor/js-cookie/js.cookie.js"></script>
+<script src="{{ asset('assets') }}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+@endpush

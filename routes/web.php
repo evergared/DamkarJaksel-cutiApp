@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,11 +24,15 @@ use App\Http\Controllers;
 
 
 Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes();
+
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::get('/kepegawaian','App\Http\Controllers\DashboardController@loadKepegawaian')->name('kepegawaian');
 Route::get('/report','App\Http\Controllers\DashboardController@loadReport')->name('report');
-Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('form_cuti');
+Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('form');
 
 // TODO : benahi middleware untuk routing, jika database sudah selesai
 
@@ -44,4 +47,4 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
-Route::post('/form','App\Http\Controllers\FormCutiController@submitCutiPegawai')->name('submit_cuti');
+Route::post('/form','App\Http\Controllers\FormCutiController@submitCutiPegawai')->name('form_cuti');
