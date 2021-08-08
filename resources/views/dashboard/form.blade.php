@@ -31,14 +31,14 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input class="form-control" id="tMulai" name="tMulai" placeholder="{{ __('Tanggal Mulai') }}" type="text">
+                    <input autocomplete="off" class="form-control" id="tMulai" name="tMulai" placeholder="{{ __('Tanggal Mulai') }}" type="text">
                   </div>
                   <span class="my-2 mb-2"><small>{{ __('Sampai Dengan') }}</small></span>
                   <div class="input-group col-lg-5">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input class="form-control" id="tSelesai" name="tSelesai" placeholder="{{ __('Tanggal Selesai') }}" type="text">
+                    <input autocomplete="off" class="form-control" id="tSelesai" name="tSelesai" placeholder="{{ __('Tanggal Selesai') }}" type="text">
                   </div>
                 </div>
 
@@ -47,7 +47,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-clipboard"></i></span>
                   </div>
-                  <input class="form-control" id="jCuti" name="jCuti" placeholder="{{ __('Jenis Cuti') }}" type="text">
+                  <input autocomplete="off" class="form-control" id="jCuti" name="jCuti" placeholder="{{ __('Jenis Cuti') }}" type="text">
                 </div>
 
                 {{-- Bagian Alasan Cuti --}}
@@ -82,7 +82,7 @@
                 {{-- Script untuk fungsi modal dan form submit --}}
                 <script>
                   function updateModal()
-                  { 
+                  {
                     var $nrk = " " + document.getElementById('nrk').value;
                     var $tanggalMulai = " " + document.getElementById('tMulai').value;
                     var $tanggalSelesai = " " + document.getElementById('tSelesai').value;
