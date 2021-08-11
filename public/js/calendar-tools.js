@@ -7,11 +7,29 @@
 |---------------------------------------------------------------------------------------|
 */
 
-/*  
-    -------------------------
+/*  -------------------------
    | Bagian datepicker      |
    -------------------------
 */
+
+
+
+$('.datepicker .input-daterange .form-control').datepicker({
+  language:'id';
+  format:'dd/mm/yyyy';
+  weekStart:1;
+  minViewMode:1;
+  maxViewMode:2;
+  calendarWeeks:true;
+  todayHighlight:true;
+  startDate:'+10d';
+  autoclose:false;
+  clearBtn:true;
+
+  // pengaturan kondisional
+  daysOfWeekDisabled:'0,6';
+});
+
 
 /*
 Salah satu Service atau layanan yang digunakan ialah Google Calendar.

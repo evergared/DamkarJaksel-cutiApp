@@ -145,5 +145,7 @@
 @push('js')
 {{-- Datepicker --}}
 <script src="{{ asset('assets') }}/vendor/js-cookie/js.cookie.js"></script>
-<script src="{{ asset('assets') }}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="{{ asset('assets') }}/vendor/bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.js"></script>
+<script src="{{ asset('assets') }}/vendor/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.id.min.js"></script>
+<script src="{{ asset('js') }}/calendar-tools.js"></script>
 @endpush
