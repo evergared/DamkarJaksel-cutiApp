@@ -12,23 +12,26 @@
    -------------------------
 */
 
+  $('.input-daterange').datepicker({
+    language:'id',
+    format:'dd/mm/yyyy',
+    weekStart:1,
+    startView:1,
+    minViewMode:0,
+    maxViewMode:2,
+    calendarWeeks:true,
+    todayHighlight:true,
+    startDate:'+10d',
+    autoclose:false,
+    todayBtn:'linked',
+    clearBtn:true,
+    toggleActive:true,
+  
+    // pengaturan kondisional
+    daysOfWeekDisabled:'0,6'
+  });
 
 
-$('.datepicker .input-daterange .form-control').datepicker({
-  language:'id';
-  format:'dd/mm/yyyy';
-  weekStart:1;
-  minViewMode:1;
-  maxViewMode:2;
-  calendarWeeks:true;
-  todayHighlight:true;
-  startDate:'+10d';
-  autoclose:false;
-  clearBtn:true;
-
-  // pengaturan kondisional
-  daysOfWeekDisabled:'0,6';
-});
 
 
 /*
