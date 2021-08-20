@@ -1,3 +1,9 @@
+{{
+
+    abort_unless(Auth::check(),403);
+
+}}
+
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
   <div class="container-fluid">
     <!-- Toggler untuk saat web menampilkan halaman narrow melebihi sidebar / saat web ditampilkan untuk android -->
