@@ -20,7 +20,6 @@ class DashboardController extends Controller
   public function kickUser()
   {
     abort(403);
-    redirect('/home');
   }
 
   public function getDashboard($jabatan)
@@ -32,21 +31,25 @@ class DashboardController extends Controller
 
   public function loadHome()
   {
+    $this->checkAuth();
     return view('dashboard/home');
   }
 
   public function loadKepegawaian()
   {
+    $this->checkAuth();
     return view('dashboard/kepegawaian');
   }
 
   public function loadReport()
   {
+    $this->checkAuth();
     return view('dashboard/report');
   }
 
   public function loadForm()
   {
+    $this->checkAuth();
     return view('dashboard/form');
   }
 }
