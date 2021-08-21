@@ -31,7 +31,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
-                    <input autocomplete="off" class="form-control" id="tMulai" name="tMulai" placeholder="{{ __('Tanggal Mulai') }}" type="text">
+                    <input autocomplete="off" class="form-control" id="tMulai" name="tMulai" placeholder="{{ __('Tanggal Mulai') }}" type="text" data-provide="datepicker">
                   </div>
                   <span class="my-2 mb-2"><small>{{ __('Sampai Dengan') }}</small></span>
                   <div class="input-group col-lg-5">
@@ -95,6 +95,8 @@
                     document.getElementById('modal-jCuti').innerHTML = $jenisCuti;
                     document.getElementById('modal-aCuti').innerHTML = $alasanCuti;
                   }
+
+                  
                 </script>
 
               </div>
@@ -145,5 +147,7 @@
 @push('js')
 {{-- Datepicker --}}
 <script src="{{ asset('assets') }}/vendor/js-cookie/js.cookie.js"></script>
-<script src="{{ asset('assets') }}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="{{ asset('assets') }}/vendor/bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.js"></script>
+<script src="{{ asset('assets') }}/vendor/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.id.min.js"></script>
+<script src="{{ asset('js') }}/calendar-tools.js"></script>
 @endpush
