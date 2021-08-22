@@ -32,7 +32,6 @@ class ComposerStaticInite8bc10da28754d46828c01919c7566bc
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         '9cdd7b9056abc3081735233ba9dd9c7f' => __DIR__ . '/..' . '/facade/flare-client-php/src/helpers.php',
-        'a1af1fc0cffb5f61cbaf64dbe030fdb9' => __DIR__ . '/..' . '/laravel/legacy-factories/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
@@ -124,13 +123,11 @@ class ComposerStaticInite8bc10da28754d46828c01919c7566bc
             'Laravel\\Ui\\' => 11,
             'Laravel\\Tinker\\' => 15,
             'Laravel\\Sail\\' => 13,
-            'LaravelFrontendPresets\\ArgonPreset\\' => 35,
         ),
         'I' => 
         array (
             'Illuminate\\Support\\' => 19,
             'Illuminate\\Foundation\\Auth\\' => 27,
-            'Illuminate\\Database\\Eloquent\\' => 29,
             'Illuminate\\' => 11,
         ),
         'G' => 
@@ -395,10 +392,6 @@ class ComposerStaticInite8bc10da28754d46828c01919c7566bc
         array (
             0 => __DIR__ . '/..' . '/laravel/sail/src',
         ),
-        'LaravelFrontendPresets\\ArgonPreset\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel-frontend-presets/argon/src',
-        ),
         'Illuminate\\Support\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Macroable',
@@ -407,10 +400,6 @@ class ComposerStaticInite8bc10da28754d46828c01919c7566bc
         'Illuminate\\Foundation\\Auth\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/ui/auth-backend',
-        ),
-        'Illuminate\\Database\\Eloquent\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/legacy-factories/src',
         ),
         'Illuminate\\' => 
         array (
@@ -529,7 +518,10 @@ class ComposerStaticInite8bc10da28754d46828c01919c7566bc
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
+        'App\\Http\\Controllers\\CalendarController' => __DIR__ . '/../..' . '/app/Http/Controllers/CalendarController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
+        'App\\Http\\Controllers\\FormCutiController' => __DIR__ . '/../..' . '/app/Http/Controllers/FormCutiController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
@@ -552,6 +544,7 @@ class ComposerStaticInite8bc10da28754d46828c01919c7566bc
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Rules\\CurrentPasswordCheckRule' => __DIR__ . '/../..' . '/app/Rules/CurrentPasswordCheckRule.php',
+        'App\\View\\Components\\Modal' => __DIR__ . '/../..' . '/app/View/Components/Modal.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/CorsService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
@@ -1944,12 +1937,9 @@ class ComposerStaticInite8bc10da28754d46828c01919c7566bc
         'Illuminate\\Database\\Eloquent\\Factories\\HasFactory' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/Factories/HasFactory.php',
         'Illuminate\\Database\\Eloquent\\Factories\\Relationship' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/Factories/Relationship.php',
         'Illuminate\\Database\\Eloquent\\Factories\\Sequence' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/Factories/Sequence.php',
-        'Illuminate\\Database\\Eloquent\\Factory' => __DIR__ . '/..' . '/laravel/legacy-factories/src/Factory.php',
-        'Illuminate\\Database\\Eloquent\\FactoryBuilder' => __DIR__ . '/..' . '/laravel/legacy-factories/src/FactoryBuilder.php',
         'Illuminate\\Database\\Eloquent\\HigherOrderBuilderProxy' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/HigherOrderBuilderProxy.php',
         'Illuminate\\Database\\Eloquent\\InvalidCastException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/InvalidCastException.php',
         'Illuminate\\Database\\Eloquent\\JsonEncodingException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/JsonEncodingException.php',
-        'Illuminate\\Database\\Eloquent\\LegacyFactoryServiceProvider' => __DIR__ . '/..' . '/laravel/legacy-factories/src/LegacyFactoryServiceProvider.php',
         'Illuminate\\Database\\Eloquent\\MassAssignmentException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/MassAssignmentException.php',
         'Illuminate\\Database\\Eloquent\\MassPrunable' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/MassPrunable.php',
         'Illuminate\\Database\\Eloquent\\Model' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Eloquent/Model.php',
@@ -2624,8 +2614,6 @@ class ComposerStaticInite8bc10da28754d46828c01919c7566bc
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
-        'LaravelFrontendPresets\\ArgonPreset\\ArgonPreset' => __DIR__ . '/..' . '/laravel-frontend-presets/argon/src/ArgonPreset.php',
-        'LaravelFrontendPresets\\ArgonPreset\\ArgonPresetServiceProvider' => __DIR__ . '/..' . '/laravel-frontend-presets/argon/src/ArgonPresetServiceProvider.php',
         'Laravel\\Sail\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/sail/src/Console/InstallCommand.php',
         'Laravel\\Sail\\Console\\PublishCommand' => __DIR__ . '/..' . '/laravel/sail/src/Console/PublishCommand.php',
         'Laravel\\Sail\\SailServiceProvider' => __DIR__ . '/..' . '/laravel/sail/src/SailServiceProvider.php',

@@ -29,7 +29,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
-
 Route::get('/kepegawaian','App\Http\Controllers\DashboardController@loadKepegawaian')->name('kepegawaian');
 Route::get('/report','App\Http\Controllers\DashboardController@loadReport')->name('report');
 Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('form');
