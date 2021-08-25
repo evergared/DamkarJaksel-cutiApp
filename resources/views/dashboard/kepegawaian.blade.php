@@ -54,31 +54,25 @@
     </div>
     {{-- Tabel --}}
     <div class="table-responsive">
-      <table class="table align-items-center table-flush">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">{{ __('Jenis Cuti') }}</th>
-            <th scope="col">{{ __('Sisa Cuti') }}</th>
-          </tr>
-        </thead>
-
-        {{-- TODO : generate stuffs --}}
-        <tbody class="list">
-          <tr>
-            <th scope="col">Tahunan</th>
-            <th scope="col">99999</th>
-          </tr>
-        </tbody>
-
-      </table>
+      {{!! $dataTable->table() !!}}
     </div>
   </div>
 </div>
+
+{{!! $dataTable->scripts() !!}}
 
   </div>
 </div>
   @include('layouts.footers.nav')
 </div>
 
+
+
+@push('datatbles')
+<link href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap4.min.js"></script>
+@endpush
 
 @endsection

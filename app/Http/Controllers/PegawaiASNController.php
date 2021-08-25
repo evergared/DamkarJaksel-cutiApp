@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pegawai_ASN;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\DataTables\Pegawai_ASNDataTable;
 
 class PegawaiASNController extends Controller
 {
@@ -13,9 +14,9 @@ class PegawaiASNController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Pegawai_ASNDataTable $dataTable)
     {
-        //
+        return $dataTable->render('dashboard/kepegawaian');
     }
 
     /**
@@ -47,7 +48,7 @@ class PegawaiASNController extends Controller
      */
     public function show(Pegawai_ASN $pegawai_ASN)
     {
-        //
+        return $pegawai_ASN->all();
     }
 
     /**
