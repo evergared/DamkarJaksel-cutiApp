@@ -10,4 +10,15 @@ class Pegawai_ASN extends Model
     use HasFactory;
 
     protected $table="Pegawai_ASN";
+
+    protected $fillable = [
+
+        'nik',
+        'nrk',
+        'nama',
+        'golongan',
+        'jabatan',
+        'nip_atasan',
+        'pendidikan'
+    ];
 }

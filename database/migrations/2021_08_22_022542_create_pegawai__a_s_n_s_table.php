@@ -23,6 +23,7 @@ class CreatePegawaiASNSTable extends Migration
             $table->string('jabatan');
             $table->string('nip_atasan',30); // foreign key
             $table->string('pendidikan');
+            $table->timestamps();
 
             $table->primary('nip');
         });

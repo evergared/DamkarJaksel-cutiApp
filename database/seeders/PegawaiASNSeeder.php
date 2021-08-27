@@ -17,7 +17,7 @@ class PegawaiASNSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
         
-        for($i = 0; $i < 10; $i++)
+        for($i = 0; $i < 100; $i++)
         {
             DB::table('pegawai_asn')->insert([
                 'nip' => $faker->nik,
@@ -26,7 +26,9 @@ class PegawaiASNSeeder extends Seeder
                 'golongan' => "golongan",
                 'jabatan' => $this->randomJabatan(),
                 'nip_atasan' => $faker->nik(),
-                'pendidikan' => $this->randomPendidikan()
+                'pendidikan' => $this->randomPendidikan(),
+                'created_at' => now(),
+                'updated_at' => now()
             ]);
         }
 
