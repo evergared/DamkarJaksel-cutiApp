@@ -43,7 +43,12 @@
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
 
-        @stack('datatables')
+        <!-- JQuery -->
+        {{-- JQuery dibutuhkan untuk datepicker, chart, tabel, dsb. --}}
+        {{-- jika perlu update, update jquery di : https://code.jquery.com/ --}}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        
+        
 
     </head>
     <body class="{{ $class ?? '' }}">
@@ -63,8 +68,10 @@
             @include('layouts.footers.guest')
         @endguest
 
+        <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
         @stack('js')
+        @stack('datatables')
 
         <!-- Argon JS -->
         <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>

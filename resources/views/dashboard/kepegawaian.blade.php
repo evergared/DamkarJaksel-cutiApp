@@ -28,49 +28,57 @@
 <div class="card-body">
   <div class="col">
     <div class="row align-items-center">
-      {{-- Tampilkan berapa banyak data per laman --}}
-      <div class="row justify-content-start">
-        <small>{{ __('Menampilkan')}} </small>
-        <input class="form-control-sm form-control-alternative col-lg-2 text-xs" type="text" name="">
-        <small> {{ __(' Entri')}}</small>
-      </div>
-      <div class="col-lg-6">
-
-      </div>
-      {{-- Cari data --}}
-      <div class="row ">
-  <form class="" action="#" method="post">
-    <div class="row form-group justify-content-end">
-    <div class="input-group input-group-sm col-lg-6">
-      <div class="input-group-prepend input-group-alternative">
-      <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
-      </div>
-      <input class="form-control form-control-alternative" type="text" name="" placeholder="{{ __('Cari') }}">
-    </div>
-    <a class="btn btn-sm btn-primary md-2"><small class="text-white">{{ __('Cari') }}</small></a>
-    </div>
-  </form>
-  </div>
-    </div>
-    {{-- Tabel --}}
     <div class="table-responsive">
-      {{!! $dataTable->table() !!}}
-    </div>
+    <table class="table asn">
+        <thead>
+            <tr>
+                <th>NO</th>
+                <th>NIP</th>
+                <th>NRK</th>
+                <th>Nama</th>
+                <th>Golongan</th>
+                <th>Jabatan</th>
+                <th>NIP Atasan</th>
+                <th>Pendidikan</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
   </div>
 </div>
+</div>
 
-{{!! $dataTable->scripts() !!}}
 
   </div>
 </div>
   @include('layouts.footers.nav')
 </div>
 
+<script type="text/javascript">
+    $(function (){
+        var table = $('.asn').DataTable({
 
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('list.asn') }}",
+            columns:[
+                {data: 'DT_RowIndex', name:'DT_RowIndex'},
+                {data: 'nip', name:'nip'},
+                {data: 'nrk', name:'nrk'},
+                {data: 'nama', name: 'nama'},
+                {data: 'golongan', name:'golongan'},
+                {data: 'jabatan', name:'jabatan'},
+                {data: 'nip_atasan',name:'nip_atasan'},
+                {data: 'pendidikan',name: 'pendidikan'}
+            ]
 
-@push('datatbles')
-<link href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        });
+    });
+</script>
+
+@push('datatables')
+<link href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap4.min.css">
 <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap4.min.js"></script>
 @endpush

@@ -47,7 +47,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::post('/form','App\Http\Controllers\FormCutiController@submitCutiPegawai')->name('form_cuti');
 
+// route facade utk menampung query tabel
 Route::get('/kepegawaian/table/asn',[App\Http\Controllers\PegawaiASNController::class,'createTable'])->name('list.asn');
 
+// Halaman test, utk keperluan test implementasi fungsi
 Route::get('/try',function() {return view('try');});
 
