@@ -48,8 +48,9 @@ Route::group(['middleware' => 'auth'], function () {
 Route::post('/form','App\Http\Controllers\FormCutiController@submitCutiPegawai')->name('form_cuti');
 
 // route facade utk menampung query tabel
-Route::get('/kepegawaian/table/asn',[App\Http\Controllers\PegawaiASNController::class,'createTable'])->name('list.asn');
-Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\PegawaiASNController::class,'createTable'])->name('list.pjlp');
+// TODO : benahi route, tambah parameter id untuk pengecekan clearance
+Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class,'createTableASN'])->name('list.asn');
+Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::class,'createTablePJLP'])->name('list.pjlp');
 
 // Halaman test, utk keperluan test implementasi fungsi
 Route::get('/try',function() {return view('try');});

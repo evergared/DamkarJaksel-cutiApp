@@ -38,9 +38,9 @@ class DashboardController extends Controller
   public function loadKepegawaian()
   {
     $this->checkAuth();
-    $tabAction = "asn";
+    $clearance = "3";
 
-    return view('dashboard/kepegawaian')->with('tabAction',$tabAction);
+    return view('dashboard/kepegawaian')->with('clearance',$clearance);
   }
 
   public function loadReport()
