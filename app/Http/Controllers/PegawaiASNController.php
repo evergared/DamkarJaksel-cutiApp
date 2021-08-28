@@ -6,8 +6,7 @@ use App\Models\Pegawai_ASN;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\DataTables\Pegawai_ASNDataTable;
-use Yajra\DataTables\Facades\DataTables;
-//use Yajra\DataTables\DataTables;
+
 class PegawaiASNController extends Controller
 {
     /**
@@ -84,19 +83,5 @@ class PegawaiASNController extends Controller
     public function destroy(Pegawai_ASN $pegawai_ASN)
     {
         //
-    }
-
-    public function createTable(Request $request)
-    {
-        $d = Pegawai_ASN::latest()->get();
-        
-        if($request->ajax())
-        {
-            error_log($request);
-            return DataTables::of($d)
-                ->addIndexColumn()
-                ->make(true);
-        }
-        return view('dashboard/kepegawaian');
     }
 }

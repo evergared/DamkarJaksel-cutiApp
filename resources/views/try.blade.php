@@ -5,20 +5,21 @@
 <div>
 
 <div >
-    <table class="table asn">
-        <thead>
-            <tr>
-                <th>NO</th>
-                <th>NIP</th>
-                <th>NRK</th>
-                <th>Nama</th>
-                <th>Golongan</th>
-                <th>Jabatan</th>
-                <th>NIP Atasan</th>
-                <th>Pendidikan</th>
-            </tr>
-        </thead>
-    </table>
+<table class="table pjlp">
+                  <thead>
+                      <tr>
+                          <th>NO</th>
+                          <th>NIP</th>
+                          <th>No PJLP</th>
+                          <th>Nama</th>
+                          <th>Golongan</th>
+                          <th>Jenis Kontrak</th>
+                          <th>NIP Atasan</th>
+                          <th>Pendidikan</th>
+                      </tr>
+                  </thead>
+                  <tbody></tbody>
+              </table>
 </div>
 
     @include('layouts.footers.nav')
@@ -26,15 +27,15 @@
 
 <script type="text/javascript">
     $(function (){
-        var table = $('.asn').DataTable({
+        var table = $('.pjlp').DataTable({
 
             processing: true,
             serverSide: true,
-            ajax: "{{ route('list.asn') }}",
+            ajax: "{{ route('list.pjlp') }}",
             columns:[
                 {data: 'DT_RowIndex', name:'DT_RowIndex'},
                 {data: 'nip', name:'nip'},
-                {data: 'nrk', name:'nrk'},
+                {data: 'no_pjlp', name:'no_pjlp'},
                 {data: 'nama', name: 'nama'},
                 {data: 'golongan', name:'golongan'},
                 {data: 'jabatan', name:'jabatan'},
