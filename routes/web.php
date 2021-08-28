@@ -49,6 +49,7 @@ Route::post('/form','App\Http\Controllers\FormCutiController@submitCutiPegawai')
 
 // route facade utk menampung query tabel
 Route::get('/kepegawaian/table/asn',[App\Http\Controllers\PegawaiASNController::class,'createTable'])->name('list.asn');
+Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\PegawaiASNController::class,'createTable'])->name('list.pjlp');
 
 // Halaman test, utk keperluan test implementasi fungsi
 Route::get('/try',function() {return view('try');});

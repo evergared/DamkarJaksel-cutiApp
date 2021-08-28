@@ -92,6 +92,7 @@ class PegawaiASNController extends Controller
         
         if($request->ajax())
         {
+            error_log($request);
             return DataTables::of($d)
                 ->addIndexColumn()
                 ->make(true);
