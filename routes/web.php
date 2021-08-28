@@ -23,10 +23,9 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Auth::routes();
+ Auth::routes(); // helper class untuk menghandle permintaan autentikasi
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 Route::get('/kepegawaian','App\Http\Controllers\DashboardController@loadKepegawaian')->name('kepegawaian');
@@ -47,3 +46,11 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::post('/form','App\Http\Controllers\FormCutiController@submitCutiPegawai')->name('form_cuti');
+
+// route facade utk menampung query tabel
+Route::get('/kepegawaian/table/asn',[App\Http\Controllers\PegawaiASNController::class,'createTable'])->name('list.asn');
+Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\PegawaiASNController::class,'createTable'])->name('list.pjlp');
+
+// Halaman test, utk keperluan test implementasi fungsi
+Route::get('/try',function() {return view('try');});
+
