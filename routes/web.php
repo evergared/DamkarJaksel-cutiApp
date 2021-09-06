@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,8 +23,8 @@ use Illuminate\Support\Facades\Route;
   });
 
 
-
- Auth::routes(); // helper class untuk menghandle permintaan autentikasi
+// helper class untuk menghandle permintaan autentikasi
+ Auth::routes(); 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -53,5 +54,5 @@ Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class
 Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::class,'createTablePJLP'])->name('list.pjlp');
 
 // Halaman test, utk keperluan test implementasi fungsi
-Route::get('/try',function() {return view('try');});
+Route::get('/try',function(Request $request) {return ;});
 
