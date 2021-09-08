@@ -47,26 +47,26 @@ class RegisterController extends Controller
             'password' => 'required|string|confirmed'
         ]);
         
-        //$person = "no";
-
+        // ambil data berdasarkan nip / nrk yang didapat
         if(in_array($request['nip-nrk'],$nrk))
-            //$person = "nrk";
-            $person = DB::table('data_pegawai')->where('nrk',$request['nip-nrk'])->get()->toArray();
+            $person = DB::table('data_pegawai')->where('nrk',$request['nip-nrk'])->first();
         else
-            //$person = "nip";
-        $person = DB::table('data_pegawai')->where('nip',$request['nip-nrk'])->get()->toArray();
+            $person = DB::table('data_pegawai')->where('nip',$request['nip-nrk'])->first();
 
         // TODO : buat logic untuk insert level user berdasarkan hierarki dan jabatan yang dipegang
         // ide : gunakan composite value dengan separator, cth kasek|ppk
+        // 1. get person data dari data pegawai
+        // 2. buat array untuk menyimpan role
+        // 3. loop pemanggilan data dari nip
 
-        // if(User::create([
-        //     'nip' => $person['nip'],
-        //     'level' => '-',
-        //     'password' => Hash::make($request['password']),
-        //     'email' => $request['email']
-        // ]))
+        if(User::create([
+            'nip' => $person->nip,
+            'level' => '-',
+            'password' => Hash::make($request['password']),
+            'email' => $request['email']
+        ]));
 
-        dd('registrasi berhasil untuk pengguna dengan nip : ' . count($person));
+        dd('registrasi berhasil untuk pengguna dengan nip : ' . $person->nip);
         //implode(" | ",$person);
         
     }
