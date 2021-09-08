@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\DataPegawaiController;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\DataPegawai as pegawai;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -46,11 +46,28 @@ class RegisterController extends Controller
             'email' => 'required|email:dns|max:255|unique:user',
             'password' => 'required|string|confirmed'
         ]);
+        
+        //$person = "no";
 
-        dd('registrasi berhasil');
+        if(in_array($request['nip-nrk'],$nrk))
+            //$person = "nrk";
+            $person = DB::table('data_pegawai')->where('nrk',$request['nip-nrk'])->get()->toArray();
+        else
+            //$person = "nip";
+        $person = DB::table('data_pegawai')->where('nip',$request['nip-nrk'])->get()->toArray();
 
-        // TODO : Logic create new user
-        //User::create([]);
+        // TODO : buat logic untuk insert level user berdasarkan hierarki dan jabatan yang dipegang
+        // ide : gunakan composite value dengan separator, cth kasek|ppk
 
+        // if(User::create([
+        //     'nip' => $person['nip'],
+        //     'level' => '-',
+        //     'password' => Hash::make($request['password']),
+        //     'email' => $request['email']
+        // ]))
+
+        dd('registrasi berhasil untuk pengguna dengan nip : ' . count($person));
+        //implode(" | ",$person);
+        
     }
 }

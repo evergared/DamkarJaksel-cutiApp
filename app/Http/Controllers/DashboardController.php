@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 
 class DashboardController extends Controller
@@ -22,11 +23,10 @@ class DashboardController extends Controller
     abort(403);
   }
 
-  public function getDashboard($jabatan)
+  public static function getDashboard(Request $request)
   {
-    $list = DB::get('tabel_jabatan');
-
-    //if($jabatan)
+    $nip = $request->session()->get('nip');
+    dd("anda login sebagai : ".$nip);
   }
 
   public function loadHome()
