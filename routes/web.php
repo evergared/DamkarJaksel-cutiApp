@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 
 /*
@@ -24,8 +26,27 @@ use Illuminate\Support\Facades\Route;
 
 
 // helper class untuk menghandle permintaan autentikasi
- Auth::routes(); 
+ Auth::routes([ 'verify' => true]); 
 
+ // Email Verification Routes
+//  Route::get('/email/verify', function () {
+//     return view('auth.verify-email');
+// })->middleware('auth')->name('verification.notice');
+
+//  Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+//     $request->fulfill();
+
+//     return redirect('/home');
+// })->middleware(['auth', 'signed'])->name('verification.verify');
+
+// Route::post('/email/verification-notification', function (Request $request) {
+//     $request->user()->sendEmailVerificationNotification();
+
+//     return back()->with('message', 'Link verifikasi telah dikirim!');
+// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+// Dashboard Routes
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -46,13 +67,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
+// Form Submision Routes
 Route::post('/form','App\Http\Controllers\FormCutiController@submitCutiPegawai')->name('form_cuti');
 
-// route facade utk menampung query tabel
+// Table Query Routes
 // TODO : benahi route, tambah parameter id untuk pengecekan clearance
 Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class,'createTableASN'])->name('list.asn');
 Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::class,'createTablePJLP'])->name('list.pjlp');
 
 // Halaman test, utk keperluan test implementasi fungsi
-Route::get('/try',function(Request $request) {return view('try');});
+Route::get('/try',function(Request $request) {return view('auth.verify');});
 

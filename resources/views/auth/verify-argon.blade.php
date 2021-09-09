@@ -5,23 +5,23 @@
 
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-7">
+            <div class="col-lg-5 col-md-7">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
-                            <small>Mohon verifikasi E-mail anda</small>
+                            <small>{{ __('Verify Your Email Address') }}</small>
                         </div>
-                        <div class="text-center">
+                        <div>
                             @if (session('resent'))
                                 <div class="alert alert-success" role="alert">
-                                    E-mail verifikasi telah dikirim ke alamat e-mail anda.
+                                    {{ __('A fresh verification link has been sent to your email address.') }}
                                 </div>
                             @endif
                             
-                            Sebelum melanjutkan, harap periksa akun E-mail anda untuk link verifikasi dari kami.<br><br>
+                            {{ __('Before proceeding, please check your email for a verification link.') }}
                             
                             @if (Route::has('verification.resend'))
-                                Jika anda tidak menerima E-mail dari kami, <a href="{{ route('verification.resend') }}">KLIK DISINI</a> untuk mengirimkan email verifikasi kembali.
+                                {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>
                             @endif
                         </div>
                     </div>

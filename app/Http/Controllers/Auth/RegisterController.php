@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
-    
+    use RegistersUsers;
 
     public function showRegistrationForm()
     {
@@ -69,6 +69,14 @@ class RegisterController extends Controller
         
     }
 
+    protected function registered(Request $request, $user)
+    {
+        if(event(new Registered($user)))
+            error_log("event triggered and it's should be true");
+        route("verify");
+        //route('verification.notice');
+    }
+
     function getRoles($nip)
     {
         $pjlp = [16,17,18,19];
@@ -83,7 +91,7 @@ class RegisterController extends Controller
             $this->addRoles($roles,"ASN");
 
         if((25 <= $person->jabatan) && ($person->jabatan <= 54))
-            $this->addRoles($roles,"KARU");
+            $this->addRoles($roles,"KATON");
 
         if(in_array($person->jabatan,$kasie))
             $this->addRoles($roles,"KASIE");
