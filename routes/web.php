@@ -35,16 +35,16 @@ Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('f
 
 // TODO : benahi middleware untuk routing, jika database sudah selesai
 
-// Route::group(['middleware' => 'auth'], function () {
-// 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-// 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-// 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-// 	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade');
-// 	 Route::get('map', function () {return view('pages.maps');})->name('map');
-// 	 Route::get('icons', function () {return view('pages.icons');})->name('icons');
-// 	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
-// 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
-// });
+Route::group(['middleware' => 'auth'], function () {
+	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade');
+	 Route::get('map', function () {return view('pages.maps');})->name('map');
+	 Route::get('icons', function () {return view('pages.icons');})->name('icons');
+	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
+	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+});
 
 Route::post('/form','App\Http\Controllers\FormCutiController@submitCutiPegawai')->name('form_cuti');
 
@@ -54,5 +54,5 @@ Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class
 Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::class,'createTablePJLP'])->name('list.pjlp');
 
 // Halaman test, utk keperluan test implementasi fungsi
-Route::get('/try',function(Request $request) {return ;});
+Route::get('/try',function(Request $request) {return view('try');});
 

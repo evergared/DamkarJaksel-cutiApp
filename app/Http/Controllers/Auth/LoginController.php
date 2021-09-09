@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\JsonResponse;
 
 class LoginController extends Controller
 {
@@ -48,7 +49,7 @@ class LoginController extends Controller
         // jika user login dengan nip
         $pegawai = DB::table('user')->pluck('nip')->toArray();
 
-        //error_log("Password : ".$request->get('password'));
+        error_log("Password : ".$request->get('password'));
 
         $pass = Hash::make($request->get('password'));
 
@@ -65,22 +66,21 @@ class LoginController extends Controller
                 $cred, $request->filled('remember'));
         }
 
+        // NOTE : tabel untuk id user harus bernama id
+
     }
 
     protected function authenticated(Request $request, $user)
     {
-        // $roles = explode("|",$user->level);
 
-        // $request->session()->flash("roles",$roles);
+        $roles = explode("|",$user->level);
+        $request->session()->flash("roles",$roles);
         
-        // //redirect('home');
-        // dd("masuk dengan cred : " . $user);
-        // dashboard::getDashboard($request);
-        error_log("cek auth : ".Auth::check());
-        error_log("cek auth id : ".Auth::id());
+        // error_log("masuk dengan cred : " . $user);
+        // error_log("cek auth : ".Auth::check());
+        // error_log("cek auth id : ".Auth::id());
 
-        return redirect()->intended('home');
-        //return view('dashboard/home');
+
     }
 
 }

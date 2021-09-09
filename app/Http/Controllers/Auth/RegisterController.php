@@ -53,8 +53,6 @@ class RegisterController extends Controller
         else
             $person = DB::table('data_pegawai')->where('nip',$request['nip-nrk'])->first();
 
-        // TODO : buat logic untuk insert level user berdasarkan hierarki dan jabatan yang dipegang
-        // ide : gunakan composite value dengan separator, cth kasek|ppk
         // 1. get person data dari data pegawai
         // 2. buat array untuk menyimpan role
         // 3. loop pemanggilan data dari nip
@@ -66,7 +64,7 @@ class RegisterController extends Controller
             'email' => $request['email']
         ]));
 
-        dd('registrasi berhasil untuk pengguna dengan nip : ' . $person->nip);
+        //dd('registrasi berhasil untuk pengguna dengan nip : ' . $person->nip);
         //implode(" | ",$person);
         
     }

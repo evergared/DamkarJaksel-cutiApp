@@ -20,17 +20,13 @@ class DashboardController extends Controller
 
   public function kickUser()
   {
-    abort(403);
+    //abort(403);
   }
 
   public static function getDashboard(Request $request)
   {
      $nip = $request->session()->get('roles');
      route("home");
-     //dd("status login : ". Auth::check() ." sebagai : ".implode("+",$nip));
-
-    //$this->loadHome();
-
   }
 
   public function loadHome()
