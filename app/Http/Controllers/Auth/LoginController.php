@@ -8,6 +8,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -23,6 +25,8 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+    //protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -44,6 +48,10 @@ class LoginController extends Controller
         // jika user login dengan nip
         $pegawai = DB::table('user')->pluck('nip')->toArray();
 
+        //error_log("Password : ".$request->get('password'));
+
+        $pass = Hash::make($request->get('password'));
+
         if(in_array($request->get('nip'),$pegawai))
             return $this->guard()->attempt(
                 $this->credentials($request), $request->filled('remember')
@@ -56,11 +64,23 @@ class LoginController extends Controller
             return $this->guard()->attempt(
                 $cred, $request->filled('remember'));
         }
+
     }
 
     protected function authenticated(Request $request, $user)
     {
-        dd("masuk dengan cred : " . $user);
-        //dashboard::getDashboard($request);
+        // $roles = explode("|",$user->level);
+
+        // $request->session()->flash("roles",$roles);
+        
+        // //redirect('home');
+        // dd("masuk dengan cred : " . $user);
+        // dashboard::getDashboard($request);
+        error_log("cek auth : ".Auth::check());
+        error_log("cek auth id : ".Auth::id());
+
+        return redirect()->intended('home');
+        //return view('dashboard/home');
     }
+
 }

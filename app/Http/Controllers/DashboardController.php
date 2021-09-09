@@ -25,8 +25,12 @@ class DashboardController extends Controller
 
   public static function getDashboard(Request $request)
   {
-    $nip = $request->session()->get('nip');
-    dd("anda login sebagai : ".$nip);
+     $nip = $request->session()->get('roles');
+     route("home");
+     //dd("status login : ". Auth::check() ." sebagai : ".implode("+",$nip));
+
+    //$this->loadHome();
+
   }
 
   public function loadHome()
