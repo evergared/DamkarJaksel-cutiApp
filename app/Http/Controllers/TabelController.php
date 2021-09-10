@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 // model utk tabel
 use App\Models\Pegawai_ASN as ASN;
@@ -17,7 +18,7 @@ class TabelController extends Controller
 {
     public function createTableASN(Request $request)
     {
-        $d = ASN::latest()->get();
+        $d = DB::table('data_pegawai')->where('golongan','!=','PJLP')->get();
         
         if($request->ajax())
         {
@@ -31,7 +32,7 @@ class TabelController extends Controller
 
     public function createTablePJLP(Request $request)
     {
-        $d = PJLP::latest()->get();
+        $d = DB::table('data_pegawai')->where('golongan','PJLP')->get();
         
         if($request->ajax())
         {

@@ -44,8 +44,11 @@
                           <th>Nama</th>
                           <th>Golongan</th>
                           <th>Jabatan</th>
-                          <th>NIP Atasan</th>
+                          <th>Kasie</th>
+                          <th>Atasan</th>
                           <th>Pendidikan</th>
+                          <th>Kode Penempatan</th>
+                          <th>Keterangan</th>
                       </tr>
                   </thead>
                   <tbody></tbody>
@@ -61,12 +64,15 @@
                       <tr>
                           <th>NO</th>
                           <th>NIP</th>
-                          <th>No PJLP</th>
+                          <th>NRK</th>
                           <th>Nama</th>
                           <th>Golongan</th>
-                          <th>Jenis Kontrak</th>
-                          <th>NIP Atasan</th>
+                          <th>Jabatan</th>
+                          <th>Kasie</th>
+                          <th>Atasan</th>
                           <th>Pendidikan</th>
+                          <th>Kode Penempatan</th>
+                          <th>Keterangan</th>
                       </tr>
                   </thead>
                   <tbody></tbody>
@@ -100,8 +106,11 @@
                 {data: 'nama', name: 'nama'},
                 {data: 'golongan', name:'golongan'},
                 {data: 'jabatan', name:'jabatan'},
-                {data: 'nip_atasan',name:'nip_atasan'},
-                {data: 'pendidikan',name: 'pendidikan'}
+                {data: 'kasie', name:'kasie'},
+                {data: 'atasan', name:'atasan'},
+                {data: 'pendidikan',name: 'pendidikan'},
+                {data: 'kode_penempatan', name:'kode_penempatan'},
+                {data: 'keterangan', name:'keterangan'}
             ]
 
         });
@@ -118,12 +127,15 @@
             columns:[
                 {data: 'DT_RowIndex', name:'DT_RowIndex'},
                 {data: 'nip', name:'nip'},
-                {data: 'no_pjlp', name:'no_pjlp'},
+                {data: 'nrk', name:'nrk'},
                 {data: 'nama', name: 'nama'},
                 {data: 'golongan', name:'golongan'},
                 {data: 'jabatan', name:'jabatan'},
-                {data: 'nip_atasan',name:'nip_atasan'},
-                {data: 'pendidikan',name: 'pendidikan'}
+                {data: 'kasie', name:'kasie'},
+                {data: 'atasan', name:'atasan'},
+                {data: 'pendidikan',name: 'pendidikan'},
+                {data: 'kode_penempatan', name:'kode_penempatan'},
+                {data: 'keterangan', name:'keterangan'}
             ]
 
         });

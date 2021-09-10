@@ -71,9 +71,10 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user)
     {
+        error_log("The event should be triggered by now");
         if(event(new Registered($user)))
             error_log("event triggered and it's should be true");
-        route("verify");
+        return redirect("login");
         //route('verification.notice');
     }
 
