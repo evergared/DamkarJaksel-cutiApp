@@ -13,7 +13,7 @@
             <h1>Form Pengajuan Cuti</h1>
           </div>
           <div class="col">
-            <form role="form" method="post" action="{{ route('form_cuti') }}">
+            <form role="form" method="post" action="{{ route('submit-cuti') }}">
             @csrf
               <div class="form-group">
 
@@ -22,7 +22,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                   </div>
-                  <input class="form-control" id="nrk" name="nrk" placeholder="{{ __('NRK') }}" type="text" disabled>
+                  <input class="form-control" id="nrk" name="nrk" placeholder="{{ __('NRK') }}" type="text" @if(auth()->user()->nip !== null) value = "{{ auth()->user()->nip }}" @endif disabled>
                 </div>
 
                 {{-- Bagian datepicker --}}

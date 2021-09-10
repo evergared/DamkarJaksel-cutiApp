@@ -67,8 +67,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
-// Form Submision Routes
-Route::post('/form','App\Http\Controllers\FormCutiController@submitCutiPegawai')->name('form_cuti');
+// Cuti Related Routes
+Route::post('/form','App\Http\Controllers\FormCutiController@index')->name('submit-cuti');
 
 // Table Query Routes
 // TODO : benahi route, tambah parameter id untuk pengecekan clearance
