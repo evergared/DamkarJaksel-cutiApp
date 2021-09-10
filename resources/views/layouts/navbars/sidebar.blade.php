@@ -57,7 +57,7 @@
           </div>
       </div>
 
-      <h3>{{ __('Selamat Datang!')}} <br> {{ __('(Jabatan)')}}</h3>
+      <h3>{{ __('Selamat Datang!')}} <br> {{ auth()->user()->nip }}</h3>
       <hr class = "my-2">
       <ul class="navbar-nav ">
         <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="ni ni-shop text-blue"></i><span class="nav-link-text">{{ __('Home')}}</span></a></li>

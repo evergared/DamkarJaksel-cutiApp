@@ -43,11 +43,18 @@
                 </div>
 
                 {{-- Bagian Dropdown Jenis Cuti --}}
+
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-clipboard"></i></span>
                   </div>
-                  <input autocomplete="off" class="form-control" id="jCuti" name="jCuti" placeholder="{{ __('Jenis Cuti') }}" type="text">
+                  <select autocomplete="off" class="form-control" id="jCuti" name="jCuti" placeholder="{{ __('Jenis Cuti') }}" type="text">
+                      @if($dd_jcuti !== null)
+                      @foreach( $dd_jcuti as $cuti)
+                        <option value="{{ $cuti }}">{{ $cuti }}</option >
+                      @endforeach
+                      @endif
+                  </select>
                 </div>
 
                 {{-- Bagian Alasan Cuti --}}

@@ -29,30 +29,36 @@ class DashboardController extends Controller
      route("home");
   }
 
-  public function loadHome()
+  public function loadHome(Request $request)
   {
     $this->checkAuth();
     return view('dashboard/home');
   }
 
-  public function loadKepegawaian()
+  public function loadKepegawaian(Request $request)
   {
     $this->checkAuth();
-    $clearance = "3";
-
-    return view('dashboard/kepegawaian')->with('clearance',$clearance);
+    return view('dashboard/kepegawaian');
   }
 
-  public function loadReport()
+  public function loadReport(Request $request)
   {
     $this->checkAuth();
     return view('dashboard/report');
   }
 
-  public function loadForm()
+  public function loadForm(Request $request)
   {
-    $this->checkAuth();
-    return view('dashboard/form');
+    $cuti = [
+      "Tahunan",
+      "Melahirkan",
+      "Sakit",
+      "Negara",
+      "Besar",
+      "Penting"
+    ];
+
+    return view('dashboard/form')->with("dd_jcuti",$cuti);
   }
 }
 

@@ -74,7 +74,7 @@ class LoginController extends Controller
     {
 
         $roles = explode("|",$user->level);
-        $request->session()->flash("roles",$roles);
+        $request->session()->put("roles",$roles);
         
         // error_log("masuk dengan cred : " . $user);
         // error_log("cek auth : ".Auth::check());
