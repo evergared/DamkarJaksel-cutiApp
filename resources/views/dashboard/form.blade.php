@@ -13,6 +13,27 @@
             <h1>Form Pengajuan Cuti</h1>
           </div>
           <div class="col">
+
+            @if($errors->has('form_error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
+            <span class="alert-inner--text">{{ $errors->first('form_error') }}</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            @endif
+
+            @if(session('form_success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
+            <span class="alert-inner--text"><strong>{{ session('form_success') }}</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            @endif
+
             <form role="form" method="post" action="{{ route('submit-cuti') }}">
             @csrf
               <div class="form-group">
@@ -22,7 +43,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                   </div>
-                  <input class="form-control" id="nrk" name="nrk" placeholder="{{ __('NRK') }}" type="text" @if(auth()->user()->nip !== null) value = "{{ auth()->user()->nip }}" @endif disabled>
+                  <input class="form-control" id="nrk" name="nrk" placeholder="{{ __('NRK') }}" type="text" @if(auth()->user()->nip !== null) value = "{{ 'auth()->user()->nip' }}" @endif disabled>
                 </div>
 
                 {{-- Bagian datepicker --}}

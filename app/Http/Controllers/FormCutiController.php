@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Throwable;
+
 class FormCutiController extends Controller
 {
 
@@ -15,7 +17,7 @@ class FormCutiController extends Controller
 
         $this->validasiForm($request);
         // Via Auth()
-        
+        $this->submitCuti($request);
         
     }
 
@@ -37,6 +39,7 @@ class FormCutiController extends Controller
         $alasanCuti = $request->input('aCuti');
 
         // TODO : proses perhitungan hari
+        // TODO : alasan cuti 
 
 
         // TODO : buat query untuk input, lalu tampilkan alert berhasil atau gagal
@@ -58,7 +61,7 @@ class FormCutiController extends Controller
             return redirect()
                     ->back()
                     ->withInput()
-                    ->withErrors('roles.error','Proses gagal! Silahkan logout dan login kembali.');
+                    ->withErrors('form_error','Proses gagal! Silahkan logout dan login kembali.');
         }
 
         try
@@ -78,17 +81,18 @@ class FormCutiController extends Controller
             ]);
         }
 
-        catch(Exception $e)
+        catch(Throwable $e)
         {
-            error_log("Error input database. User " . Auth::user()->nip . " Time " . now() . "\nException : ".$e);
+            report("Error input database. User " . $request->user()->nip . " Time " . now() . "\nException : ".$e);
+
             return redirect()
             ->back()
             ->withInput()
-            ->withErrors('database.error','Database gagal! Silahkan coba beberapa saat lagi atau hubungi admin.');
+            ->withErrors('form_error','Database gagal! Silahkan coba beberapa saat lagi atau hubungi admin.');
         }
 
 
-        return redirect()->back();
+        return redirect()->back()->with('form_success','Permintaan cuti anda telah di submit. Silahkan cek Report Daftar Cuti untuk proses persetujuan.');
         //return view('dashboard/form');
     }
 
