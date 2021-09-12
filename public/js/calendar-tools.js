@@ -32,7 +32,7 @@ let liburNasional = []
 
   $('.input-daterange').datepicker({
     language:'id',
-    format:'dd/mm/yyyy',
+    format:'yyyy-mm-dd',
     weekStart:1,
     startView:1,
     minViewMode:0,

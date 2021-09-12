@@ -14,25 +14,25 @@
           </div>
           <div class="col">
 
-            @if($errors->has('form_error'))
+          @if(session('form_error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
-            <span class="alert-inner--text">{{ $errors->first('form_error') }}</span>
+            <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
+            <span class="alert-inner--text">{{ session('form_error') }}</span>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
-            @endif
+          @endif
 
-            @if(session('form_success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
-            <span class="alert-inner--text"><strong>{{ session('form_success') }}</span>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            @endif
+          @if(session('form_success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
+          <span class="alert-inner--text">{{ session('form_success') }}</span>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          @endif
 
             <form role="form" method="post" action="{{ route('submit-cuti') }}">
             @csrf
@@ -43,7 +43,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                   </div>
-                  <input class="form-control" id="nrk" name="nrk" placeholder="{{ __('NRK') }}" type="text" @if(auth()->user()->nip !== null) value = "{{ 'auth()->user()->nip' }}" @endif disabled>
+                  <input class="form-control" id="nrk" name="nrk" placeholder="{{ __('NRK') }}" type="text" @if(auth()->user()->nip !== null) value = "{{ auth()->user()->nip }}" @endif readonly = "true">
                 </div>
 
                 {{-- Bagian datepicker --}}
@@ -61,6 +61,11 @@
                     </div>
                     <input autocomplete="off" class="form-control" id="tSelesai" name="tSelesai" placeholder="{{ __('Tanggal Selesai') }}" type="text">
                   </div>
+                  @if( $errors->has('tmulai') or $errors->has('tselesai') )
+                  <span class="invalid-feedback" style="display: block;" role="alert">
+                      <strong>Tanggal cuti belum ditetapkan!</strong>
+                  </span>
+                  @endif
                 </div>
 
                 {{-- Bagian Dropdown Jenis Cuti --}}

@@ -15,7 +15,7 @@ class FormCutiController extends Controller
     {
         // TODO : lakukan pengecekan untuk klasifikasi cuti
 
-        $this->validasiForm($request);
+        //$this->validasiForm($request);
         // Via Auth()
         $this->submitCuti($request);
         
@@ -24,19 +24,26 @@ class FormCutiController extends Controller
     public function validasiForm(Request $request)
     {
         return $request->validate([
-            "tmulai" => "date|required",
-            "tselesai" => "date|required",
+            "tmulai" => "required",
+            "tselesai" => "required",
         ]);
     }
 
     public function submitCuti(Request $request)
     {
+        error_log("Begin Submit cuti");
+
+        //$this->validasiForm($request);
 
         $nrk = $request->input('nrk');
-        $tglMulai = $request->input('tMulai');
-        $tglSelesai= $request->input('tSelesai');
+        $tglMulai = Date($request->input('tMulai'));
+        $tglSelesai= Date($request->input('tSelesai'));
         $jenisCuti = $request->input('jCuti');
         $alasanCuti = $request->input('aCuti');
+
+        error_log("NIP : ".$nrk);
+        error_log("Mulai : ".$tglMulai);
+        error_log("Selesai : ".$tglSelesai);
 
         // TODO : proses perhitungan hari
         // TODO : alasan cuti 
@@ -49,12 +56,14 @@ class FormCutiController extends Controller
             $asigment = DB::table('asigment_pjlp');
             $daftar = DB::table('daftar_cuti_pjlp');
             $tahunan = DB::table('cuti_tahunan_pjlp');
+            error_log("User's role is PJLP");
         }
         elseif(in_array("ASN",$roles))
         {
             $asigment = DB::table('asigment_asn');
             $daftar = DB::table('daftar_cuti_asn');
             $tahunan = DB::table('cuti_tahunan_asn');
+            error_log("User's role is ASN");
         }
         else
         {
@@ -62,37 +71,46 @@ class FormCutiController extends Controller
                     ->back()
                     ->withInput()
                     ->withErrors('form_error','Proses gagal! Silahkan logout dan login kembali.');
+                    error_log("User's role is unknown");
         }
+
 
         try
         {
+            error_log("prepping for insert to daftar cuti");
+            if($daftar !== null)
+                error_log('Not null');
             $id = $daftar->insertGetId([
                 'nip' => $nrk,
                 'tgl_awal' => $tglMulai,
                 'tgl_akhir' => $tglSelesai,
-                'total_cuti' => $tglSelesai-$tglMulai,
-                'tgl_pengajuan' => today(),
+                'total_cuti' => 0,
+                'tgl_pengajuan' => Date(today()),
                 'jenis_cuti' => $jenisCuti
             ]);
-
+            error_log("the id for entry is : ".$id);
+            error_log("insert to daftar cuti has completed, check the database");
+            
+            error_log("prepping for insert to asignment cuti");
             $asigment -> insert([
                 'no_cuti' => $id,
                 'nip' => $nrk,
             ]);
+            error_log("insert to asignment is completed, check the database");
+            return redirect()->back()->with('form_success',"Form cuti berhasil diajukan! Cek Report Daftar Cuti untuk detail.");
+
         }
 
         catch(Throwable $e)
         {
-            report("Error input database. User " . $request->user()->nip . " Time " . now() . "\nException : ".$e);
-
+            error_log("Error input database. User " . $request->user()->nip . " Time " . now() . "\nException : ".$e);
+            report($e);
             return redirect()
             ->back()
-            ->withInput()
-            ->withErrors('form_error','Database gagal! Silahkan coba beberapa saat lagi atau hubungi admin.');
+            ->with('form_error','Insert database gagal! Cek data anda dan coba beberapa saat lagi atau hubungi admin.');
         }
 
 
-        return redirect()->back()->with('form_success','Permintaan cuti anda telah di submit. Silahkan cek Report Daftar Cuti untuk proses persetujuan.');
         //return view('dashboard/form');
     }
 

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\DB;
 
 
 /*
@@ -68,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // Cuti Related Routes
-Route::post('/form','App\Http\Controllers\FormCutiController@index')->name('submit-cuti');
+Route::post('/form','App\Http\Controllers\FormCutiController@submitCuti')->name('submit-cuti');
 
 // Table Query Routes
 // TODO : benahi route, tambah parameter id untuk pengecekan clearance
@@ -76,5 +77,12 @@ Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class
 Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::class,'createTablePJLP'])->name('list.pjlp');
 
 // Halaman test, utk keperluan test implementasi fungsi
-Route::get('/try',function(Request $request) {return view('auth.verify');});
+Route::get('/try',function(Request $request) {
+	
+	DB::table('asigment_asn') -> insert([
+		'no_cuti' => 2,
+		'nip' => '11111',
+	]);
+	return view('try');
+});
 
