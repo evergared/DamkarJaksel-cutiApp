@@ -77,12 +77,5 @@ Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class
 Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::class,'createTablePJLP'])->name('list.pjlp');
 
 // Halaman test, utk keperluan test implementasi fungsi
-Route::get('/try',function(Request $request) {
-	
-	DB::table('asigment_asn') -> insert([
-		'no_cuti' => 2,
-		'nip' => '11111',
-	]);
-	return view('try');
-});
+Route::get('/try','App\Http\Controllers\TabelController@createTablePegawai');
 

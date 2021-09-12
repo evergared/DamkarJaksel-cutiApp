@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Yajra\DataTables\Html\Builder;
 use Illuminate\Support\Facades\DB;
 
 // model utk tabel
@@ -13,6 +14,7 @@ use App\Models\Pegawai_PJLP as PJLP;
 
 // datatable utk pembuatan table melalui facade
 use App\DataTables\Pegawai_ASNDataTable;
+use App\DataTables\pegawaiDataTable;
 
 class TabelController extends Controller
 {
@@ -43,5 +45,10 @@ class TabelController extends Controller
         }
         return view('dashboard/kepegawaian');
         //return $d;
+    }
+
+    public function createTablePegawai(pegawaiDataTable $dataTable)
+    {
+        return $dataTable->render('try');
     }
 }
