@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use Throwable;
@@ -50,7 +51,7 @@ class FormCutiController extends Controller
 
 
         // TODO : buat query untuk input, lalu tampilkan alert berhasil atau gagal
-        $roles = $request -> session() -> get('roles');
+        $roles = explode("|",Auth::user()->level);
         if(in_array("PJLP",$roles))
         {
             $asigment = DB::table('asigment_pjlp');
