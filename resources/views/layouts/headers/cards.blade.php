@@ -1,7 +1,7 @@
 <div class="header bg-gradient-primary pb-8 pt-4 pt-md-6">
 
 <div class="container-fluid">
-<div class="alert alert-default alert-dismissible fade show" role="alert">
+<!-- <div class="alert alert-default alert-dismissible fade show" role="alert">
     <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
     <span class="alert-inner--text"><strong>Default!</strong> This is a default alert—check it out!</span>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -19,7 +19,7 @@
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-</div>
+</div> -->
 </div>
 
     <div class="container-fluid ">

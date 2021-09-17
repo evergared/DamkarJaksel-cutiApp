@@ -73,9 +73,6 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
 
-        $roles = explode("|",$user->level);
-        $request->session()->put("roles",$roles);
-        
         // error_log("masuk dengan cred : " . $user);
         // error_log("cek auth : ".Auth::check());
         // error_log("cek auth id : ".Auth::id());

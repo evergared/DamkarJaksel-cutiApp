@@ -2,8 +2,14 @@
 
 @section('content')
 
+@auth
+    @if(in_array('ASN',explode('|',auth()->user()->level)))
+        User adalah ASN tulen
+    @endif
+@endauth
 
-{{$dataTable->table()}}
+    Testis
+
 
 @endsection
 
@@ -12,5 +18,5 @@
 <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap4.min.js"></script>
 
-{{ $dataTable->scripts() }}
+
 @endpush
