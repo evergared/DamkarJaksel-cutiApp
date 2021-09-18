@@ -24,7 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'level',
         'password',
         'email',
-        'email_verified_at'
+        'email_verified_at',
+        'roles'
     ];
 
     /**
@@ -44,7 +45,11 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'roles' => 'array'
     ];
 
-
+    public function getRolesAttribute()
+    {
+        return explode('|',$this->level);
+    }
 }
