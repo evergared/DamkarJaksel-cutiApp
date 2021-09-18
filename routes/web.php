@@ -75,8 +75,9 @@ Route::post('/form','App\Http\Controllers\FormCutiController@submitCuti')->name(
 // TODO : benahi route, tambah parameter id untuk pengecekan clearance
 Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class,'createTableASN'])->name('list.asn');
 Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::class,'createTablePJLP'])->name('list.pjlp');
+Route::get('/report/table/self',[App\Http\Controllers\TabelController::class,'createTableAssignmentSELF'])->name('report.self');
 
 // Halaman test, utk keperluan test implementasi fungsi
 //Route::get('/try','App\Http\Controllers\TabelController@createTablePegawai');
-Route::get('/try', function(){ return view('try');})->middleware('datatable');
+Route::get('/try', function(){ return view('try');});
 

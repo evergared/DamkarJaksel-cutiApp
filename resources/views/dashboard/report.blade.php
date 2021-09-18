@@ -24,7 +24,7 @@
         </div>
 
         <div class="card-body">
-
+            @include('datatable.assignment-self')
         </div>
 
     </div>

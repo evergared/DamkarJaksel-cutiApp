@@ -3,7 +3,7 @@
 @section('content')
 
 @auth
-    @if(in_array('ASN',explode('|',auth()->user()->level)))
+    @if(in_array('ASN',Auth::user()->roles))
         User adalah ASN tulen
     @endif
 @endauth
