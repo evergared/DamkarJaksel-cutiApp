@@ -49,35 +49,35 @@
 
         @if(auth()->user()->is_admin)
         
-        <div class="tab-content" id="tab-content-report">
+          <div class="tab-content" id="tab-content-report">
 
-        <div class="tab-pane fade show active" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
-          @include('datatable.assignment-asn')
-        </div>
+          <div class="tab-pane fade show active" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
+            @include('datatable.admin-assignment-asn')
+          </div>
 
-        <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
-          @include('datatable.assignment-pjlp')
-        </div>
+          <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
+            @include('datatable.assignment-pjlp')
+          </div>
 
-        </div>
+          </div>
 
         @elseif(auth()->user()->has_subordinate)
-        
-        <div class="tab-content" id="tab-content-report">
 
-        <div class="tab-pane fade show active" id="tab-pribadi" role="tabpanel" aria-labelledby="tab-pribadi-tab" >
-          @include('datatable.assignment-self')
-        </div>
+          <div class="tab-content" id="tab-content-report">
 
-        <div class="tab-pane fade" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
-          @include('datatable.assignment-asn')
-        </div>
+          <div class="tab-pane fade show active" id="tab-pribadi" role="tabpanel" aria-labelledby="tab-pribadi-tab" >
+            @include('datatable.assignment-self')
+          </div>
 
-        <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
-          @include('datatable.assignment-pjlp')
-        </div>
+          <div class="tab-pane fade" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
+            @include('datatable.assignment-asn')
+          </div>
 
-        </div>
+          <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
+            @include('datatable.assignment-pjlp')
+          </div>
+
+          </div>
 
         @else
             @include('datatable.assignment-self')

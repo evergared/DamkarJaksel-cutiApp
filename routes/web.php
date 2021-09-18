@@ -70,14 +70,19 @@ Route::group(['middleware' => 'auth'], function () {
 
 // Cuti Related Routes
 Route::post('/form','App\Http\Controllers\FormCutiController@submitCuti')->name('submit-cuti');
+Route::get('/report/table/self/delete/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'cancelCuti'])->name('report.self.delete');
+Route::get('/report/table/self/application/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('report.self.app');
 
 // Table Query Routes
 Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class,'createTableASN'])->name('list.asn');
 Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::class,'createTablePJLP'])->name('list.pjlp');
 Route::get('/report/table/self',[App\Http\Controllers\TabelController::class,'createTableAssignmentSELF'])->name('report.self');
+Route::get('/report/table/asn',[App\Http\Controllers\TabelController::class,'createTableAssignmentASN'])->name('report.asn');
 
-Route::get('/report/table/self/delete/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'cancelCuti'])->name('report.self.delete');
-Route::get('/report/table/self/application/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('report.self.app');
+
+
+// TODO : make route for admin report cuti view
+// TODO : organize cuti related route with middleware for protection against snoopers
 
 // Halaman test, utk keperluan test implementasi fungsi
 //Route::get('/try','App\Http\Controllers\TabelController@createTablePegawai');

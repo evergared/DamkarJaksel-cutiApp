@@ -50,7 +50,8 @@ class TabelController extends Controller
 
     public function createTableAssignmentASN(Request $request)
     {
-        $query = DB::table("asigment_asn")->all();
+        error_log('table asn is called');
+        $query = DB::table("asigment_asn",'a')->join('daftar_cuti_asn as d','a.no_cuti','=','d.id');
         if(in_array('KASIE',Auth::User()->roles))
         {
 
@@ -59,11 +60,37 @@ class TabelController extends Controller
         {
 
         }
+        elseif(Auth::user()->is_admin)
+        {
+            error_log('user is admin');
+            $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
+                ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
+                ->get([
+                    'dp.nip',
+                    'dp.nama',
+                    'p.penempatan',
+                    'd.jenis_cuti',
+                    'd.tgl_awal',
+                    'd.tgl_akhir',
+                    'd.total_cuti',
+                    'd.tgl_pengajuan'
+                ]);
+        }
 
         if($request->ajax())
         {
             return DataTables::of($query)
                 ->addIndexColumn()
+                ->addColumn('tindakan',function($row){
+
+                    // $deleteRoute = route('report.self.delete',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
+                    // $appRoute = route('report.self.app',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
+                    
+                    // $btn = '<a href="'.$appRoute.'" class="edit btn btn-info btn-sm">Ambil Surat Cuti</a>';
+                    // $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>';
+                    // return $btn;
+                })
+                ->rawColumns(['tindakan'])
                 ->make(true);
         }
         return view('dashboard/report');
