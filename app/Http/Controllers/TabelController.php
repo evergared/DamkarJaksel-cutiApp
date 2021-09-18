@@ -85,22 +85,33 @@ class TabelController extends Controller
     public function createTableAssignmentSELF(Request $request)
     {
         if(in_array('ASN',Auth::user()->roles))
-            $tabel = DB::table('daftar_cuti_asn','d')->join('asigment_asn','d.nip','=','asigment_asn.nip');
+            $tabel = DB::table('daftar_cuti_asn','d')->join('asigment_asn as a','d.id','=','a.no_cuti');
         elseif(in_array('PJLP',Auth::user()->roles))
-            $tabel = DB::table('daftar_cuti_pjlp','d')->join('asigment_pjlp','d.nip','=','asigment_pjlp.nip');
+            $tabel = DB::table('daftar_cuti_pjlp','d')->join('asigment_pjlp as a','d.id','=','a.no_cuti');
 
-        $query = $tabel->where('d.nip','=',Auth::user()->nip)->get();
+        $query = $tabel->where('d.nip','=',Auth::user()->nip)
+            ->get([
+                'd.nip',
+                'a.no_cuti',
+                'd.jenis_cuti',
+                'd.tgl_awal',
+                'd.tgl_akhir',
+                'd.total_cuti',
+                'd.tgl_pengajuan'
+            ]);
         
         if($request->ajax())
         {
             return DataTables::of($query)
                 ->addIndexColumn()
                 ->addColumn('tindakan',function($row){
-                            $btn = '<a href="javascript:void(0)" class="edit btn btn-info btn-sm">View</a>';
-                            $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Edit</a>';
-                            $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-danger btn-sm">Delete</a>';
-         
-                            return $btn;
+
+                    $deleteRoute = route('report.self.delete',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
+                    $appRoute = route('report.self.app',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
+                    
+                    $btn = '<a href="'.$appRoute.'" class="edit btn btn-info btn-sm">Ambil Surat Cuti</a>';
+                    $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>';
+                    return $btn;
                 })
                 ->rawColumns(['tindakan'])
                 ->make(true);

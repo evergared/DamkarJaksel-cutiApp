@@ -72,10 +72,12 @@ Route::group(['middleware' => 'auth'], function () {
 Route::post('/form','App\Http\Controllers\FormCutiController@submitCuti')->name('submit-cuti');
 
 // Table Query Routes
-// TODO : benahi route, tambah parameter id untuk pengecekan clearance
 Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class,'createTableASN'])->name('list.asn');
 Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::class,'createTablePJLP'])->name('list.pjlp');
 Route::get('/report/table/self',[App\Http\Controllers\TabelController::class,'createTableAssignmentSELF'])->name('report.self');
+
+Route::get('/report/table/self/delete/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'cancelCuti'])->name('report.self.delete');
+Route::get('/report/table/self/application/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('report.self.app');
 
 // Halaman test, utk keperluan test implementasi fungsi
 //Route::get('/try','App\Http\Controllers\TabelController@createTablePegawai');

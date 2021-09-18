@@ -143,11 +143,49 @@ class FormCutiController extends Controller
         // notify user
     }
 
-    public function cancelCuti (Request $request)
+    public function cancelCuti (Request $request,$nip,$no_cuti)
     {
         // get user's type (pjlp/asn)
         // delete cuti data from relevant asignment table
         // delete cuti data from daftar cuti
+
+        error_log('delete request : '.$nip." and ".$no_cuti);
+
+        $check = DB::table('data_pegawai')->where('nip','=',$nip)->get()->first();
+
+        if($check->golongan === "PJLP")
+        {
+            $d = DB::table('daftar_cuti_pjlp');
+            $a = DB::table('asigment_pjlp');
+        }
+        else
+        {
+            $d = DB::table('daftar_cuti_asn');
+            $a = DB::table('asigment_asn');
+        }
+
+        try
+        {
+            error_log('delete from asigment');
+            $a->where('no_cuti','=',$no_cuti)->delete();
+
+            error_log('delete from daftar cuti');
+            $d->delete($no_cuti);
+
+            return redirect()
+                ->back()
+                ->with('report_success','Cuti berhasil dihapus!');
+        }
+        
+        catch(Throwable $e)
+        {
+            report($e);
+            return redirect()
+                ->back()
+                ->withErrors('report_error','Cuti gagal dihapus!');
+        }
+
+        
     }
 
     public function modifyCuti (Request $request)

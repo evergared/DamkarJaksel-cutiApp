@@ -24,6 +24,7 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('report.self') }}",
+            dom : 'Bfrtip',
             columns:[
                 {data: 'DT_RowIndex', name:'DT_RowIndex'},
                 {data: 'jenis_cuti', name:'jenis_cuti'},

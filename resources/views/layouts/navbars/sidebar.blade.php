@@ -57,7 +57,7 @@
           </div>
       </div>
 
-      <small>{{ __('Selamat Datang!')}} <br> {{ auth()->user()->nip }}</small>
+      <small>{{ __('Selamat Datang!')}} <br> {{ auth()->user()->data['nama'] }}</small>
       <hr class = "my-2">
       Navigasi
       <ul class="navbar-nav ">
