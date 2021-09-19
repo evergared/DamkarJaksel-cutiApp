@@ -50,11 +50,30 @@ class TabelController extends Controller
 
     public function createTableAssignmentASN(Request $request)
     {
-        error_log('table asn is called');
+        error_log('Test Pemanggilan asignment asn');
         $query = DB::table("asigment_asn",'a')->join('daftar_cuti_asn as d','a.no_cuti','=','d.id');
+
+        // TODO : buat tampil tabel assignment asn untuk karu
+        // TODO : buat tampil tabel assignment asn untuk kasubag tu
         if(in_array('KASIE',Auth::User()->roles))
         {
-
+            error_log('Kasie is here');
+            $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
+                ->where('dp.kasie','=',Auth::user()->data['jabatan'])
+                ->get([
+                    'dp.nip',
+                    'dp.nrk',
+                    'dp.nama',
+                    'a.no_cuti',
+                    'a.kasie',
+                    'a.ket_kasie',
+                    'd.jenis_cuti',
+                    'd.tgl_awal',
+                    'd.tgl_akhir',
+                    'd.total_cuti',
+                    'd.tgl_pengajuan'
+                ]);
+                error_log('query is done');
         }
         elseif(in_array('KATON',Auth::User()->roles))
         {
@@ -62,13 +81,13 @@ class TabelController extends Controller
         }
         elseif(Auth::user()->is_admin)
         {
-            error_log('user is admin');
             $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
                 ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
                 ->get([
                     'dp.nip',
                     'dp.nama',
                     'p.penempatan',
+                    'a.no_cuti',
                     'd.jenis_cuti',
                     'd.tgl_awal',
                     'd.tgl_akhir',
@@ -82,13 +101,28 @@ class TabelController extends Controller
             return DataTables::of($query)
                 ->addIndexColumn()
                 ->addColumn('tindakan',function($row){
-
-                    // $deleteRoute = route('report.self.delete',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
-                    // $appRoute = route('report.self.app',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
                     
-                    // $btn = '<a href="'.$appRoute.'" class="edit btn btn-info btn-sm">Ambil Surat Cuti</a>';
-                    // $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>';
-                    // return $btn;
+                    if(Auth::user()->is_admin)
+                    {
+                        $deleteRoute = route('report.asn.delete',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
+                        $appRoute = route('report.asn.app',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
+                        
+                        $btn = '<a href="'.$appRoute.'" class="edit btn btn-info btn-sm">Ambil Surat Cuti</a>';
+                        $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>'; 
+                    }
+
+                    else if(in_array('KASIE',Auth::user()->roles))
+                    {
+                        error_log('making button');
+                        $actionRoute = "#";
+
+                        $btn = '<a href="'.$actionRoute.'" class="edit btn btn-primary btn-sm">Ubah Persetujuan</a>';
+                    }
+                        
+                        
+
+                    return $btn;
+                    
                 })
                 ->rawColumns(['tindakan'])
                 ->make(true);
@@ -98,11 +132,69 @@ class TabelController extends Controller
 
     public function createTableAssignmentPJLP(Request $request)
     {
-        $query = DB::table("asigment_pjlp")->all();
+        error_log("Data PJLP Start");
+        $query = DB::table("asigment_pjlp",'a')->join('daftar_cuti_pjlp as d','a.no_cuti','=','d.id');
+
+        if(in_array('KASIE',Auth::User()->roles))
+        {
+            //$query = $query->
+        }
+        elseif(in_array('KATON',Auth::User()->roles))
+        {
+
+        }
+        elseif(in_array('KASUBAGTU',Auth::user()->roles))
+        {
+
+        }
+        elseif(in_array('PPK',Auth::user()->roles))
+        {
+
+        }
+        elseif(in_array('KASUDIN',Auth::user()->roles))
+        {
+
+        }
+        elseif(Auth::user()->is_admin)
+        {
+            error_log('user is admin');
+            $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
+                ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
+                ->get([
+                    'dp.nip',
+                    'dp.nama',
+                    'p.penempatan',
+                    'a.no_cuti',
+                    'd.jenis_cuti',
+                    'd.tgl_awal',
+                    'd.tgl_akhir',
+                    'd.total_cuti',
+                    'd.tgl_pengajuan'
+                ]);
+
+                
+        }
+
         if($request->ajax())
         {
             return DataTables::of($query)
                 ->addIndexColumn()
+                ->addColumn('tindakan',function($row){
+                    error_log('creating buttons');
+                    if(Auth::user()->is_admin)
+                    {
+                        $deleteRoute = route('report.pjlp.delete',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
+                        $appRoute = route('report.pjlp.app',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
+                        
+                        $btn = '<a href="'.$appRoute.'" class="edit btn btn-info btn-sm">Ambil Surat Cuti</a>';
+                        $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>'; 
+                    }
+                        
+                        
+
+                    return $btn;
+                })
+                ->rawColumns(['tindakan'])
                 ->make(true);
         }
         

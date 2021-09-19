@@ -1,6 +1,6 @@
 <div class="table-responsive">
-    <h4>Data Cuti Keseluruhan Pegawai ASN</h4>
-    <table class="table asn">
+    <h4>Data Cuti Keseluruhan Pegawai PJLP</h4>
+    <table class="table pjlp">
         <thead>
             <tr>
                 <th>NO</th>
@@ -12,6 +12,7 @@
                 <th>Tanggal Akhir</th>
                 <th>Total Hari Kerja</th>
                 <th>Tanggal Pengajuan</th>
+                <th>Tindakan</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -21,11 +22,11 @@
 @push('datatables-script')
 <script type="text/javascript">
     $(function (){
-        var table = $('.asn').DataTable({
+        var table = $('.pjlp').DataTable({
 
             processing: true,
             serverSide: true,
-            ajax: "{{ route('report.asn') }}",
+            ajax: "{{ route('report.pjlp') }}",
             dom : 'Bfrtip',
             columns:[
                 {data: 'DT_RowIndex', name:'DT_RowIndex'},
@@ -37,6 +38,8 @@
                 {data: 'tgl_akhir', name: 'tgl_akhir'},
                 {data: 'total_cuti', name:'total_cuti'},
                 {data: 'tgl_pengajuan', name:'tgl_pengajuan'},
+                {data: 'tindakan',name: 'tindakan', orderable:false, searchable:false}
+
             ],
         });
     });

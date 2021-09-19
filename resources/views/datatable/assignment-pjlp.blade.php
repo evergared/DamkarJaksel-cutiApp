@@ -1,1 +1,3 @@
-<h1>test pjlp</h1>
+@if(auth()->user()->is_admin)
+    @include('datatable.report.admin-pjlp')
+@endif

@@ -12,6 +12,7 @@
             <div class="col text-left">
               <h3>{{ __('Report Data Cuti') }}</h3>
             </div>
+
               @if(auth()->user()->is_admin)
               <div class="nav-wrapper text-right">
                 <ul class="nav nav-pills flex-column flex-md-row align-items-right" role=tablist>
@@ -23,6 +24,7 @@
                     </li>
                 </ul>
               </div>
+
               @elseif(auth()->user()->has_subordinate)
               <div class="nav-wrapper text-right">
                 <ul class="nav nav-pills flex-column flex-md-row align-items-right" role=tablist>
@@ -34,6 +36,7 @@
                   </li>
                   @if(auth()->user()->has_subordinate_pjlp)
                   @endif
+
                     <li class="nav-item">
                       <a class="btn btn-sm btn-primary" href="#tab-pjlp" role="tab" data-toggle="tab" aria-controls="tab-pjlp">PJLP</a>
                     </li>
@@ -52,7 +55,7 @@
           <div class="tab-content" id="tab-content-report">
 
           <div class="tab-pane fade show active" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
-            @include('datatable.admin-assignment-asn')
+            @include('datatable.assignment-asn')
           </div>
 
           <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
@@ -65,22 +68,22 @@
 
           <div class="tab-content" id="tab-content-report">
 
-          <div class="tab-pane fade show active" id="tab-pribadi" role="tabpanel" aria-labelledby="tab-pribadi-tab" >
-            @include('datatable.assignment-self')
-          </div>
+            <div class="tab-pane fade show active" id="tab-pribadi" role="tabpanel" aria-labelledby="tab-pribadi-tab" >
+              @include('datatable.report.self')
+            </div>
 
-          <div class="tab-pane fade" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
-            @include('datatable.assignment-asn')
-          </div>
+            <div class="tab-pane fade" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
+              @include('datatable.assignment-asn')
+            </div>
 
-          <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
-            @include('datatable.assignment-pjlp')
-          </div>
+            <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
+              @include('datatable.assignment-pjlp')
+            </div>
 
           </div>
 
         @else
-            @include('datatable.assignment-self')
+            @include('datatable.report.self')
         @endif
         </div>
 

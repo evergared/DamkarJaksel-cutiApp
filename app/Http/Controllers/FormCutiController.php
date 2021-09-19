@@ -94,8 +94,7 @@ class FormCutiController extends Controller
             
             error_log("prepping for insert to asignment cuti");
             $asigment -> insert([
-                'no_cuti' => $id,
-                'nip' => $nrk,
+                'no_cuti' => $id
             ]);
             error_log("insert to asignment is completed, check the database");
             return redirect()->back()->with('form_success',"Form cuti berhasil diajukan! Cek Report Daftar Cuti untuk detail.");

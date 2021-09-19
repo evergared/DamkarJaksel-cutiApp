@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<!-- <div class="table-responsive">
     <table class="table asn">
         <thead>
             <tr>
@@ -18,4 +18,13 @@
         </thead>
         <tbody></tbody>
     </table>
-</div>
+</div> -->
+
+@if(in_array('KASIE',auth()->user()->roles))
+    @include('datatable.report.kasie-asn')
+@elseif(in_array('KASUBAGTU',auth()->user()->roles))
+
+@elseif(in_array('KASUDIN',auth()->user()->roles))
+@elseif(auth()->user()->is_admin)
+    @include('datatable.report.admin-asn')
+@endif
