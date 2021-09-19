@@ -11,6 +11,7 @@
                 <th>Tanggal Akhir</th>
                 <th>Total Hari Kerja</th>
                 <th>Tanggal Pengajuan</th>
+                <th>Persetujuan Anda</th>
                 <th>Tindakan</th>
             </tr>
         </thead>
@@ -37,6 +38,7 @@
                 {data: 'tgl_akhir', name: 'tgl_akhir'},
                 {data: 'total_cuti', name:'total_cuti'},
                 {data: 'tgl_pengajuan', name:'tgl_pengajuan'},
+                {data: 'p_kasie',name:'p_kasie',searchable:false},
                 {data: 'tindakan',name: 'tindakan', orderable:false, searchable:false}
 
             ],

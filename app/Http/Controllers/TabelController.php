@@ -57,7 +57,6 @@ class TabelController extends Controller
         // TODO : buat tampil tabel assignment asn untuk kasubag tu
         if(in_array('KASIE',Auth::User()->roles))
         {
-            error_log('Kasie is here');
             $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
                 ->where('dp.kasie','=',Auth::user()->data['jabatan'])
                 ->get([
@@ -73,7 +72,23 @@ class TabelController extends Controller
                     'd.total_cuti',
                     'd.tgl_pengajuan'
                 ]);
-                error_log('query is done');
+
+                $dt =  DataTables::of($query)
+                        ->addIndexColumn()
+                        ->addColumn('p_kasie',function($data){
+                            error_log('isi data : ',$data);
+                            if($data. === '-')
+                            return 'Test Berhasil';
+                            else
+                            return 'test Gagal';
+                        })
+                        ->addColumn('tindakan',function($row){
+                                $actionRoute = "#";
+                                $btn = '<a href="'.$actionRoute.'" class="edit btn btn-primary btn-sm">Ubah Persetujuan</a>';
+                                return $btn;
+                        })
+                        ->rawColumns(['p_kasie','tindakan'])
+                        ->make(true);
         }
         elseif(in_array('KATON',Auth::User()->roles))
         {
@@ -94,38 +109,24 @@ class TabelController extends Controller
                     'd.total_cuti',
                     'd.tgl_pengajuan'
                 ]);
+
+                $dt =  DataTables::of($query)
+                        ->addIndexColumn()
+                        ->addColumn('tindakan',function($row){
+                                $deleteRoute = route('report.asn.delete',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
+                                $appRoute = route('report.asn.app',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
+                                
+                                $btn = '<a href="'.$appRoute.'" class="edit btn btn-info btn-sm">Ambil Surat Cuti</a>';
+                                $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>'; 
+                            return $btn;
+                        })
+                        ->rawColumns(['tindakan'])
+                        ->make(true);
         }
 
         if($request->ajax())
         {
-            return DataTables::of($query)
-                ->addIndexColumn()
-                ->addColumn('tindakan',function($row){
-                    
-                    if(Auth::user()->is_admin)
-                    {
-                        $deleteRoute = route('report.asn.delete',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
-                        $appRoute = route('report.asn.app',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
-                        
-                        $btn = '<a href="'.$appRoute.'" class="edit btn btn-info btn-sm">Ambil Surat Cuti</a>';
-                        $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>'; 
-                    }
-
-                    else if(in_array('KASIE',Auth::user()->roles))
-                    {
-                        error_log('making button');
-                        $actionRoute = "#";
-
-                        $btn = '<a href="'.$actionRoute.'" class="edit btn btn-primary btn-sm">Ubah Persetujuan</a>';
-                    }
-                        
-                        
-
-                    return $btn;
-                    
-                })
-                ->rawColumns(['tindakan'])
-                ->make(true);
+            return $dt; 
         }
         return view('dashboard/report');
     }
