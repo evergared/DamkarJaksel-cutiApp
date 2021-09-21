@@ -129,7 +129,7 @@ class FormCutiController extends Controller
         // call approvalAction
     }
 
-    public function approvalAction (Request $request)
+    public function approvalAction (Request $request,$nip,$no_cuti)
     {
         // check if everyone has vote
 
@@ -140,6 +140,9 @@ class FormCutiController extends Controller
         // if one or all disapprove,
         // update the user's datatable able to modify cuti form
         // notify user
+
+        error_log('Percobaan ganti approval : NIP '.$nip." No Cuti ".$no_cuti);
+
     }
 
     public function cancelCuti (Request $request,$nip,$no_cuti)

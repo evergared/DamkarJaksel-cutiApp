@@ -43,8 +43,50 @@
 
             ],
         });
+
+        //var dtt = table.row( $(this).parents('tr')).data();
+
+        $(".asn").on("click", "a.act_", function (e) {
+        e.preventDefault();
+        var magnifico = $(table.row($(this).closest('tr')).data()['tindakan']).html('a.act_');
+        let thunderbolt = magnifico.data('galileo');
+        let lightning = magnifico.data('figaro');
+
+        //alert('approved : '+thunderbold);
+        $('#approval').modal('show');
+        $('')
+        $('#aprv-form').submit(function(e){
+           
+            
+        });
+        });
+        
     });
+
 </script>
+
+<script ></script>
+
+<x-modal id="approval" title="Pilih tindakan untuk entri ini">
+    <x-slot name="message">
+        <form name="aprv-action">
+            @csrf
+            <span class="text-align-center">
+                <input type="radio" name="op" id="op1" value="s"><label for='op1'>Setuju</label><br>
+                <input type="radio" name="op" id="op2" value="u"><label for='op2'>Ubah</label><br>
+                <input type="radio" name="op" id="op3" value="t"><label for='op3'>Tangguhkan</label><br>
+                <input type="radio" name="op" id="op4" value="x"><label for='op4'>Tolak</label><br>
+            </span>
+                <input type="text" placeholder="(Opsional) Masukan alasan anda" name="alasan" id="alasan" disabled>
+                <input type="hidden" name="thunderbolt">
+                <input type="hidden" name="lightning">
+        </form>
+    </x-slot>
+    <x-slot name="footer">
+        <a class="btn btn-secondary my-2" data-toggle="modal" data-target="#approval">Batal</a>
+        <button class="btn btn-primary my-2 text-white" name="approvalOk" type="submit">Terapkan</button>
+    </x-slot>
+</x-modal>
 @endpush
 
 @push('datatables')

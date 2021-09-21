@@ -19,6 +19,19 @@ use App\DataTables\pegawaiDataTable;
 
 class TabelController extends Controller
 {
+    public function approvalAtasan($data)
+    {
+        switch($data)
+        {
+            case '-': return 'Belum Dicek'; break;
+            case 's': return 'Disetujui'; break;
+            case 't': return 'Ditangguhkan'; break;
+            case 'u': return 'Diundur';break;
+            case 'x': return 'Ditolak';break;
+            default : return 'Kesalahan Data';break;
+        }
+    }
+
     public function createTableASN(Request $request)
     {
         $d = DB::table('data_pegawai')->where('golongan','!=','PJLP')->get();
@@ -76,15 +89,11 @@ class TabelController extends Controller
                 $dt =  DataTables::of($query)
                         ->addIndexColumn()
                         ->addColumn('p_kasie',function($data){
-                            error_log('isi data : ',$data);
-                            if($data. === '-')
-                            return 'Test Berhasil';
-                            else
-                            return 'test Gagal';
+                            $dat = (array) $data;
+                            return $this->approvalAtasan($dat['kasie']);
                         })
                         ->addColumn('tindakan',function($row){
-                                $actionRoute = "#";
-                                $btn = '<a href="'.$actionRoute.'" class="edit btn btn-primary btn-sm">Ubah Persetujuan</a>';
+                                $btn = '<a href="" class="act_ btn btn-primary btn-sm" data-galileo = "'.$row->nip.'" data-figaro="'.$row->no_cuti.'">Ubah Persetujuan</a>';
                                 return $btn;
                         })
                         ->rawColumns(['p_kasie','tindakan'])

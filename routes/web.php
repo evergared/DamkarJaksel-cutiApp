@@ -76,6 +76,8 @@ Route::get('/report/table/asn/delete/{nip}/{no_cuti}',[App\Http\Controllers\Form
 Route::get('/report/table/asn/application/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('report.asn.app');
 Route::get('/report/table/pjlp/delete/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'cancelCuti'])->name('report.pjlp.delete');
 Route::get('/report/table/pjlp/application/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('report.pjlp.app');
+Route::get('/report/table/asn/approval/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'approvalAction'])->name('report.asn.approval');
+
 
 // Table Query Routes
 Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class,'createTableASN'])->name('list.asn');
