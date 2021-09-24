@@ -5,10 +5,15 @@
             <tr>
                 <th>NO</th>
                 <th>Jenis Cuti</th>
+                <th>Alasan</th>
                 <th>Tanggal Awal</th>
                 <th>Tanggal Akhir</th>
                 <th>Total Hari Kerja</th>
                 <th>Tanggal Pengajuan</th>
+                <th>Persetujuan Kasie Sektor</th>
+                <th>Keterangan Kasie</th>
+                <th>Persetujuan Kasubag TU</th>
+                <th>Keterangan Kasubag TU</th>
                 <th>Tindakan</th>
             </tr>
         </thead>
@@ -28,10 +33,15 @@
             columns:[
                 {data: 'DT_RowIndex', name:'DT_RowIndex'},
                 {data: 'jenis_cuti', name:'jenis_cuti'},
+                {data: 'alasan', name:'alasan',searchable:false},
                 {data: 'tgl_awal', name:'tgl_awal'},
                 {data: 'tgl_akhir', name: 'tgl_akhir'},
                 {data: 'total_cuti', name:'total_cuti'},
                 {data: 'tgl_pengajuan', name:'tgl_pengajuan'},
+                {data: 'p_kasie', name:'p_kasie'},
+                {data: 'k_kasie', name:'k_kasie'},
+                {data: 'p_tu', name:'p_tu'},
+                {data: 'k_tu', name:'k_tu'},
                 {data: 'tindakan',name: 'tindakan', orderable:false, searchable:false}
             ],
         });

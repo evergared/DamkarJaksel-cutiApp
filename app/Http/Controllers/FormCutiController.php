@@ -32,9 +32,6 @@ class FormCutiController extends Controller
 
     public function submitCuti(Request $request)
     {
-        error_log("Begin Submit cuti");
-
-        //$this->validasiForm($request);
 
         $nrk = $request->input('nrk');
         $tglMulai = Date($request->input('tMulai'));
@@ -42,24 +39,20 @@ class FormCutiController extends Controller
         $jenisCuti = $request->input('jCuti');
         $alasanCuti = $request->input('aCuti');
 
-        error_log("NIP : ".$nrk);
-        error_log("Mulai : ".$tglMulai);
-        error_log("Selesai : ".$tglSelesai);
-
         // TODO : proses perhitungan hari
         // TODO : alasan cuti 
 
 
         // TODO : buat query untuk input, lalu tampilkan alert berhasil atau gagal
-        $roles = explode("|",Auth::user()->level);
-        if(in_array("PJLP",$roles))
+
+        if(in_array("PJLP",Auth::user()->roles))
         {
             $asigment = DB::table('asigment_pjlp');
             $daftar = DB::table('daftar_cuti_pjlp');
             $tahunan = DB::table('cuti_tahunan_pjlp');
             error_log("User's role is PJLP");
         }
-        elseif(in_array("ASN",$roles))
+        elseif(in_array("ASN",Auth::user()->roles))
         {
             $asigment = DB::table('asigment_asn');
             $daftar = DB::table('daftar_cuti_asn');
@@ -87,7 +80,8 @@ class FormCutiController extends Controller
                 'tgl_akhir' => $tglSelesai,
                 'total_cuti' => 0,
                 'tgl_pengajuan' => Date(today()),
-                'jenis_cuti' => $jenisCuti
+                'jenis_cuti' => $jenisCuti,
+                'alasan' => $alasanCuti
             ]);
             error_log("the id for entry is : ".$id);
             error_log("insert to daftar cuti has completed, check the database");
@@ -129,7 +123,7 @@ class FormCutiController extends Controller
         // call approvalAction
     }
 
-    public function approvalAction (Request $request,$nip,$no_cuti)
+    public function approvalAction (Request $request)
     {
         // check if everyone has vote
 
@@ -141,7 +135,40 @@ class FormCutiController extends Controller
         // update the user's datatable able to modify cuti form
         // notify user
 
-        error_log('Percobaan ganti approval : NIP '.$nip." No Cuti ".$no_cuti);
+
+        $nip = $request->input('thunderbolt');
+        $no_cuti = $request->input('lightning');
+
+        if(DB::table('data_pegawai')->where('nip',$nip)->get('golongan')->first() === "PJLP")
+        {
+            $assignment = DB::table('asigment_pjlp');
+            $daftar = DB::table('daftar_cuti_pjlp');
+        }
+        else
+        {
+            $assignment = DB::table('asigment_asn');
+            $daftar = DB::table('daftar_cuti_asn');
+        }
+
+
+        try
+        {
+            if(in_array('KASIE',Auth::user()->roles))
+            {
+                $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('op'),'ket_kasie'=>$request->input('alasan')]);
+            }
+            
+            // TODO : jika semua sudah approve, tembak event
+
+            return redirect()->back();
+        }
+
+        catch(Throwable $e)
+        {
+            report($e);
+            return redirect()->back();
+        }
+        return redirect()->back();
 
     }
 

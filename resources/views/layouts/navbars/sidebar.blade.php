@@ -66,10 +66,12 @@
         <li class="nav-item"><a class="nav-link" href="{{ route('form') }}"><i class="ni ni-single-copy-04 text-gray"></i><span class="nav-link-text">{{ __('Form Pengajuan Cuti')}}</span></a></li>
       </ul>
       <hr class = "my-2">
+      @if(auth()->user()->is_admin)
       Admin
       <ul class="navbar-nav ">
         <li class="nav-item"><a class="nav-link" href="{{ route('kepegawaian') }}"><i class="ni ni-briefcase-24 text-orange"></i><span class="nav-link-text">{{ __('Kepegawaian')}}</span></a></li>
       </ul>
+      @endif
       <a class="nav-link" href="#"><strong class="nav-link-text">{{ __('Petunjuk Penggunaan')}}</strong></a>
 
     </div>

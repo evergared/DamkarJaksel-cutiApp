@@ -10,9 +10,12 @@
                 <th>Tanggal Awal</th>
                 <th>Tanggal Akhir</th>
                 <th>Total Hari Kerja</th>
+                <th>Alasan</th>
                 <th>Tanggal Pengajuan</th>
                 <th>Persetujuan Anda</th>
+                <th>Alasan Tindakan</th>
                 <th>Tindakan</th>
+                
             </tr>
         </thead>
         <tbody></tbody>
@@ -37,8 +40,10 @@
                 {data: 'tgl_awal', name:'tgl_awal'},
                 {data: 'tgl_akhir', name: 'tgl_akhir'},
                 {data: 'total_cuti', name:'total_cuti'},
+                {data: 'alasan', name:'alasan',searchable:false},
                 {data: 'tgl_pengajuan', name:'tgl_pengajuan'},
                 {data: 'p_kasie',name:'p_kasie',searchable:false},
+                {data: 'k_kasie', name:'k_kasie',searchable:false},
                 {data: 'tindakan',name: 'tindakan', orderable:false, searchable:false}
 
             ],
@@ -47,18 +52,48 @@
         //var dtt = table.row( $(this).parents('tr')).data();
 
         $(".asn").on("click", "a.act_", function (e) {
-        e.preventDefault();
-        var magnifico = $(table.row($(this).closest('tr')).data()['tindakan']).html('a.act_');
-        let thunderbolt = magnifico.data('galileo');
-        let lightning = magnifico.data('figaro');
+            e.preventDefault();
+            var magnifico = $(table.row($(this).closest('tr')).data()['tindakan']).html('a.act_'); {{--ambil atribut data dari tombol tindakan--}}
+            let thunderbolt = magnifico.data('galileo'); {{--NIP--}}
+            let lightning = magnifico.data('figaro'); {{--No_cuti--}}
 
-        //alert('approved : '+thunderbold);
-        $('#approval').modal('show');
-        $('')
-        $('#aprv-form').submit(function(e){
-           
-            
-        });
+            $('#thunderbolt').val(thunderbolt);
+            $('#lightning').val(lightning);
+
+            let z = $(table.row($(this).closest('tr')).data()['p_kasie']).html('strong').prop('id');
+                console.log('op2 is '+$('#op2').prop('checked'));
+
+            switch(z)
+            {
+                case 's': $('input#op1').prop('checked',true);console.log('op1');break;
+                case 'u': $('input#op2').prop('checked',true);console.log('op2');break;
+                case 't': $('input#op3').prop('checked',true);console.log('op3');break;
+                case 'x': $('input#op4').prop('checked',true);console.log('op4');break;
+                case 'bc': $('input.op').prop('checked',false);console.log('op dead');break;
+            }
+
+            if($('input#op2').prop('checked') == true || $('input#op3').prop('checked') == true || $('input#op4').prop('checked') == true)
+            {
+                $('input#alasan').prop('disabled',false);
+                $('input#alasan').val($(table.row($(this).closest('tr')).data()['k_kasie']).text());
+            }
+            else
+            {
+                $('input#alasan').prop('value',"");
+                $('input#alasan').prop('disabled',true);
+
+            }
+
+
+            $('input.op').change(function(){
+                if($('input#op1').prop('checked') == true)
+                    $('input#alasan').prop('disabled',true);
+                else
+                    $('input#alasan').prop('disabled',false);
+            });
+
+            $('#approval').modal('show');
+
         });
         
     });
@@ -69,22 +104,23 @@
 
 <x-modal id="approval" title="Pilih tindakan untuk entri ini">
     <x-slot name="message">
-        <form name="aprv-action">
+        <form name="aprv-action" autocomplete="off" action="{{ route('report.asn.approval')}}">
             @csrf
             <span class="text-align-center">
-                <input type="radio" name="op" id="op1" value="s"><label for='op1'>Setuju</label><br>
-                <input type="radio" name="op" id="op2" value="u"><label for='op2'>Ubah</label><br>
-                <input type="radio" name="op" id="op3" value="t"><label for='op3'>Tangguhkan</label><br>
-                <input type="radio" name="op" id="op4" value="x"><label for='op4'>Tolak</label><br>
+                <input type="radio" class="op" name="op" id="op1" value="s"><label for='op1'>Setuju</label><br>
+                <input type="radio" class="op" name="op" id="op2" value="u"><label for='op2'>Ubah</label><br>
+                <input type="radio" class="op" name="op" id="op3" value="t"><label for='op3'>Tangguhkan</label><br>
+                <input type="radio" class="op" name="op" id="op4" value="x"><label for='op4'>Tolak</label><br>
             </span>
-                <input type="text" placeholder="(Opsional) Masukan alasan anda" name="alasan" id="alasan" disabled>
-                <input type="hidden" name="thunderbolt">
-                <input type="hidden" name="lightning">
-        </form>
+                <input type="text" placeholder="(Opsional) Masukan alasan anda" name="alasan" id="alasan"  disabled>
+                <input type="hidden" name="thunderbolt" id="thunderbolt">
+                <input type="hidden" name="lightning" id="lightning">
+        
     </x-slot>
     <x-slot name="footer">
         <a class="btn btn-secondary my-2" data-toggle="modal" data-target="#approval">Batal</a>
         <button class="btn btn-primary my-2 text-white" name="approvalOk" type="submit">Terapkan</button>
+    </form>
     </x-slot>
 </x-modal>
 @endpush

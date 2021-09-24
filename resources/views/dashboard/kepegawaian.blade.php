@@ -34,12 +34,12 @@
 
           <div class="tab-pane fade show active" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab">
             <h3>Tabel List ASN</h3>
-            @include('datatable.pegawai-asn')
+            @include('datatable.kepegawaian.pegawai-asn')
           </div>
         
           <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab">
             <h3>Tabel List PJLP</h3>
-            @include('datatable.pegawai-pjlp')
+            @include('datatable.kepegawaian.pegawai-pjlp')
           </div>
         
 
