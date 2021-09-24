@@ -51,11 +51,11 @@ class DashboardController extends Controller
   {
     $cuti = [
       "Tahunan",
-      "Melahirkan",
-      "Sakit",
-      "Negara",
-      "Besar",
-      "Penting"
+      // "Melahirkan",
+      // "Sakit",
+      // "Negara",
+      // "Besar",
+      // "Penting"
     ];
 
     return view('dashboard/form')->with("dd_jcuti",$cuti);
