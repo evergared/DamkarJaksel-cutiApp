@@ -26,6 +26,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'email',
         'email_verified_at',
+        'is_pjlp',
+        'is_asn',
         'is_admin',
         'roles',
         'data',
@@ -55,6 +57,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'roles' => 'array',
         'data' => 'array',
         'is_admin' =>'boolean',
+        'is_pjlp' => 'boolean',
+        'is_asn' => 'boolean',
         'is_kasie' => 'boolean',
         'is_kasubag_tu' => 'boolean',
         'has_subordinate' => 'boolean',
@@ -74,6 +78,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getIsAdminAttribute()
     {
         return in_array('ADMIN',$this->roles);
+    }
+
+    public function getIsPjlpAttribute()
+    {
+        return in_array('PJLP',$this->roles);
+    }
+
+    public function getIsAsnAttribute()
+    {
+        return in_array('ASN',$this->roles);
     }
 
     public function getIsKasieAttribute()

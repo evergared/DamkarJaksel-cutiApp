@@ -43,21 +43,18 @@ class FormCutiController extends Controller
         // TODO : alasan cuti 
 
 
-        // TODO : buat query untuk input, lalu tampilkan alert berhasil atau gagal
 
-        if(in_array("PJLP",Auth::user()->roles))
+        if(Auth::user()->is_pjlp)
         {
             $asigment = DB::table('asigment_pjlp');
             $daftar = DB::table('daftar_cuti_pjlp');
             $tahunan = DB::table('cuti_tahunan_pjlp');
-            error_log("User's role is PJLP");
         }
-        elseif(in_array("ASN",Auth::user()->roles))
+        elseif(Auth::user()->is_asn)
         {
             $asigment = DB::table('asigment_asn');
             $daftar = DB::table('daftar_cuti_asn');
             $tahunan = DB::table('cuti_tahunan_asn');
-            error_log("User's role is ASN");
         }
         else
         {
@@ -65,15 +62,11 @@ class FormCutiController extends Controller
                     ->back()
                     ->withInput()
                     ->withErrors('form_error','Proses gagal! Silahkan logout dan login kembali.');
-                    error_log("User's role is unknown");
         }
 
 
         try
         {
-            error_log("prepping for insert to daftar cuti");
-            if($daftar !== null)
-                error_log('Not null');
             $id = $daftar->insertGetId([
                 'nip' => $nrk,
                 'tgl_awal' => $tglMulai,
@@ -83,29 +76,24 @@ class FormCutiController extends Controller
                 'jenis_cuti' => $jenisCuti,
                 'alasan' => $alasanCuti
             ]);
-            error_log("the id for entry is : ".$id);
-            error_log("insert to daftar cuti has completed, check the database");
             
-            error_log("prepping for insert to asignment cuti");
             $asigment -> insert([
                 'no_cuti' => $id
             ]);
-            error_log("insert to asignment is completed, check the database");
+
             return redirect()->back()->with('form_success',"Form cuti berhasil diajukan! Cek Report Daftar Cuti untuk detail.");
 
         }
 
         catch(Throwable $e)
         {
-            error_log("Error input database. User " . $request->user()->nip . " Time " . now() . "\nException : ".$e);
-            report($e);
+            report("Error input database. User : " . $request->user()->nip . " Time " . now() . "\nException : ".$e);
             return redirect()
             ->back()
             ->with('form_error','Insert database gagal! Cek data anda dan coba beberapa saat lagi atau hubungi admin.');
         }
 
 
-        //return view('dashboard/form');
     }
 
     public function approveCuti (Request $request)
@@ -178,8 +166,6 @@ class FormCutiController extends Controller
         // delete cuti data from relevant asignment table
         // delete cuti data from daftar cuti
 
-        error_log('delete request : '.$nip." and ".$no_cuti);
-
         $check = DB::table('data_pegawai')->where('nip','=',$nip)->get()->first();
 
         if($check->golongan === "PJLP")
@@ -195,10 +181,8 @@ class FormCutiController extends Controller
 
         try
         {
-            error_log('delete from asigment');
             $a->where('no_cuti','=',$no_cuti)->delete();
 
-            error_log('delete from daftar cuti');
             $d->delete($no_cuti);
 
             return redirect()
@@ -208,7 +192,7 @@ class FormCutiController extends Controller
         
         catch(Throwable $e)
         {
-            report($e);
+            report("Error Delete Cuti : ".$nip." No cuti : ".$no_cuti." Exception : ".$e);
             return redirect()
                 ->back()
                 ->withErrors('report_error','Cuti gagal dihapus!');

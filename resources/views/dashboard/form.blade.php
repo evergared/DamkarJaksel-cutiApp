@@ -157,12 +157,34 @@
                 </tr>
               </thead>
 
-              {{-- TODO : generate stuffs --}}
               <tbody class="list">
+          
+              @if(auth()->user()->is_pjlp)
+              @inject('cuti','App\Services\Stat\SisaCuti')
+
                 <tr>
                   <th scope="col">Tahunan</th>
-                  <th scope="col">99999</th>
+                  <th scope="col">{{ $cuti::$sisaTahunan }}</th>
                 </tr>
+
+              @elseif(auth()->user()->is_asn)
+              @inject('cuti','App\Services\Stat\SisaCuti')
+
+                <tr>
+                  <th scope="col">Tahunan</th>
+                  <th scope="col">{{ $cuti::$sisaTahunan }}</th>
+                </tr>
+                <tr>
+                  <th scope="col">N1</th>
+                  <th scope="col">{{ $cuti::$n1 }}</th>
+                </tr>
+                <tr>
+                  <th scope="col">N2</th>
+                  <th scope="col">{{ $cuti::$n2 }}</th>
+                </tr>
+              @endif
+
+                
               </tbody>
 
             </table>
