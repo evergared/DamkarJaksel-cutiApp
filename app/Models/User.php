@@ -30,7 +30,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'roles',
         'data',
         'has_subordinate',
-        'has_subordinate_pjlp'
+        'has_subordinate_pjlp',
+        'is_kasie',
+        'is_kasubag_tu'
     ];
 
     /**
@@ -53,8 +55,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'roles' => 'array',
         'data' => 'array',
         'is_admin' =>'boolean',
+        'is_kasie' => 'boolean',
+        'is_kasubag_tu' => 'boolean',
         'has_subordinate' => 'boolean',
-        'has_subordinate_pjlp' => 'boolean'
+        'has_subordinate_pjlp' => 'boolean',
     ];
 
     public function getDataAttribute()
@@ -70,6 +74,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getIsAdminAttribute()
     {
         return in_array('ADMIN',$this->roles);
+    }
+
+    public function getIsKasieAttribute()
+    {
+        return (in_array('KASIE',$this->roles) || in_array('KASIE.PENCEGAHAN',$this->roles));
+    }
+
+    public function getIsKasubagTuAttribute()
+    {
+        return in_array('KASUBAGTU',$this->roles);
     }
 
     public function getHasSubordinateAttribute()
