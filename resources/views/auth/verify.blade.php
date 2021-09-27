@@ -21,7 +21,8 @@
                             Sebelum melanjutkan, harap periksa akun E-mail anda untuk link verifikasi dari kami.<br><br>
                             
                             @if (Route::has('verification.resend'))
-                                Jika anda tidak menerima E-mail dari kami, <a href="{{ route('verification.resend') }}">KLIK DISINI</a> untuk mengirimkan email verifikasi kembali.
+                                Jika anda tidak menerima E-mail dari kami, <a href="{{ route('verification.resend') }}">KLIK DISINI</a> untuk mengirimkan email verifikasi kembali.<br>
+                                Atau <a href="{{ route('home') }}">KLIK DISINI</a> untuk melewati proses ini.
                             @endif
                         </div>
                     </div>

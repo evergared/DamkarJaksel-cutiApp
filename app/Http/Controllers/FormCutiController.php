@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 use Throwable;
 
+use App\Events\CutiSubmitEvent;
+
 class FormCutiController extends Controller
 {
 
@@ -80,6 +82,8 @@ class FormCutiController extends Controller
             $asigment -> insert([
                 'no_cuti' => $id
             ]);
+
+            CutiSubmitEvent::dispatch($nrk,$id);
 
             return redirect()->back()->with('form_success',"Form cuti berhasil diajukan! Cek Report Daftar Cuti untuk detail.");
 

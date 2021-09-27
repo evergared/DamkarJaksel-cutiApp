@@ -66,6 +66,7 @@ class RegisterController extends Controller
 
         //dd('registrasi berhasil untuk pengguna dengan nip : ' . $person->nip);
         //implode(" | ",$person);
+        return redirect("login");
         
     }
 

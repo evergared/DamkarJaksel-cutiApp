@@ -2,6 +2,7 @@
 {{-- File hasil generate dari Argon dashboard --}}
 
 @auth()
+
     @include('layouts.navbars.navs.auth')
 @endauth
 

@@ -26,10 +26,12 @@ class SisaCuti
     {
         if(SisaCuti::$user->is_pjlp)
         {
-            SisaCuti::$sisaTahunan = (array) DB::table('cuti_tahunan_pjlp')
+            $ts = (array) DB::table('cuti_tahunan_pjlp')
                                         ->where('nip','=',SisaCuti::$user->data['nip'])
                                         ->get('sisa')
                                         ->first();
+            
+                                        SisaCuti::$sisaTahunan = $ts['sisa'];
         }
         else
         {

@@ -7,6 +7,8 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
+use App\Listeners\CutiEventSubscriber;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -23,7 +25,11 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
-    protected $subscriber = [];
+    protected $subscriber = [
+
+        CutiEventSubscriber::class,
+
+    ];
 
     /**
      * Register any events for your application.
