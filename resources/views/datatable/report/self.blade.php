@@ -1,53 +1,121 @@
-<div class="table-responsive">
-    <h4>Histori Pengajuan Cuti Pribadi</h4>
-    <table class="table self">
-        <thead>
-            <tr>
-                <th>NO</th>
-                <th>Jenis Cuti</th>
-                <th>Alasan</th>
-                <th>Tanggal Awal</th>
-                <th>Tanggal Akhir</th>
-                <th>Total Hari Kerja</th>
-                <th>Tanggal Pengajuan</th>
-                <th>Persetujuan Kasie Sektor</th>
-                <th>Keterangan Kasie</th>
-                <th>Persetujuan Kasubag TU</th>
-                <th>Keterangan Kasubag TU</th>
-                <th>Tindakan</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
 
-@push('datatables-script')
-<script type="text/javascript">
-    $(function (){
-        var table = $('.self').DataTable({
+@if(auth()->user()->is_asn)
 
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('report.self') }}",
-            dom : 'Bfrtip',
-            columns:[
-                {data: 'DT_RowIndex', name:'DT_RowIndex'},
-                {data: 'jenis_cuti', name:'jenis_cuti'},
-                {data: 'alasan', name:'alasan',searchable:false},
-                {data: 'tgl_awal', name:'tgl_awal'},
-                {data: 'tgl_akhir', name: 'tgl_akhir'},
-                {data: 'total_cuti', name:'total_cuti'},
-                {data: 'tgl_pengajuan', name:'tgl_pengajuan'},
-                {data: 'p_kasie', name:'p_kasie'},
-                {data: 'k_kasie', name:'k_kasie'},
-                {data: 'p_tu', name:'p_tu'},
-                {data: 'k_tu', name:'k_tu'},
-                {data: 'tindakan',name: 'tindakan', orderable:false, searchable:false}
-            ],
+    <div class="table-responsive">
+        <h4>Histori Pengajuan Cuti Pribadi</h4>
+        <table class="table self">
+            <thead>
+                <tr>
+                    <th>NO</th>
+                    <th>Jenis Cuti</th>
+                    <th>Alasan</th>
+                    <th>Tanggal Awal</th>
+                    <th>Tanggal Akhir</th>
+                    <th>Total Hari Kerja</th>
+                    <th>Tanggal Pengajuan</th>
+                    <th>Persetujuan Kasie Sektor</th>
+                    <th>Keterangan Kasie</th>
+                    <th>Persetujuan Kasubag TU</th>
+                    <th>Keterangan Kasubag TU</th>
+                    <th>Tindakan</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    @push('datatables-script')
+    <script type="text/javascript">
+        $(function (){
+            var table = $('.self').DataTable({
+
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('report.self') }}",
+                dom : 'Bfrtip',
+                columns:[
+                    {data: 'DT_RowIndex', name:'DT_RowIndex'},
+                    {data: 'jenis_cuti', name:'jenis_cuti'},
+                    {data: 'alasan', name:'alasan',searchable:false},
+                    {data: 'tgl_awal', name:'tgl_awal'},
+                    {data: 'tgl_akhir', name: 'tgl_akhir'},
+                    {data: 'total_cuti', name:'total_cuti'},
+                    {data: 'tgl_pengajuan', name:'tgl_pengajuan'},
+                    {data: 'p_kasie', name:'p_kasie'},
+                    {data: 'k_kasie', name:'k_kasie'},
+                    {data: 'p_tu', name:'p_tu'},
+                    {data: 'k_tu', name:'k_tu'},
+                    {data: 'tindakan',name: 'tindakan', orderable:false, searchable:false}
+                ],
+            });
         });
-    });
-</script>
-@endpush
+    </script>
+    @endpush
+
+
+@elseif(auth()->user()->is_pjlp)
+
+
+    <div class="table-responsive">
+        <h4>Histori Pengajuan Cuti Pribadi</h4>
+        <table class="table self">
+            <thead>
+                <tr>
+                    <th>NO</th>
+                    <th>Jenis Cuti</th>
+                    <th>Alasan</th>
+                    <th>Tanggal Awal</th>
+                    <th>Tanggal Akhir</th>
+                    <th>Total Hari Kerja</th>
+                    <th>Tanggal Pengajuan</th>
+                    <th>Persetujuan Kasie Sektor</th>
+                    <th>Keterangan Kasie</th>
+                    <th>Persetujuan Kasubag TU</th>
+                    <th>Keterangan Kasubag TU</th>
+                    <th>Persetujuan PPK</th>
+                    <th>Keterangan PPK</th>
+                    <th>Tindakan</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    @push('datatables-script')
+    <script type="text/javascript">
+        $(function (){
+            var table = $('.self').DataTable({
+
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('report.self') }}",
+                dom : 'Bfrtip',
+                columns:[
+                    {data: 'DT_RowIndex', name:'DT_RowIndex'},
+                    {data: 'jenis_cuti', name:'jenis_cuti'},
+                    {data: 'alasan', name:'alasan',searchable:false},
+                    {data: 'tgl_awal', name:'tgl_awal'},
+                    {data: 'tgl_akhir', name: 'tgl_akhir'},
+                    {data: 'total_cuti', name:'total_cuti'},
+                    {data: 'tgl_pengajuan', name:'tgl_pengajuan'},
+                    {data: 'p_kasie', name:'p_kasie'},
+                    {data: 'k_kasie', name:'k_kasie'},
+                    {data: 'p_tu', name:'p_tu'},
+                    {data: 'k_tu', name:'k_tu'},
+                    {data: 'p_ppk', name:'p_ppk'},
+                    {data: 'k_ppk', name:'k_ppk'},
+                    {data: 'tindakan',name: 'tindakan', orderable:false, searchable:false}
+                ],
+            });
+        });
+    </script>
+    @endpush
+
+
+@endif
+
+
+
 
 @push('datatables')
 <link href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap4.min.css">
