@@ -49,7 +49,6 @@ class LoginController extends Controller
         // jika user login dengan nip
         $pegawai = DB::table('user')->pluck('nip')->toArray();
 
-        error_log("Password : ".$request->get('password'));
 
         $pass = Hash::make($request->get('password'));
 
@@ -73,6 +72,14 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
 
+        error_log('has subordinate : '.$user->has_subordinate);
+
+        error_log('roles : ');
+        foreach($user->roles as $role)
+        {
+            error_log(" - ".$role);
+        }
+        error_log("is kasie :".in_array('KASIE',$user->roles));
         // error_log("masuk dengan cred : " . $user);
         // error_log("cek auth : ".Auth::check());
         // error_log("cek auth id : ".Auth::id());

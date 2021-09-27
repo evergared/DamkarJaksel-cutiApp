@@ -93,6 +93,8 @@ class RegisterController extends Controller
 
         if((25 <= $person->jabatan) && ($person->jabatan <= 54))
             $this->addRoles($roles,"KATON");
+        elseif($person->jabatan === 21)
+            $this->addRoles($roles,"KARU");
 
         if(in_array($person->jabatan,$kasie))
             $this->addRoles($roles,"KASIE");

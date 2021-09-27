@@ -34,50 +34,12 @@
 
           <div class="tab-pane fade show active" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab">
             <h3>Tabel List ASN</h3>
-            <div class="table-responsive">
-              <table class="table asn">
-                  <thead>
-                      <tr>
-                          <th>NO</th>
-                          <th>NIP</th>
-                          <th>NRK</th>
-                          <th>Nama</th>
-                          <th>Golongan</th>
-                          <th>Jabatan</th>
-                          <th>Kasie</th>
-                          <th>Atasan</th>
-                          <th>Pendidikan</th>
-                          <th>Kode Penempatan</th>
-                          <th>Keterangan</th>
-                      </tr>
-                  </thead>
-                  <tbody></tbody>
-              </table>
-            </div>
+            @include('datatable.kepegawaian.pegawai-asn')
           </div>
         
           <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab">
             <h3>Tabel List PJLP</h3>
-            <div class="table-responsive">
-              <table class="table pjlp">
-                  <thead>
-                      <tr>
-                          <th>NO</th>
-                          <th>NIP</th>
-                          <th>NRK</th>
-                          <th>Nama</th>
-                          <th>Golongan</th>
-                          <th>Jabatan</th>
-                          <th>Kasie</th>
-                          <th>Atasan</th>
-                          <th>Pendidikan</th>
-                          <th>Kode Penempatan</th>
-                          <th>Keterangan</th>
-                      </tr>
-                  </thead>
-                  <tbody></tbody>
-              </table>
-            </div>
+            @include('datatable.kepegawaian.pegawai-pjlp')
           </div>
         
 
@@ -91,62 +53,10 @@
   @include('layouts.footers.nav')
 </div>
 
-{{-- TODO : if else condition agar script hanya muncul saat diperlukan --}}
-<script type="text/javascript">
-    $(function (){
-        var table = $('.asn').DataTable({
 
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('list.asn') }}",
-            columns:[
-                {data: 'DT_RowIndex', name:'DT_RowIndex'},
-                {data: 'nip', name:'nip'},
-                {data: 'nrk', name:'nrk'},
-                {data: 'nama', name: 'nama'},
-                {data: 'golongan', name:'golongan'},
-                {data: 'jabatan', name:'jabatan'},
-                {data: 'kasie', name:'kasie'},
-                {data: 'atasan', name:'atasan'},
-                {data: 'pendidikan',name: 'pendidikan'},
-                {data: 'kode_penempatan', name:'kode_penempatan'},
-                {data: 'keterangan', name:'keterangan'}
-            ]
 
-        });
-    });
-</script>
 
-<script type="text/javascript">
-    $(function (){
-        var table = $('.pjlp').DataTable({
 
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('list.pjlp') }}",
-            columns:[
-                {data: 'DT_RowIndex', name:'DT_RowIndex'},
-                {data: 'nip', name:'nip'},
-                {data: 'nrk', name:'nrk'},
-                {data: 'nama', name: 'nama'},
-                {data: 'golongan', name:'golongan'},
-                {data: 'jabatan', name:'jabatan'},
-                {data: 'kasie', name:'kasie'},
-                {data: 'atasan', name:'atasan'},
-                {data: 'pendidikan',name: 'pendidikan'},
-                {data: 'kode_penempatan', name:'kode_penempatan'},
-                {data: 'keterangan', name:'keterangan'}
-            ]
 
-        });
-    });
-</script>
-
-@push('datatables')
-{{-- TODO : Buat css baru lagi untuk membenahi tampilan tabel pada web ini--}}
-<link href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap4.min.css">
-<script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap4.min.js"></script>
-@endpush
 
 @endsection
