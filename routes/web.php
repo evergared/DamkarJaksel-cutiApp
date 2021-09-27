@@ -68,7 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
-// Cuti Related Routes
+// Cuti CRUD Related Routes
 Route::post('/form','App\Http\Controllers\FormCutiController@submitCuti')->name('submit-cuti');
 Route::get('/report/table/self/delete/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'cancelCuti'])->name('report.self.delete');
 Route::get('/report/table/self/application/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('report.self.app');
@@ -77,6 +77,7 @@ Route::get('/report/table/asn/application/{nip}/{no_cuti}',[App\Http\Controllers
 Route::get('/report/table/pjlp/delete/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'cancelCuti'])->name('report.pjlp.delete');
 Route::get('/report/table/pjlp/application/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('report.pjlp.app');
 Route::get('/report/table/asn/approval',[App\Http\Controllers\FormCutiController::class,'approvalAction'])->name('report.asn.approval');
+Route::get('/report/table/pjlp/approval',[App\Http\Controllers\FormCutiController::class,'approvalAction'])->name('report.pjlp.approval');
 
 
 // Table Query Routes

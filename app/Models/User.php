@@ -34,7 +34,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'has_subordinate',
         'has_subordinate_pjlp',
         'is_kasie',
-        'is_kasubag_tu'
+        'is_kasubag_tu',
+        'is_ppk'
     ];
 
     /**
@@ -61,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_asn' => 'boolean',
         'is_kasie' => 'boolean',
         'is_kasubag_tu' => 'boolean',
+        'is_ppk' => 'boolean',
         'has_subordinate' => 'boolean',
         'has_subordinate_pjlp' => 'boolean',
     ];
@@ -98,6 +100,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getIsKasubagTuAttribute()
     {
         return in_array('KASUBAGTU',$this->roles);
+    }
+
+    public function getIsPpkAttribute()
+    {
+        return in_array('PPK',$this->roles);
     }
 
     public function getHasSubordinateAttribute()

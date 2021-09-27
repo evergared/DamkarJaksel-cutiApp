@@ -145,7 +145,14 @@ class FormCutiController extends Controller
             {
                 $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('op'),'ket_kasie'=>$request->input('alasan')]);
             }
-            
+            elseif(in_array('KASUBAGTU',Auth::user()->roles))
+            {
+                $assignment->where('no_cuti',$no_cuti)->update(['kasubagtu'=>$request->input('op'),'ket_tu'=>$request->input('alasan')]);
+            }
+            elseif(in_array('PPK',Auth::user()->roles))
+            {
+                $assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('op'),'ket_ppk'=>$request->input('alasan')]);
+            }
             // TODO : jika semua sudah approve, tembak event
 
             return redirect()->back();
