@@ -1,4 +1,4 @@
-@if(in_array('KASIE',auth()->user()->roles))
+@if(in_array('KASIE',auth()->user()->roles) || in_array('KASIE.PENCEGAHAN',auth()->user()->roles))
     @include('datatable.report.kasie-asn')
 
 

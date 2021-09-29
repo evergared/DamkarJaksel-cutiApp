@@ -82,7 +82,7 @@ class RegisterController extends Controller
     function getRoles($nip)
     {
         $pjlp = [16,17,18,19];
-        $kasie = [1,2,3,4,5,6,7,8,9,10,12,13];
+        $kasie = [1,2,3,4,5,6,7,8,9,10,12];
         $person = DB::table('data_pegawai')->where('nip',$nip)->first();
 
         if(in_array($person->jabatan,$pjlp))
