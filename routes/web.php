@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Calendars\DisableCutiManual;
 
 
 /*
@@ -94,5 +95,10 @@ Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'cr
 
 // Halaman test, utk keperluan test implementasi fungsi
 //Route::get('/try','App\Http\Controllers\TabelController@createTablePegawai');
-Route::get('/try', function(){ return view('try');});
+Route::get('/try', function(){ 
+
+	$test = new DisableCutiManual();
+	return dd($test->index());
+	
+});
 
