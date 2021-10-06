@@ -16,13 +16,27 @@
  * --------------------------------
  */
 
-// TODO : benahi, jika perhitungan ada di sisi controller, kemungkinan bagian inisiasi variabel tidak diperlukan
+let disabledCuti = [];
+let disabledCutiStatus = true;
 
-// Pada tanggal berapa saja cuti tidak dapat diambil
-let tanggalTanpaCuti = []
+let enabledCuti = [];
+let enabledCutiStatus = true;
 
-// Libur nasional dari data google, variabel ini sebagai wadah penyimpanan data libur nasional
-let liburNasional = []
+let liburNasional = [];
+let liburNasionalStatus = true;
+
+
+var disabledDates = [];
+
+if(disabledCutiStatus)
+{
+  disabledDates.push(disabledCuti);
+
+  if(enabledCutiStatus)
+  {
+    
+  }
+}
 
 
 /*  -------------------------
@@ -49,6 +63,11 @@ let liburNasional = []
     daysOfWeekDisabled:'0,6', // TODO : if else function, jika staff maka sabtu minggu disabled.
     setDatesDisabled:'' // TODO : masukan data array untuk menonaktifkan tanggal-tanggal tertentu.
   });
+
+  $('#admin-datepicker').datepicker({
+    language:'id',
+    format:'yyyy-mm-dd',
+  })
 
 
 

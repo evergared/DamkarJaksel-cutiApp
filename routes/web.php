@@ -49,12 +49,12 @@ use App\Http\Controllers\Calendars\DisableCutiManual;
 
 
 // Dashboard Routes
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 Route::get('/kepegawaian','App\Http\Controllers\DashboardController@loadKepegawaian')->name('kepegawaian');
 Route::get('/report','App\Http\Controllers\DashboardController@loadReport')->name('report');
 Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('form');
+
+Route::get('/calendar','App\Http\Controllers\DashboardController@loadCalendar')->name('calendar');
 
 // TODO : benahi middleware untuk routing, jika database sudah selesai
 
@@ -98,7 +98,7 @@ Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'cr
 Route::get('/try', function(){ 
 
 	$test = new DisableCutiManual();
-	return dd($test->index());
-	
+	//return dd($test->fetchEvents());
+	return view('dashboard/admin/calendar');
 });
 
