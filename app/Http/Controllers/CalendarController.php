@@ -13,7 +13,13 @@ class CalendarController extends Controller
 
     public function index()
     {
+        $dc = new DisableCuti();
 
+        $dateData = [];
+
+        array_merge($dateData,$dc->extractDatesAsArray());
+
+        return array_unique($dateData);
     }
 
     public function create(Request $request)
@@ -22,7 +28,7 @@ class CalendarController extends Controller
         {
             if($request['calendar'] === "disable")
             {
-                $event = DisableCuti
+                $event = new DisableCuti();
             }
         }
 

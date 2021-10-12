@@ -98,7 +98,7 @@ Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'cr
 Route::get('/try', function(){ 
 
 	$test = new DisableCutiManual();
-	//return dd($test->fetchEvents());
-	return view('dashboard/admin/calendar');
+	return dd(implode("|",$test->extractDatesAsArray()));
+	//return view('dashboard/admin/calendar');
 });
 
