@@ -88,6 +88,12 @@ Route::get('/report/table/self',[App\Http\Controllers\TabelController::class,'cr
 Route::get('/report/table/asn',[App\Http\Controllers\TabelController::class,'createTableAssignmentASN'])->name('report.asn');
 Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'createTableAssignmentPJLP'])->name('report.pjlp');
 
+// Admin Calendar Routes
+Route::get('/calendar/fetch',[App\Http\Controllers\CalendarController::class,'index']);
+Route::get('/calendar/create',[App\Http\Controllers\CalendarController::class,'createEvent']);
+Route::get('/calendar/delete',[App\Http\Controllers\CalendarController::class,'deleteEvent']);
+Route::get('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
+
 
 
 // TODO : make route for admin report cuti view
@@ -98,7 +104,7 @@ Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'cr
 Route::get('/try', function(){ 
 
 	$test = new DisableCutiManual();
-	return dd(implode("|",$test->extractDatesAsArray()));
-	//return view('dashboard/admin/calendar');
+	//return dd(implode("|",$test->extractDatesAsArray()));
+	return view('dashboard/admin/calendar');
 });
 

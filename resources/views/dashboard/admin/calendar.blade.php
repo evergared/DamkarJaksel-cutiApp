@@ -1,8 +1,14 @@
 @extends('layouts.app')
 @section('content')
 
-<div id="app">
-    <admin-calendar></admin-calendar>
+<div class="container-fluid mt--7 ">
+  <div class="row justify-content-center">
+
+        <div id="app">
+            <admin-calendar></admin-calendar>
+        </div>
+
+  </div>
 </div>
 
 @endsection
