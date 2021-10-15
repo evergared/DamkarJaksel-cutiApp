@@ -22,10 +22,23 @@ class CalendarController extends Controller
         return array_unique($dateData);
     }
 
+    public function fetchJson()
+    {
+        $dc = new DisableCuti();
+
+        $dateData = [];
+
+        array_push($dateData,$dc->extractDatesAsJsonFeed());
+
+
+        return array_unique($dateData);
+    }
+
     public function create(Request $request)
     {
         try
         {
+            $newEvent = $request->all();
             if($request['calendar'] === "disable")
             {
                 $event = new DisableCuti();
@@ -46,6 +59,14 @@ class CalendarController extends Controller
     public function delete()
     {
 
+    }
+
+    public function getCalendarById($celandarId)
+    {
+        // switch($celandarId)
+        // {
+        //     case
+        // }
     }
 
 }

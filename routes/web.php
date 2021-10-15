@@ -90,6 +90,7 @@ Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'cr
 
 // Admin Calendar Routes
 Route::get('/calendar/fetch',[App\Http\Controllers\CalendarController::class,'index']);
+Route::get('/calendar/json',[App\Http\Controllers\CalendarController::class,'fetchJson']);
 Route::get('/calendar/create',[App\Http\Controllers\CalendarController::class,'createEvent']);
 Route::get('/calendar/delete',[App\Http\Controllers\CalendarController::class,'deleteEvent']);
 Route::get('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
@@ -104,6 +105,7 @@ Route::get('/calendar/update',[App\Http\Controllers\CalendarController::class,'u
 Route::get('/try', function(){ 
 
 	$test = new DisableCutiManual();
+	//return dd($test->extractDatesAsJsonFeed());
 	//return dd(implode("|",$test->extractDatesAsArray()));
 	return view('dashboard/admin/calendar');
 });

@@ -1,13 +1,13 @@
 <template>
-    <div class="col-lg-8 col-md-7">
-      <div class="card bg-secondary shadow border-0 xl-12">
+    <div class="col-lg col-lg-16">
+      <div class="card bg-secondary shadow border-0 xl-12 mb-3">
           <div class="card-body">
               <h2 class="card-title">Form Event</h2>
               <form @submit.prevent>
 
                   <div class="form-group">
                       <label for="event_name">Nama Event</label>
-                      <input type="text" id="event_name" class="form-control" v-model="newEvent.event_name">
+                      <input type="text" id="event_name" class="form-control" placeholder="Nama Event" v-model="newEvent.event_name">
                   </div>
 
                   <div class="row">
@@ -41,8 +41,12 @@
           </div>
       </div>
 
-    <div class="col-md-8">
-        <Fullcalendar @eventClick="showEvent" :plugins="calendarPlugins" :events="events" />
+    <div class="col-md-16">
+      <div class="card bg-secondary shadow border-0 xl-12">
+          <div class="card-body">
+            <Fullcalendar :options="calendarOptions" />
+          </div>
+      </div>
     </div>
 
 
@@ -55,7 +59,6 @@ import "@fullcalendar/core/vdom"
 import Fullcalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import listPlugin from "@fullcalendar/list";
 import axios from "axios";
 
     export default {
@@ -64,16 +67,20 @@ import axios from "axios";
         },
         data(){
             return {
-                calendarPlugins: [dayGridPlugin,interactionPlugin,listPlugin],
-                events:"",
-                newEvent:{
-                    event_name:"",
-                    event_start:"",
-                    event_end:""
+                    calendarOptions:{
+                        plugins: [dayGridPlugin,interactionPlugin],
+                        initialView:'dayGridMonth',
+                        events:"",
+                        
                 },
-                addingMode : true,
-                indexToUpdate : ""
-            };
+                newEvent:{
+                            event_name:"",
+                            event_start:"",
+                            event_end:""
+                        },
+                        addingMode : true,
+                        indexToUpdate : ""
+            }
         },
 
         created(){
@@ -120,14 +127,14 @@ import axios from "axios";
                     this.resetForm();
                     this.getEvents();
                     this.addingMode = !this.addingMode;
-                    
+
                 })
                 .catch( err => console.log("Failed to delete event for FullCalendar", err.response.data));
             },
 
             getEvents(){
                 axios
-                .get("/calendar/index")
+                .get("/calendar/json")
                 .then(resp => (this.events = resp.data.data))
                 .catch(err => console.log(err.response.data));
             },

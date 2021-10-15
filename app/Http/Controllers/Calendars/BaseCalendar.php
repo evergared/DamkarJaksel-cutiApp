@@ -114,12 +114,14 @@ abstract class BaseCalendar
     {
         $events = $this->fetchEvents();
 
-        $dateData = [
-            "version" => 'https://www.jsonfeed.org/version/1.1/',
-            "calendarId" => $this->calendarId,
-            "calendarName" => $this->calendarName,
-            "items" => []
-        ];
+        $dateData = [];
+
+        // $dateData = [
+        //     "version" => 'https://www.jsonfeed.org/version/1.1/',
+        //     "calendarId" => $this->calendarId,
+        //     "calendarName" => $this->calendarName,
+        //     "events" => []
+        // ];
 
         foreach($events as $event)
         {
@@ -138,16 +140,28 @@ abstract class BaseCalendar
                 //error_log($event->name." is not same day");
             }
 
-            $dateData['items'][$event->id] = [
+            // $dateData['events'][$event->id] = [
+            //     'id' => $event->id,
+            //     'title'  => $event->name,
+            //     'start' => $sd,
+            //     'end' => $ed,
+            //     'allDay' => true,
+            // ];
+            
+            $dateData[] = [
+                'calId' => $this->calendarId,
                 'id' => $event->id,
                 'title'  => $event->name,
                 'start' => $sd,
                 'end' => $ed,
                 'allDay' => true,
             ];
+
+        
+
         }
 
-        return $dateData;
+        return json_encode($dateData);
     }
 
     public function findEvent($eventId)
