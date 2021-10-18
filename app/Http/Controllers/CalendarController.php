@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Calendars\DisableCutiManual as DisableCuti;
+use App\Http\Controllers\Calendars\LiburNasional;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Throwable;
@@ -14,24 +15,22 @@ class CalendarController extends Controller
     public function index()
     {
         $dc = new DisableCuti();
+        $ln = new LiburNasional();
 
-        $dateData = [];
+        $dateData = array_merge($dc->extractDatesAsArray(),$ln->extractDatesAsArray());
 
-        array_merge($dateData,$dc->extractDatesAsArray());
-
-        return array_unique($dateData);
+        return $dateData;
     }
 
     public function fetchJson()
     {
         $dc = new DisableCuti();
-
-        $dateData = [];
-
-        array_push($dateData,$dc->extractDatesAsJsonFeed());
+        $ln = new LiburNasional();
 
 
-        return array_unique($dateData);
+        $dateData = array_merge($ln->extractDatesAsJsonFeed(),$dc->extractDatesAsJsonFeed());
+        
+        return $dateData;
     }
 
     public function create(Request $request)

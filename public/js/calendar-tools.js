@@ -10,40 +10,6 @@
 |---------------------------------------------------------------------------------------|
 */
 
-/**
- * --------------------------------
- * | Bagian Inisiasi Variabel     |
- * --------------------------------
- */
-
-let disabledCuti = [];
-let disabledCutiStatus = true;
-
-let enabledCuti = [];
-let enabledCutiStatus = true;
-
-let liburNasional = [];
-let liburNasionalStatus = true;
-
-
-var disabledDates = [];
-
-if(disabledCutiStatus)
-{
-  disabledDates.push(disabledCuti);
-
-  if(enabledCutiStatus)
-  {
-    
-  }
-}
-
-
-/*  -------------------------
-   | Bagian datepicker      |
-   -------------------------
-*/
-
   $('.input-daterange').datepicker({
     language:'id',
     format:'yyyy-mm-dd',
@@ -61,19 +27,5 @@ if(disabledCutiStatus)
   
     // pengaturan kondisional
     daysOfWeekDisabled:'0,6', // TODO : if else function, jika staff maka sabtu minggu disabled.
-    setDatesDisabled:'' // TODO : masukan data array untuk menonaktifkan tanggal-tanggal tertentu.
+    setDatesDisabled:'{{ route("calendar/array") }}' // TODO : masukan data array untuk menonaktifkan tanggal-tanggal tertentu.
   });
-
-  $('#admin-datepicker').datepicker({
-    language:'id',
-    format:'yyyy-mm-dd',
-  })
-
-
-
-
-/*
-Salah satu Service atau layanan yang digunakan ialah Google Calendar.
-Fungsinya adalah untuk mendapatkan data :
-- Tanggal-tanggal merah / libur nasional
-*/

@@ -89,7 +89,7 @@ Route::get('/report/table/asn',[App\Http\Controllers\TabelController::class,'cre
 Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'createTableAssignmentPJLP'])->name('report.pjlp');
 
 // Admin Calendar Routes
-Route::get('/calendar/fetch',[App\Http\Controllers\CalendarController::class,'index']);
+Route::get('/calendar/array',[App\Http\Controllers\CalendarController::class,'index']);
 Route::get('/calendar/json',[App\Http\Controllers\CalendarController::class,'fetchJson']);
 Route::get('/calendar/create',[App\Http\Controllers\CalendarController::class,'createEvent']);
 Route::get('/calendar/delete',[App\Http\Controllers\CalendarController::class,'deleteEvent']);

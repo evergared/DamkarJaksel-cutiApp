@@ -25,7 +25,12 @@ abstract class BaseCalendar
 
     // Berdampak pada data yang ditampilkan di web ini dan di google calendar jika tidak diingat
 
-    protected $calendarName, $calendarId;
+    protected $calendarName,
+              $calendarId,
+              $display = "auto",
+              $editable = true,
+              $color = "black",
+              $textColor = "black";
 
     public function index()
     {
@@ -148,20 +153,27 @@ abstract class BaseCalendar
             //     'allDay' => true,
             // ];
             
-            $dateData[] = [
+            $newData = [
                 'calId' => $this->calendarId,
+                'calName'=>$this->calendarName,
                 'id' => $event->id,
                 'title'  => $event->name,
                 'start' => $sd,
                 'end' => $ed,
                 'allDay' => true,
+                'display'=>$this->display,
+                'color'=>$this->color,
+                'editable'=>$this->editable,
+                'eventTextColor' =>$this->textColor
             ];
 
-        
+            ;
+
+            $dateData[] = $newData;
 
         }
 
-        return json_encode($dateData);
+        return $dateData;
     }
 
     public function findEvent($eventId)

@@ -9940,6 +9940,43 @@ var unmountComponentAtNode = FullCalendarVDom.unmountComponentAtNode;
 
 /***/ }),
 
+/***/ "./node_modules/@fullcalendar/core/locales/id.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@fullcalendar/core/locales/id.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+var id = {
+  code: 'id',
+  week: {
+    dow: 1, // Monday is the first day of the week.
+    doy: 7, // The week that contains Jan 1st is the first week of the year.
+  },
+  buttonText: {
+    prev: 'mundur',
+    next: 'maju',
+    today: 'hari ini',
+    month: 'Bulan',
+    week: 'Minggu',
+    day: 'Hari',
+    list: 'Agenda',
+  },
+  weekText: 'Mg',
+  allDayText: 'Sehari penuh',
+  moreLinkText: 'lebih',
+  noEventsText: 'Tidak ada acara untuk ditampilkan',
+};
+
+exports["default"] = id;
+
+
+/***/ }),
+
 /***/ "./node_modules/@fullcalendar/core/main.js":
 /*!*************************************************!*\
   !*** ./node_modules/@fullcalendar/core/main.js ***!
@@ -16156,69 +16193,109 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fullcalendar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/vue */ "./node_modules/@fullcalendar/vue/dist/main.js");
 /* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/main.js");
 /* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/main.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+/* harmony import */ var _fullcalendar_core_locales_id__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/core/locales/id */ "./node_modules/@fullcalendar/core/locales/id.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -16233,97 +16310,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       calendarOptions: {
         plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_3__["default"]],
         initialView: 'dayGridMonth',
-        events: ""
+        locale: _fullcalendar_core_locales_id__WEBPACK_IMPORTED_MODULE_4__["default"],
+        eventSources: ['/calendar/json'],
+        headerToolbar: {
+          start: "",
+          center: "title",
+          end: "today prev,next"
+        }
       },
       newEvent: {
+        event_calendar: "",
+        event_calendarId: "",
+        event_id: "",
         event_name: "",
         event_start: "",
         event_end: ""
       },
-      addingMode: true,
-      indexToUpdate: ""
+      eventClick: function eventClick(ev) {
+        this.event_name = ev.event.title;
+      }
     };
-  },
-  created: function created() {
-    this.getEvents();
-  },
-  methods: {
-    addNewEvent: function addNewEvent() {
-      var _this = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_4___default().post("/calendar/create", _objectSpread({}, this.newEvent)).then(function (data) {
-        _this.getEvents();
-
-        _this.resetForm();
-      })["catch"](function (err) {
-        return console.log("Failed to create new event for FullCalendar", err.response.data);
-      });
-    },
-    showEvent: function showEvent(arg) {
-      this.addingMode = false;
-
-      var _this$events$find = this.events.find(function (event) {
-        return event.id === +arg.event.id;
-      }),
-          id = _this$events$find.id,
-          title = _this$events$find.title,
-          start = _this$events$find.start,
-          end = _this$events$find.end;
-
-      this.indexToUpdate = id;
-      this.newEvent = {
-        event_name: title,
-        event_start: start,
-        event_end: end
-      };
-    },
-    updateEvent: function updateEvent() {
-      var _this2 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_4___default().put("/calendar/update" + this.indexToUpdate, _objectSpread({}, this.newEvent)).then(function (resp) {
-        _this2.resetForm();
-
-        _this2.getEvents();
-
-        _this2.addingMode = !_this2.addingMode;
-      })["catch"](function (err) {
-        return console.log("Failed to update event for FullCalendar", err.response.data);
-      });
-    },
-    deleteEvent: function deleteEvent() {
-      var _this3 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_4___default()["delete"]("/calendar/delete").then(function (resp) {
-        _this3.resetForm();
-
-        _this3.getEvents();
-
-        _this3.addingMode = !_this3.addingMode;
-      })["catch"](function (err) {
-        return console.log("Failed to delete event for FullCalendar", err.response.data);
-      });
-    },
-    getEvents: function getEvents() {
-      var _this4 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_4___default().get("/calendar/json").then(function (resp) {
-        return _this4.events = resp.data.data;
-      })["catch"](function (err) {
-        return console.log(err.response.data);
-      });
-    },
-    resetForm: function resetForm() {
-      var _this5 = this;
-
-      Object.keys(this.newEvent).forEach(function (key) {
-        return _this5.newEvent[key] = "";
-      });
-    }
-  },
-  watch: {
-    indexToUpdate: function indexToUpdate() {
-      return this.indexToUpdate;
-    }
   }
 });
 
@@ -52840,57 +52846,109 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-lg col-lg-16" }, [
-    _c("div", { staticClass: "card bg-secondary shadow border-0 xl-12 mb-3" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("h2", { staticClass: "card-title" }, [_vm._v("Form Event")]),
-        _vm._v(" "),
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-10" }, [
+      _c("div", { staticClass: "card shadow" }, [
         _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-              }
-            }
-          },
+          "div",
+          { staticClass: "card-body" },
           [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "event_name" } }, [
-                _vm._v("Nama Event")
+            _c("Fullcalendar", {
+              ref: "fc",
+              attrs: { options: _vm.calendarOptions }
+            })
+          ],
+          1
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-6 mt-3 md-3" }, [
+      _c("div", { staticClass: "card bg-secondary shadow border-0" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("h2", { staticClass: "card-title" }, [_vm._v("Detil Event")]),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              ref: "ev",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "event_name" } }, [
+                  _vm._v("Nama Event")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.newEvent.event_name,
+                      expression: "newEvent.event_name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "event_name",
+                    placeholder: "Nama Event"
+                  },
+                  domProps: { value: _vm.newEvent.event_name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.newEvent, "event_name", $event.target.value)
+                    }
+                  }
+                })
               ]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.newEvent.event_name,
-                    expression: "newEvent.event_name"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  id: "event_name",
-                  placeholder: "Nama Event"
-                },
-                domProps: { value: _vm.newEvent.event_name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "event_calendar" } }, [
+                  _vm._v("Dari Kalender")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.newEvent.event_calendar,
+                      expression: "newEvent.event_calendar"
                     }
-                    _vm.$set(_vm.newEvent, "event_name", $event.target.value)
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "event_calendar",
+                    placeholder: "Kalender Asal",
+                    disabled: ""
+                  },
+                  domProps: { value: _vm.newEvent.event_calendar },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.newEvent,
+                        "event_calendar",
+                        $event.target.value
+                      )
+                    }
                   }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "row" },
-              [
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-md-6" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "event_start" } }, [
@@ -52957,74 +53015,31 @@ var render = function() {
                       }
                     })
                   ])
-                ]),
-                _vm._v(" "),
-                _vm.addingMode
-                  ? _c("div", { staticClass: "col-md-6 mb-4" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-sm btn-primary",
-                          on: { click: _vm.addNewEvent }
-                        },
-                        [_vm._v("Buat Event")]
-                      )
-                    ])
-                  : _c("tempate", [
-                      _c("div", { staticClass: "col-md-6 mb-4" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-success",
-                            on: { click: _vm.updateEvent }
-                          },
-                          [_vm._v("Perbarui Event")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-danger",
-                            on: { click: _vm.deleteEvent }
-                          },
-                          [_vm._v("Hapus Event")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-secondary",
-                            on: {
-                              click: function($event) {
-                                _vm.addingMode = !_vm.addingMode
-                              }
-                            }
-                          },
-                          [_vm._v("Batal")]
-                        )
-                      ])
-                    ])
-              ],
-              1
-            )
-          ]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-16" }, [
-      _c("div", { staticClass: "card bg-secondary shadow border-0 xl-12" }, [
-        _c(
-          "div",
-          { staticClass: "card-body" },
-          [_c("Fullcalendar", { attrs: { options: _vm.calendarOptions } })],
-          1
-        )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ]
+          )
+        ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row-md-6 mb-4" }, [
+      _c("button", { staticClass: "btn btn-sm btn-primary" }, [
+        _vm._v("Update")
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-sm btn-danger" }, [_vm._v("Hapus")])
+    ])
+  }
+]
 render._withStripped = true
 
 
