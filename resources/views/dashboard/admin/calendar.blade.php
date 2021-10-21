@@ -1,14 +1,17 @@
 @extends('layouts.app')
 @section('content')
+@include('layouts.headers.cards')
 
-<div class="container">
-  <div class="row">
+
+<div class="container-fluid mt--7">
 
         <div id="app">
             <admin-calendar></admin-calendar>
         </div>
 
-  </div>
+  @include('layouts.footers.nav')
+
+
 </div>
 
 @endsection

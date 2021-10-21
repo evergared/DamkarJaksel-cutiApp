@@ -121,13 +121,6 @@ abstract class BaseCalendar
 
         $dateData = [];
 
-        // $dateData = [
-        //     "version" => 'https://www.jsonfeed.org/version/1.1/',
-        //     "calendarId" => $this->calendarId,
-        //     "calendarName" => $this->calendarName,
-        //     "events" => []
-        // ];
-
         foreach($events as $event)
         {
             if($event->startDate->eq($event->endDate) || $event->endDate->eq($event->startDate->addDay(1)))
@@ -144,18 +137,9 @@ abstract class BaseCalendar
                 $ed = $event->endDate;
                 //error_log($event->name." is not same day");
             }
-
-            // $dateData['events'][$event->id] = [
-            //     'id' => $event->id,
-            //     'title'  => $event->name,
-            //     'start' => $sd,
-            //     'end' => $ed,
-            //     'allDay' => true,
-            // ];
             
             $newData = [
-                'calId' => $this->calendarId,
-                'calName'=>$this->calendarName,
+                
                 'id' => $event->id,
                 'title'  => $event->name,
                 'start' => $sd,
@@ -164,10 +148,14 @@ abstract class BaseCalendar
                 'display'=>$this->display,
                 'color'=>$this->color,
                 'editable'=>$this->editable,
-                'eventTextColor' =>$this->textColor
+                'eventTextColor' =>$this->textColor,
+                'extendedProps' => [
+                    'calId' => $this->calendarId,
+                    'calName'=>$this->calendarName,
+                ]
             ];
 
-            ;
+            
 
             $dateData[] = $newData;
 
@@ -180,7 +168,9 @@ abstract class BaseCalendar
     {
         try
         {
-            return Event::find($eventId);
+            $event = Event::find($eventId,$this->calendarId);
+            return $event;
+            
         }
 
         catch(Throwable $e)
@@ -188,6 +178,11 @@ abstract class BaseCalendar
             report($this->calendarName.' find event error, e : '.$e);
             error_log('Find event error for '.$this->calendarName.' calendar with id : '.$eventId);
         }
+    }
+
+    public function getCalendarId()
+    {
+        return $this->calendarId;
     }
 }
 ?>

@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Calendars\DisableCutiManual as DisableCuti;
 use App\Http\Controllers\Calendars\LiburNasional;
+use Illuminate\Support\Facades\Config;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Throwable;
+
+use function PHPUnit\Framework\isNull;
 
 class CalendarController extends Controller
 {
@@ -25,13 +29,21 @@ class CalendarController extends Controller
     public function fetchJson()
     {
         $dc = new DisableCuti();
-        $ln = new LiburNasional();
 
 
-        $dateData = array_merge($ln->extractDatesAsJsonFeed(),$dc->extractDatesAsJsonFeed());
+        $dateData = $dc->extractDatesAsJsonFeed();
         
         return $dateData;
     }
+
+    // dipisah agar bisa di aktifan/nonaktifkan lewat fullcalendar
+    // TODO : fetchPiket
+    public function fetchLibur()
+    {
+        $ln = new LiburNasional();
+        return $ln->extractDatesAsJsonFeed();
+    }
+
 
     public function create(Request $request)
     {
@@ -50,22 +62,72 @@ class CalendarController extends Controller
         }
     }
 
-    public function update()
+    public function updateEvent(Request $request)
     {
+        
 
+        try
+        {
+            //error_log($request);
+        
+            $cal = $this->getCalendar($request->event_calendarId);
+
+            $event = $cal->findEvent($request->event_id);
+            $event->name = $request->event_name;
+            $event->startDate = $this->formatDate($request->event_start);
+
+            if($request->event_end==="Invalid date")
+                $event->endDate = $this->formatDate($request->event_start);
+            else
+            $event->endDate = $this->formatDate($request->event_end,1);
+
+            $event->save();
+        }
+
+        catch(Throwable $e)
+        {
+            error_log("update event error : ".$e);
+        }
     }
 
-    public function delete()
+    public function deleteEvent($calId,$eventId)
     {
+        //error_log($calId.'&'.$eventId);
 
+        $cal = $this->getCalendar($calId);
+        
+
+        $eventIt = $cal->findEvent($eventId);
+        $eventIt->delete();
     }
 
-    public function getCalendarById($celandarId)
+    function getCalendar($id)
     {
-        // switch($celandarId)
-        // {
-        //     case
-        // }
+        switch($id)
+        {
+            case '2o5peemb99hhig9mruvodklg90@group.calendar.google.com':$cal = new DisableCuti();break;
+            default : $cal = null;break;
+        }
+
+        return $cal;
+    }
+
+    function formatDate($date,$mod = 0)
+    {
+        if($mod < 0)
+        {
+            $ndate = Carbon::parse($date)->subDays($mod);
+        }
+        else if($mod > 0)
+        {
+            $ndate = Carbon::parse($date)->addDays($mod);
+        }
+        else if($mod === 0)
+        {
+            $ndate = Carbon::parse($date);
+        }
+        
+        return $ndate;
     }
 
 }

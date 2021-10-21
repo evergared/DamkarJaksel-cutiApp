@@ -92,9 +92,10 @@ Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'cr
 Route::get('/calendar/array',[App\Http\Controllers\CalendarController::class,'index']);
 Route::get('/calendar/json',[App\Http\Controllers\CalendarController::class,'fetchJson']);
 Route::get('/calendar/create',[App\Http\Controllers\CalendarController::class,'createEvent']);
-Route::get('/calendar/delete',[App\Http\Controllers\CalendarController::class,'deleteEvent']);
 Route::get('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
-
+Route::get("/calendar/libur",[App\Http\Controllers\CalendarController::class,"fetchLibur"]);
+Route::post('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
+Route::delete('/calendar/delete/{calId}/{eventId}',[App\Http\Controllers\CalendarController::class,'deleteEvent']);
 
 
 // TODO : make route for admin report cuti view

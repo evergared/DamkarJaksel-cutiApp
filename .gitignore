@@ -8,4 +8,4 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-/node_module/.cache
+node_modules/.cache/babel-loader/*.json.gz

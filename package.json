@@ -31,6 +31,7 @@
         "@fullcalendar/interaction": "^5.10.0",
         "@fullcalendar/list": "^5.10.0",
         "@fullcalendar/timegrid": "^5.10.0",
-        "@fullcalendar/vue": "^5.10.0"
+        "@fullcalendar/vue": "^5.10.0",
+        "vue-moment": "^4.1.0"
     }
 }
