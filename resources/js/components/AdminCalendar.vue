@@ -9,11 +9,22 @@
                     </div>
                  </div>
 
-                 <div class="col-md mt-3 md-3" >
+                 <div class="col-sm mt-3 md-3" >
                     <div class="card bg-secondary shadow border-0">
                         <div class="card-body">
-                            <h2 class="card-title">Detil Event</h2>
-                            <form ref="ev" @submit.prevent>
+                            <div class="row">
+                                <div class="col">
+                                    <h2 class="card-title" v-if="!tambah">Detil Event</h2>
+                                    <h2 class="card-title" v-if="tambah">Tambah Event</h2>
+                                </div>
+                                <div class="col justify-content-center mr-2">
+                                    <span class="row justify-content-end">
+                                        <button class="btn btn-sm btn-success align-self-end" v-if="!tambah" @click="changeMode()">Tambah Event</button>
+                                        <button class="btn btn-sm btn-info align-self-end" v-if="tambah" @click="changeMode()">Detil Event</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <form v-if="!tambah" ref="ev" @submit.prevent>
 
                                 <div class="form-group">
                                     <label for="event_name">Nama Event</label>
@@ -46,14 +57,47 @@
                                     <button class="btn btn-sm btn-dark" @click="clear()">Batal</button>
                                 </div>
                             </form>
+
+                            <form v-if="tambah" ref="nev" @submit.prevent>
+
+                                <div class="form-group">
+                                    <label for="event_name">Nama Event</label>
+                                    <input type="text" id="event_name" class="form-control" placeholder="Nama Event" v-model="newEvent.event_name" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="event_calendar">Jenis Kalender</label>
+                                    <select id="event_calendar" class="form-control"  v-model="newEvent.event_calendar">
+                                        <option disabled value="">Pilih kalender</option>
+                                        <option>Tidak Boleh Cuti</option>
+                                        <option>Boleh Cuti</option>
+                                    </select>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="event_start">Tanggal Awal</label>
+                                            <input type="date" id="event_start" class="form-control" v-model="newEvent.event_start" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="event_end">Tanggal Akhir</label>
+                                            <input type="date" id="event_end" class="form-control" v-model="newEvent.event_end">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row-md-6 mb-4 justify-content-center" >
+                                    <button class="btn btn-sm btn-primary" @click="createEvent()">Tambah</button>
+                                    <button class="btn btn-sm btn-dark" @click="clear()">Batal</button>
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                  </div>
-
-
-
-
-
 </div>
 
 
@@ -88,11 +132,16 @@ import moment from 'moment';
                             event_end:""
                         }
 
-            var sm = false
+            const newEvent = {
+                            event_calendar:"",
+                            event_name:"",
+                            event_start:"",
+                            event_end:""
+                        }
 
             return {
 
-                eventItem, sm,
+                eventItem, newEvent,tambah:false,
 
                     calendarOptions:{
                         plugins: [dayGridPlugin,interactionPlugin],
@@ -103,16 +152,16 @@ import moment from 'moment';
                                             '/calendar/json',
                                             '/calendar/libur'
                                         ],
-                        customButtons:{
-                            buatEvent:{
-                                text:"Event Baru",
-                                click:function(){
-                                    sm = !sm;
-                                }
-                            }
-                        },
+                        // customButtons:{
+                        //     buatEvent:{
+                        //         text:"Tambah",
+                        //         click:function(){
+                        //             sm = !sm;
+                        //         }
+                        //     }
+                        // },
                         headerToolbar :{
-                            start : "buatEvent",
+                            start : "",
                             center : "title",
                             end : "today prev,next"
                         },
@@ -171,8 +220,17 @@ import moment from 'moment';
         
         methods:{
 
-            updateEvent:function(ev){
-                //this.eventItem.event_end = moment(this.eventItem.event_end).add(1,'d').format('YYYY-MM-DD');
+            createEvent(){
+                axios.post(`/calendar/create`,this.newEvent)
+                .then(resp =>{
+                    this.clear();
+                    this.$refs.fc.getApi().refetchEvents();
+                    alert('Event Berhasil Dibuat! Kalender akan memuat ulang...');
+                })
+                .catch(err => console.log("Fullcalendar error : "+err));
+            },
+
+            updateEvent(){
                 axios.post(`/calendar/update`,this.eventItem)
                 .then(resp =>{
                     this.clear();
@@ -201,19 +259,28 @@ import moment from 'moment';
                             this.eventItem.event_name="";
                             this.eventItem.event_start="";
                             this.eventItem.event_end="";
+
+                            this.newEvent.event_calendar="";
+                            this.newEvent.event_name="";
+                            this.newEvent.event_start="";
+                            this.newEvent.event_end="";
                 
             },
 
-            showModal(){
+            changeMode(){
 
-                if(this.sm)
-                {
-                    console.log("sm is "+sm);
-                    //this.$refs.modal.modal('show');
-                }
+                this.tambah = !this.tambah;
+                this.clear();
 
-            }
+            },
 
         }
     };
 </script>
+
+<style scoped>
+.fc-button{
+    font-size: 40%;
+    width: 40%;
+}
+</style>

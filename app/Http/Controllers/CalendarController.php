@@ -45,19 +45,24 @@ class CalendarController extends Controller
     }
 
 
-    public function create(Request $request)
+    public function createEvent(Request $request)
     {
         try
         {
-            $newEvent = $request->all();
-            if($request['calendar'] === "disable")
+            error_log("event is ".$request->event_calendar);
+            switch($request->event_calendar)
             {
-                $event = new DisableCuti();
+                case "Tidak Boleh Cuti": $cal = new DisableCuti();break;
+                default:$cal = null;break;
             }
+
+            $cal->createEvent($request->event_start,$request->event_end,$request->event_name);
+            
         }
 
         catch(Throwable $e)
         {
+            error_log("create event error : ".$e);
             report($e);
         }
     }
@@ -87,6 +92,7 @@ class CalendarController extends Controller
         catch(Throwable $e)
         {
             error_log("update event error : ".$e);
+            report($e);
         }
     }
 
