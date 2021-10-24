@@ -9,6 +9,13 @@
 | Link : https://github.com/uxsolutions/bootstrap-datepicker                            |
 |---------------------------------------------------------------------------------------|
 */
+import axios from 'axios';
+
+disableCuti = [],
+
+axios.get(axios.get('/calendar/array').then(resp=>{
+  disableCuti = resp.data;
+}),
 
   $('.input-daterange').datepicker({
     language:'id',
@@ -27,5 +34,5 @@
   
     // pengaturan kondisional
     daysOfWeekDisabled:'0,6', // TODO : if else function, jika staff maka sabtu minggu disabled.
-    setDatesDisabled:'{{ route("calendar/array") }}' // TODO : masukan data array untuk menonaktifkan tanggal-tanggal tertentu.
-  });
+    setDatesDisabled: this.disableCuti// TODO : masukan data array untuk menonaktifkan tanggal-tanggal tertentu.
+  }))

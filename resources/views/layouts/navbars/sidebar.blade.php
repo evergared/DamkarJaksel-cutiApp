@@ -70,7 +70,8 @@
       Admin
       <ul class="navbar-nav ">
         <li class="nav-item"><a class="nav-link" href="{{ route('kepegawaian') }}"><i class="ni ni-briefcase-24 text-orange"></i><span class="nav-link-text">{{ __('Kepegawaian')}}</span></a></li>
-      </ul>
+        <li class="nav-item"><a class="nav-link" href="{{ route('calendar') }}"><i class="fas fa-calendar text-blue"></i><span class="nav-link-text">{{ __('Kalender')}}</span></a></li>
+    </ul>
       @endif
       <a class="nav-link" href="#"><strong class="nav-link-text">{{ __('Petunjuk Penggunaan')}}</strong></a>
 

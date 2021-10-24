@@ -72,14 +72,14 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
 
-        error_log('has subordinate : '.$user->has_subordinate);
+        $user->data = (array)DB::table('data_pegawai')->where('nip',$user->nip)->first();
 
-        error_log('roles : ');
+
         foreach($user->roles as $role)
         {
             error_log(" - ".$role);
         }
-        error_log("is kasie :".in_array('KASIE',$user->roles));
+        error_log("is kasie :".$user->is_kasie);
         // error_log("masuk dengan cred : " . $user);
         // error_log("cek auth : ".Auth::check());
         // error_log("cek auth id : ".Auth::id());

@@ -4,10 +4,16 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+//require('./bootstrap');
+
+// import {BootstrapVue, IconsPlugin} from 'bootstrap-vue';
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 window.Vue = require('vue').default;
 Vue.use(require('vue-moment'));
+// Vue.use(BootstrapVue);
+// Vue.use(IconsPlugin);
 
 /**
  * The following block of code may be used to automatically register your
@@ -22,6 +28,7 @@ Vue.use(require('vue-moment'));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('admin-calendar', require('./components/AdminCalendar.vue').default);
+Vue.component('form-cuti', require('./components/FormCuti.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

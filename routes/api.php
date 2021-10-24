@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::delete('/calendar/delete/{calId}/{eventId}',[App\Http\Controllers\CalendarController::class,'deleteEvent']);
+Route::get('calendar/array',[App\Http\Controllers\CalendarController::class,'index']);

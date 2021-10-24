@@ -94,18 +94,18 @@ abstract class BaseCalendar
         {
             if($event->startDate->eq($event->endDate) || $event->endDate->eq($event->startDate->addDay(1)))
             {
-                array_push($dateData,$event->startDate);
+                array_push($dateData,Carbon::parse($event->startDate)->toDateString());
             }
 
             else if($event->endDate->gt($event->startDate->addDay(1)))
             {
                 $sd = $event->startDate;
-                $ed = $event->endDate->subDay(1);
+                $ed = $event->endDate;
                 $nd = new Carbon($sd);
 
                 while($nd->ne($ed))
                 {
-                    array_push($dateData,new Carbon($nd));
+                    array_push($dateData,$nd->toDateString());
                     $nd->addDay(1);
                 }
                 

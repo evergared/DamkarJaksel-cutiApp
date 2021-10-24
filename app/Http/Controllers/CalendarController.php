@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Calendars\DisableCutiManual as DisableCuti;
+use App\Http\Controllers\Calendars\EnableCutiManual as EnableCuti;
 use App\Http\Controllers\Calendars\LiburNasional;
 use Illuminate\Support\Facades\Config;
 use App\Http\Controllers\Controller;
@@ -19,19 +20,23 @@ class CalendarController extends Controller
     public function index()
     {
         $dc = new DisableCuti();
+        $ec = new EnableCuti();
         $ln = new LiburNasional();
 
         $dateData = array_merge($dc->extractDatesAsArray(),$ln->extractDatesAsArray());
+        $dateData = array_diff($dateData,$ec->extractDatesAsArray());
 
-        return $dateData;
+        return array_values($dateData);
     }
 
     public function fetchJson()
     {
         $dc = new DisableCuti();
+        $ec = new EnableCuti();
 
 
         $dateData = $dc->extractDatesAsJsonFeed();
+        $dateData = array_merge($dateData,$ec->extractDatesAsJsonFeed());
         
         return $dateData;
     }
@@ -53,6 +58,7 @@ class CalendarController extends Controller
             switch($request->event_calendar)
             {
                 case "Tidak Boleh Cuti": $cal = new DisableCuti();break;
+                case "Boleh Cuti": $cal = new EnableCuti();break;
                 default:$cal = null;break;
             }
 
@@ -112,6 +118,7 @@ class CalendarController extends Controller
         switch($id)
         {
             case '2o5peemb99hhig9mruvodklg90@group.calendar.google.com':$cal = new DisableCuti();break;
+            case 'ebe9u0cgb0a52va54qaut8rm58@group.calendar.google.com':$cal = new EnableCuti();break;
             default : $cal = null;break;
         }
 

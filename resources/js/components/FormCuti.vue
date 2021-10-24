@@ -1,0 +1,321 @@
+<template>
+    <div class="col-lg-8">
+      <div class="card shadow border-0 xl-12">
+
+        <div class="card-body">
+          <div class="text-center">
+            <h1>Form Pengajuan Cuti</h1>
+          </div>
+          <div class="col">
+
+
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="alert.type === 'failed'">
+                    <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
+                    <span class="alert-inner--text">{{ alert.message }}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+
+                
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" v-else-if="alert.type === 'success'">
+                    <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
+                    <span class="alert-inner--text">{{ alert.message }}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+
+          
+          
+
+            <form @submit.prevent>
+              <div class="form-group">
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-address-card"></i></span>
+                  </div>
+                  <input class="form-control" id="nrk" name="nrk" placeholder="NRK/NIP" type="text" v-model="form.nip" readonly = "true">
+                </div>
+
+                <div class="row justify-content-center align-items-center mb-3 mx-2">
+                  <div class="input-group col">
+                    <b-form-datepicker v-model="form.start" @input="calculateHari()" :date-disabled-fn="dateDisabled" :min="minDate" :max="maxDate" :start-weekday="1" placeholder="Tanggal Mulai" locale="id"></b-form-datepicker>
+                  </div>
+                  <span><small>Sampai Dengan</small></span>
+                  <div class="input-group col">
+                    <b-form-datepicker v-model="form.end" @input="calculateHari()" :date-disabled-fn="dateDisabled" :min="form.start" :max="maxDate" placeholder="Tanggal Akhir" locale="id"></b-form-datepicker>
+                  </div>
+
+                  
+                  <div style="display: block;" class="col mt-2" v-if="form.lama > 0">
+                      <small>Perkiraan Durasi Cuti : {{form.lama}} Hari (Maks : {{form.batashari}}) </small>
+                  </div>
+                  
+
+                </div>
+                
+                <!-- {{-- Bagian Dropdown Jenis Cuti --}} -->
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-clipboard"></i></span>
+                  </div>
+                  <select autocomplete="off" class="form-control" id="jcuti" name="jcuti" type="text" placeholder="Pilih Jenis Cuti" v-model="form.jcuti">
+                      
+                        <option value="" disabled>Pilih Jenis Cuti</option >
+                        <option >Tahunan</option >
+                      
+                  </select>
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-route"></i></span>
+                  </div>
+                  <input class="form-control" id="alamat" name="alamat" placeholder="Alamat Selama Menjalankan Cuti" type="text" v-model="form.alamat" >
+                </div>
+
+                <!-- {{-- Bagian Alasan Cuti --}} -->
+                <div class="input-group">
+                  <!-- {{-- utk attrib textarea Class="form-control" biasa, menyebabkan bug saat di resize --}} -->
+                  <textarea class="form-control" id="aCuti" name="aCuti" style="resize:none;" rows="5" placeholder="Alasan Cuti" v-model="form.alasan"></textarea>
+                </div>
+
+                <!-- {{-- Bagian tombol submit --}} -->
+                <div class="text-center">
+                  <a class="btn btn-primary my-4 text-white"  @click="checkDataSubmit()" v-if="!updateMode">Submit</a>
+                  <a class="btn btn-primary my-4 text-white"  @click="formUpdate()" v-else>Update</a>
+                </div>
+
+
+                <b-modal ref="modal1" id="modal1" cancel-disabled ok-disabled @ok="formSubmit()" >
+
+                    <!-- <div class="row">
+                        <div class="col">
+                            <strong>NIP/NRK</strong>
+                            <span><strong> : </strong></span>
+                            <i>{{form.nip}}</i>
+                        </div>
+                        <div class="col">
+                            <strong>Jenis Cuti</strong>
+                            <span><strong> : </strong></span>
+                            <i>{{form.jcuti}}</i>
+                        </div>
+                        <div class="col">
+                            <strong>Tanggal</strong>
+                            <span><strong> : </strong></span>
+                            <i>{{form.start}} - {{form.end}}</i>
+                        </div>
+                    </div> -->
+
+                            <!-- <strong>NIP/NRK</strong>
+                            <span><strong> : </strong></span>
+                            <i>{{form.nip}}</i>
+
+                            <br>
+
+                            <strong>Jenis Cuti</strong>
+                            <span><strong> : </strong></span>
+                            <i>{{form.jcuti}}</i>
+
+                            <br>
+
+                            <strong>Tanggal</strong>
+                            <span><strong> : </strong></span>
+                            <i>{{form.start}} - {{form.end}}</i>
+
+                            <br>
+
+                            <strong></strong>
+                            <span><strong> : </strong></span>
+                            <i>{{form.jcuti}}</i> -->
+                            Cuti yang diambil : {{form.jumlahHari}} hari (maks : {{form.batashari}})<br>
+                            <span v-if="form.jumlahHari > form.batashari"><small>Hanya {{form.batashari}} hari yang diterima dari {{form.jumlahHari}} hari yang diajukan. Terhitung mulai dari tanggal awal ({{form.start}})</small></span><br><br>
+                            Berikut ini ajuan tanggal cuti yang diterima : <br><br>
+                            <ol>
+                                <li v-for="tgl in dataCuti.tanggal" :key="tgl"><small>{{ tgl }}</small></li>
+                            </ol>
+
+                    <template #modal-footer="{ok, cancel}">
+                        <button type="button" class="btn btn-primary" @click="ok()">Setuju dan Buat</button>
+                        <button type="button" class="btn btn-secondary" @click="cancel()">Batal</button>
+                    </template>
+                </b-modal>
+               
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</template>
+
+<script>
+import BootstrapVue from 'bootstrap-vue';
+//import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+
+import axios from 'axios';
+
+Vue.use(BootstrapVue);
+
+export default{
+
+    mounted(){
+            axios.get('/calendar/array').then(resp=>{
+                this.disableCuti = resp.data;
+            });
+    },
+
+    data(){
+
+        const now = new Date()
+        const tmp = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10)
+        const minDate = new Date(tmp);
+        const maxDate = new Date(now.getFullYear(),'11','31');
+        //const maxDateBatas = new Date(new Date(form.start).getFullYear(), new Date(form.start).getMonth(), new Date(form.start).getDate()+this.batashari)
+        
+
+        return{
+            minDate, maxDate,
+
+            processing:false,
+
+            hari:{
+                minggu:0,
+                senin:1,
+                selasa:2,
+                rabu:3,
+                kamis:4,
+                jumat:5,
+                sabtu:6
+            },
+
+            alert:{
+                type:"",
+                message:""
+            },
+
+            form:{
+                nip:this.nip,
+                start: "",
+                end:"",
+                jcuti:this.jenis,
+                alamat:this.alamat,
+                alasan:this.alasan,
+                jumlahHari:0,
+                lama: 0,
+                batashari:this.sisacuti,
+                updateMode : this.um
+            },
+
+            dataCuti:{
+                nip: "",
+                start:"",
+                end:"",
+                lama:0,
+                tanggal:[],
+                jenisCuti:"",
+                alamat:"",
+                alasan:"",
+            },
+
+            disableCuti : [],
+
+        }
+    },
+    props:{
+        nip:{
+            type: String,
+        },
+        startDate:{
+            type:Date,
+        },
+        endDate:{
+            type:Date,
+        },
+        jenis:{
+            type: String,
+        },
+        alamat:{
+            type:String,
+        },
+        alasan:{
+            type: String,
+        },
+        sisacuti:{
+            type: Number,
+            default:20
+        },
+        um:{
+            type: Boolean,
+            default:false
+        }
+    },
+    methods:{
+
+        calculateHari(){
+
+            if(this.form.start !=="" && this.form.end !== "")
+            {
+                this.form.lama = (new Date(this.form.end).getTime() - new Date(this.form.start).getTime())/(1000*60*60*24);
+            }
+            else
+                this.form.lama = 0;
+
+        },
+
+        dateDisabled(ymd, date){
+
+            const weekday = date.getDay();
+
+            return weekday === this.hari.minggu || weekday === this.hari.sabtu || this.disableCuti.includes(ymd);
+
+        },
+        checkDataSubmit(){
+
+            if( this.form.lama > 0)
+            {
+                var baseDate = new Array();
+                for(var i = 0; i<this.form.lama; i++)
+                {
+                    var date = new Date(this.form.start);
+                    var ndate = new Date(date.setDate(date.getDate() + i));
+
+                    if((ndate.getDay() != this.hari.minggu && ndate.getDay() != this.hari.sabtu) && !this.disableCuti.includes(ndate.toISOString().slice(0,10)))
+                    {
+                        //console.log("inserted = "+ndate.toISOString().slice(0,10));
+                        baseDate.push(ndate.toLocaleString());
+                    }
+                    else
+                        continue
+                    
+                }
+                this.form.jumlahHari = baseDate.length;
+                this.dataCuti.tanggal = baseDate.slice(0,this.form.batashari);
+                this.$bvModal.show('modal1');
+            }
+            else
+                alert('Harap periksa masukan Tanggal Mulai dan Tanggal Akhir anda');
+
+            
+
+        },
+        formSubmit(){
+            
+            this.alert.type = "success";
+            this.alert.message = "Haha Told Ya!";
+            //axios.post()
+        },
+        formUpdate(){
+            this.alert.type = "failed";
+            this.alert.message = "Haha Told Ya!";
+        }
+    }
+
+
+}
+</script>

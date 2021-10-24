@@ -10,7 +10,7 @@
                  </div>
 
                  <div class="col-sm mt-3 md-3" >
-                    <div class="card bg-secondary shadow border-0">
+                    <div class="card shadow border-0">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">

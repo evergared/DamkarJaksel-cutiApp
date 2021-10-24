@@ -10,7 +10,7 @@ class LiburNasional extends BaseCalendar
         $this->calendarId = 'b3b7oep5kkvhn1joqqq93je72igi7j6v@import.calendar.google.com';
         $this->calendarName = 'Libur Nasional';
         $this->editable = false;
-        $this->color = "red";
+        $this->color = "tomato";
         $this->display = "background";
     }
 }

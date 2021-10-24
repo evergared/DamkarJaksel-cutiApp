@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Calendars\DisableCutiManual;
+use Illuminate\Support\Facades\Auth;
 
 
 /*
@@ -54,7 +55,6 @@ Route::get('/kepegawaian','App\Http\Controllers\DashboardController@loadKepegawa
 Route::get('/report','App\Http\Controllers\DashboardController@loadReport')->name('report');
 Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('form');
 
-Route::get('/calendar','App\Http\Controllers\DashboardController@loadCalendar')->name('calendar');
 
 // TODO : benahi middleware untuk routing, jika database sudah selesai
 
@@ -89,13 +89,26 @@ Route::get('/report/table/asn',[App\Http\Controllers\TabelController::class,'cre
 Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'createTableAssignmentPJLP'])->name('report.pjlp');
 
 // Admin Calendar Routes
-Route::get('/calendar/array',[App\Http\Controllers\CalendarController::class,'index']);
-Route::get('/calendar/json',[App\Http\Controllers\CalendarController::class,'fetchJson']);
-Route::post('/calendar/create',[App\Http\Controllers\CalendarController::class,'createEvent']);
-Route::get('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
-Route::get("/calendar/libur",[App\Http\Controllers\CalendarController::class,"fetchLibur"]);
-Route::post('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
-Route::delete('/calendar/delete/{calId}/{eventId}',[App\Http\Controllers\CalendarController::class,'deleteEvent']);
+// Route::get('/calendar',function(){
+// 	Route::get('/calendar','App\Http\Controllers\DashboardController@loadCalendar')->name('calendar');
+// 	Route::get('/calendar/array',[App\Http\Controllers\CalendarController::class,'index']);
+// 	Route::get('/calendar/json',[App\Http\Controllers\CalendarController::class,'fetchJson']);
+// 	Route::get('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
+// 	Route::get("/calendar/libur",[App\Http\Controllers\CalendarController::class,"fetchLibur"]);
+// 	Route::post('/calendar/create',[App\Http\Controllers\CalendarController::class,'createEvent']);
+// 	Route::post('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
+// 	Route::delete('/calendar/delete/{calId}/{eventId}',[App\Http\Controllers\CalendarController::class,'deleteEvent']);
+// })->middleware('admin');
+
+	Route::get('/calendar','App\Http\Controllers\DashboardController@loadCalendar')->name('calendar');
+	Route::get('/calendar/array',[App\Http\Controllers\CalendarController::class,'index'])->name('calendarArray');
+	Route::get('/calendar/json',[App\Http\Controllers\CalendarController::class,'fetchJson']);
+	Route::get('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
+	Route::get("/calendar/libur",[App\Http\Controllers\CalendarController::class,"fetchLibur"]);
+	Route::post('/calendar/create',[App\Http\Controllers\CalendarController::class,'createEvent']);
+	Route::post('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
+	Route::delete('/calendar/delete/{calId}/{eventId}',[App\Http\Controllers\CalendarController::class,'deleteEvent']);
+
 
 
 // TODO : make route for admin report cuti view
@@ -106,8 +119,9 @@ Route::delete('/calendar/delete/{calId}/{eventId}',[App\Http\Controllers\Calenda
 Route::get('/try', function(){ 
 
 	$test = new DisableCutiManual();
-	//return dd($test->extractDatesAsJsonFeed());
+	return view('try');
+	//return dd($test->fetchEvents());
 	//return dd(implode("|",$test->extractDatesAsArray()));
-	return view('dashboard/admin/calendar');
+	//return dd(Auth::user()->data);
 });
 
