@@ -85,16 +85,14 @@ class FormCutiController extends Controller
 
             CutiSubmitEvent::dispatch($nrk,$id);
 
-            return redirect()->back()->with('form_success',"Form cuti berhasil diajukan! Cek Report Daftar Cuti untuk detail.");
+            return response('form_success',"Form cuti berhasil diajukan! Cek Report Daftar Cuti untuk detail.");
 
         }
 
         catch(Throwable $e)
         {
             report("Error input database. User : " . $request->user()->nip . " Time " . now() . "\nException : ".$e);
-            return redirect()
-            ->back()
-            ->with('form_error','Insert database gagal! Cek data anda dan coba beberapa saat lagi atau hubungi admin.');
+            return response('form_error','Insert database gagal! Cek data anda dan coba beberapa saat lagi atau hubungi admin.');
         }
 
 

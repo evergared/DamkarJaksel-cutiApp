@@ -1,10 +1,11 @@
 <template>
-    <div class="col-lg-8">
-      <div class="card shadow border-0 xl-12">
+    <div class="">
+      <div class="col card shadow border-0 xl-12">
 
         <div class="card-body">
           <div class="text-center">
-            <h1>Form Pengajuan Cuti</h1>
+            <h1 v-if="um == false">Form Pengajuan Cuti</h1>
+            <h1 v-else>Ubah Data Cuti</h1>
           </div>
           <div class="col">
 
@@ -39,15 +40,16 @@
                   <input class="form-control" id="nrk" name="nrk" placeholder="NRK/NIP" type="text" v-model="form.nip" readonly = "true">
                 </div>
 
-                <div class="row justify-content-center align-items-center mb-3 mx-2">
+                <div class="row justify-content-center align-items-center my-3">
                   <div class="input-group col">
                     <b-form-datepicker v-model="form.start" @input="calculateHari()" :date-disabled-fn="dateDisabled" :min="minDate" :max="maxDate" :start-weekday="1" placeholder="Tanggal Mulai" locale="id"></b-form-datepicker>
                   </div>
-                  <span><small>Sampai Dengan</small></span>
+                  <span class="col-sm-auto my-1 mx-auto"><small>Sampai Dengan</small></span>
                   <div class="input-group col">
-                    <b-form-datepicker v-model="form.end" @input="calculateHari()" :date-disabled-fn="dateDisabled" :min="form.start" :max="maxDate" placeholder="Tanggal Akhir" locale="id"></b-form-datepicker>
+                    <b-form-datepicker v-model="form.end" @input="calculateHari()" :date-disabled-fn="dateDisabled" :min="form.start" :max="maxDate" :start-weekday="1" placeholder="Tanggal Akhir" locale="id"></b-form-datepicker>
                   </div>
-
+                
+                <div class="w-100"></div>
                   
                   <div style="display: block;" class="col mt-2" v-if="form.lama > 0">
                       <small>Perkiraan Durasi Cuti : {{form.lama}} Hari (Maks : {{form.batashari}}) </small>
@@ -85,61 +87,22 @@
 
                 <!-- {{-- Bagian tombol submit --}} -->
                 <div class="text-center">
-                  <a class="btn btn-primary my-4 text-white"  @click="checkDataSubmit()" v-if="!updateMode">Submit</a>
+                  <a class="btn btn-primary my-4 text-white" id="btn-submit-cuti"  @click="checkDataSubmit()" v-if="!updateMode">Submit</a>
                   <a class="btn btn-primary my-4 text-white"  @click="formUpdate()" v-else>Update</a>
                 </div>
 
 
-                <b-modal ref="modal1" id="modal1" cancel-disabled ok-disabled @ok="formSubmit()" >
+                <b-modal tabindex="-1"  ref="modal1" id="modal1" cancel-disabled ok-disabled @ok="formSubmit()" >
 
-                    <!-- <div class="row">
-                        <div class="col">
-                            <strong>NIP/NRK</strong>
-                            <span><strong> : </strong></span>
-                            <i>{{form.nip}}</i>
-                        </div>
-                        <div class="col">
-                            <strong>Jenis Cuti</strong>
-                            <span><strong> : </strong></span>
-                            <i>{{form.jcuti}}</i>
-                        </div>
-                        <div class="col">
-                            <strong>Tanggal</strong>
-                            <span><strong> : </strong></span>
-                            <i>{{form.start}} - {{form.end}}</i>
-                        </div>
-                    </div> -->
-
-                            <!-- <strong>NIP/NRK</strong>
-                            <span><strong> : </strong></span>
-                            <i>{{form.nip}}</i>
-
-                            <br>
-
-                            <strong>Jenis Cuti</strong>
-                            <span><strong> : </strong></span>
-                            <i>{{form.jcuti}}</i>
-
-                            <br>
-
-                            <strong>Tanggal</strong>
-                            <span><strong> : </strong></span>
-                            <i>{{form.start}} - {{form.end}}</i>
-
-                            <br>
-
-                            <strong></strong>
-                            <span><strong> : </strong></span>
-                            <i>{{form.jcuti}}</i> -->
-                            Cuti yang diambil : {{form.jumlahHari}} hari (maks : {{form.batashari}})<br>
+                            Perhitungan jumlah cuti yang diambil : {{form.jumlahHari}} hari (maks : {{form.batashari}})<br>
                             <span v-if="form.jumlahHari > form.batashari"><small>Hanya {{form.batashari}} hari yang diterima dari {{form.jumlahHari}} hari yang diajukan. Terhitung mulai dari tanggal awal ({{form.start}})</small></span><br><br>
                             Berikut ini ajuan tanggal cuti yang diterima : <br><br>
                             <ol>
                                 <li v-for="tgl in dataCuti.tanggal" :key="tgl"><small>{{ tgl }}</small></li>
                             </ol>
 
-                    <template #modal-footer="{ok, cancel}">
-                        <button type="button" class="btn btn-primary" @click="ok()">Setuju dan Buat</button>
+                    <template #modal-footer="{formSubmit, cancel}">
+                        <button type="button" class="btn btn-primary" @click="formSubmit()">Setuju dan Buat</button>
                         <button type="button" class="btn btn-secondary" @click="cancel()">Batal</button>
                     </template>
                 </b-modal>
@@ -296,7 +259,10 @@ export default{
                 }
                 this.form.jumlahHari = baseDate.length;
                 this.dataCuti.tanggal = baseDate.slice(0,this.form.batashari);
-                this.$bvModal.show('modal1');
+                //this.$refs.modal1.setAttribute('style','z-index:1;');
+                this.$refs['modal1'].toggle('#btn-submit-cuti');
+                
+                
             }
             else
                 alert('Harap periksa masukan Tanggal Mulai dan Tanggal Akhir anda');
@@ -306,9 +272,22 @@ export default{
         },
         formSubmit(){
             
-            this.alert.type = "success";
-            this.alert.message = "Haha Told Ya!";
-            //axios.post()
+            this.dataCuti.nip = this.form.nip;
+            this.dataCuti.start = this.form.start;
+            this.dataCuti.end = this.form.end;
+            this.dataCuti.jenisCuti = this.form.jcuti;
+            this.dataCuti.alamat = this.form.alamat;
+            this.dataCuti.alasan = this.form.alasan;
+
+            
+            axios.post(`/form/create`,this.dataCuti)
+            .then(resp => {
+                alert("Permohonan cuti berhasil dibuat!");
+            })
+            .catch( err =>{
+                console.log("Error submit cuti : "+err);
+                alert("Permohonan cuti gagal dibuat!");
+            });
         },
         formUpdate(){
             this.alert.type = "failed";

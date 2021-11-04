@@ -70,7 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // Cuti CRUD Related Routes
-Route::post('/form','App\Http\Controllers\FormCutiController@submitCuti')->name('submit-cuti');
+Route::post('/form/create','App\Http\Controllers\FormCutiController@submitCuti')->name('submit-cuti');
 Route::get('/report/table/self/delete/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'cancelCuti'])->name('report.self.delete');
 Route::get('/report/table/self/application/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('report.self.app');
 Route::get('/report/table/asn/delete/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'cancelCuti'])->name('report.asn.delete');

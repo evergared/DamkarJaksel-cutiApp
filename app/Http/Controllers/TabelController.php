@@ -209,7 +209,8 @@ class TabelController extends Controller
                                 $appRoute = route('report.asn.app',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
                                 
                                 $btn = '<a href="'.$appRoute.'" class="edit btn btn-info btn-sm">Ambil Surat Cuti</a>';
-                                $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>'; 
+                                $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>';
+                                $btn = $btn.'<button class="btn" data-toggle="modal" data-target="#form-cuti">test</button>'; 
                             return $btn;
                         })
                         ->rawColumns(['tindakan'])

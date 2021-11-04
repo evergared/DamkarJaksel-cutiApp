@@ -19,6 +19,19 @@
     </table>
 </div>
 
+<div  class="modal fade" tabindex="0" id="form-cuti">
+    <div class="col-lg-8 modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-body" id="app">
+            
+        <form-cuti></form-cuti>
+            
+      </div>
+            
+        </div>
+    </div>
+</div>
+
 @push('datatables-script')
 <script type="text/javascript">
     $(function (){
@@ -50,4 +63,8 @@
 <link href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap4.min.css">
 <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap4.min.js"></script>
+@endpush
+
+@push('js')
+    <script src="{{ asset('js/app.js') }}"></script>
 @endpush

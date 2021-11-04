@@ -3,15 +3,15 @@
 @include('layouts.headers.cards')
 
 <div class="container-fluid mt--7 ">
-  <div class="row justify-content-center">
+  <div class="row justify-content ">
 
-  <div id="app">
+  <div class="col-md-7 col-sm" id="app">
     <form-cuti v-bind:nip = '{{ auth()->user()->nip }}'></form-cuti>
   </div>
 
 
     {{-- Bagian tampilan sisa cuti --}}
-    <div class="col-md-6">
+    <div class="col-md-5 col-sm">
       <div class="card bg-secondary shadow border-0 xl-4">
         <div class="card-body">
           <div class="text-center mb-4">
