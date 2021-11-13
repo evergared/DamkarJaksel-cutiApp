@@ -35,16 +35,19 @@ class FormCutiController extends Controller
     public function submitCuti(Request $request)
     {
 
-        $nrk = $request->input('nrk');
-        $tglMulai = Date($request->input('tMulai'));
-        $tglSelesai= Date($request->input('tSelesai'));
+        $nip = $request->input('nip');
+        $tglMulai = Date($request->input('start'));
+        $tglSelesai= Date($request->input('end'));
         $jenisCuti = $request->input('jCuti');
-        $alasanCuti = $request->input('aCuti');
+        $alamatCuti = $request->input('alamat');
+        $alasanCuti = $request->input('alasan');
+        $listTanggal = implode('||',$request->input('tanggal'));
+        $lama = $request->input('lama');
 
         // TODO : proses perhitungan hari
         // TODO : alasan cuti 
 
-
+        
 
         if(Auth::user()->is_pjlp)
         {
@@ -60,20 +63,23 @@ class FormCutiController extends Controller
         }
         else
         {
-            return redirect()
-                    ->back()
-                    ->withInput()
-                    ->withErrors('form_error','Proses gagal! Silahkan logout dan login kembali.');
+            // return redirect()
+            //         ->back()
+            //         ->withInput()
+            //         ->withErrors('form_error','Proses gagal! Silahkan logout dan login kembali.');
+
+            return "Autentikasi gagal! Silahkan logout dan login kembali untuk memulihkan.";
         }
 
 
         try
         {
+
             $id = $daftar->insertGetId([
-                'nip' => $nrk,
+                'nip' => $nip,
                 'tgl_awal' => $tglMulai,
                 'tgl_akhir' => $tglSelesai,
-                'total_cuti' => 0,
+                'total_cuti' => $lama,
                 'tgl_pengajuan' => Date(today()),
                 'jenis_cuti' => $jenisCuti,
                 'alasan' => $alasanCuti
@@ -83,16 +89,18 @@ class FormCutiController extends Controller
                 'no_cuti' => $id
             ]);
 
-            CutiSubmitEvent::dispatch($nrk,$id);
+            CutiSubmitEvent::dispatch($nip,$id);
 
-            return response('form_success',"Form cuti berhasil diajukan! Cek Report Daftar Cuti untuk detail.");
-
+            //return response('form_success',"Form cuti berhasil diajukan! Cek Report Daftar Cuti untuk detail.");
+            return "Permohonan cuti berhasil dibuat! Cek Report Daftar Cuti untuk melihat persetujuan.";
         }
 
         catch(Throwable $e)
         {
+            error_log("Submit Cuti Gagal : ".$e);
             report("Error input database. User : " . $request->user()->nip . " Time " . now() . "\nException : ".$e);
-            return response('form_error','Insert database gagal! Cek data anda dan coba beberapa saat lagi atau hubungi admin.');
+            return "Gagal membuat permintaan cuti! Coba lagi dalam beberapa saat atau hubungi admin jika tetap gagal.";
+            //return response('form_error','Insert database gagal! Cek data anda dan coba beberapa saat lagi atau hubungi admin.');
         }
 
 
@@ -216,6 +224,39 @@ class FormCutiController extends Controller
         // get cuti id
         // show cuti modify dialog with last input
         // if submit, update table daftar cuti
+
+        $check = DB::table('data_pegawai')->where('nip','=',$request->input('nip'))->get()->first();
+
+        if($check->golongan === "PJLP")
+        {
+            $d = DB::table('daftar_cuti_pjlp');
+            $a = DB::table('asigment_pjlp');
+        }
+        else
+        {
+            $d = DB::table('daftar_cuti_asn');
+            $a = DB::table('asigment_asn');
+        }
+
+        try
+        {
+            $a->where('no_cuti','=',$request->input('no_cuti'))->get()->first();
+
+            $d->delete($no_cuti);
+
+            return redirect()
+                ->back()
+                ->with('report_success','Cuti berhasil dihapus!');
+        }
+        
+        catch(Throwable $e)
+        {
+            report("Error Delete Cuti : ".$nip." No cuti : ".$no_cuti." Exception : ".$e);
+            return redirect()
+                ->back()
+                ->withErrors('report_error','Cuti gagal dihapus!');
+        }
+
     }
 
     public function showCutiDetail (Request $request)

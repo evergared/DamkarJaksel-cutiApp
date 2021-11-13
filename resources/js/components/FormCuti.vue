@@ -87,12 +87,12 @@
 
                 <!-- {{-- Bagian tombol submit --}} -->
                 <div class="text-center">
-                  <a class="btn btn-primary my-4 text-white" id="btn-submit-cuti"  @click="checkDataSubmit()" v-if="!updateMode">Submit</a>
+                  <a class="btn btn-primary my-4 text-white" id="btn-submit-cuti"  @click="checkDataSubmit()" v-if="!um">Submit</a>
                   <a class="btn btn-primary my-4 text-white"  @click="formUpdate()" v-else>Update</a>
                 </div>
 
 
-                <b-modal tabindex="-1"  ref="modal1" id="modal1" cancel-disabled ok-disabled @ok="formSubmit()" >
+                <b-modal  ref="modal1" id="modal1" cancel-disabled ok-disabled  >
 
                             Perhitungan jumlah cuti yang diambil : {{form.jumlahHari}} hari (maks : {{form.batashari}})<br>
                             <span v-if="form.jumlahHari > form.batashari"><small>Hanya {{form.batashari}} hari yang diterima dari {{form.jumlahHari}} hari yang diajukan. Terhitung mulai dari tanggal awal ({{form.start}})</small></span><br><br>
@@ -101,11 +101,29 @@
                                 <li v-for="tgl in dataCuti.tanggal" :key="tgl"><small>{{ tgl }}</small></li>
                             </ol>
 
-                    <template #modal-footer="{formSubmit, cancel}">
+                    <template #modal-footer="{}">
                         <button type="button" class="btn btn-primary" @click="formSubmit()">Setuju dan Buat</button>
                         <button type="button" class="btn btn-secondary" @click="cancel()">Batal</button>
                     </template>
                 </b-modal>
+
+
+  <!-- <div class="modal fade" tabindex="-1" id="modal1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-body">
+            
+        Test
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+            
+        </div>
+    </div>
+</div> -->
                
 
               </div>
@@ -145,8 +163,6 @@ export default{
         return{
             minDate, maxDate,
 
-            processing:false,
-
             hari:{
                 minggu:0,
                 senin:1,
@@ -172,11 +188,12 @@ export default{
                 jumlahHari:0,
                 lama: 0,
                 batashari:this.sisacuti,
-                updateMode : this.um
+                updateMode : this.um,
             },
 
             dataCuti:{
                 nip: "",
+                no_cuti: "",
                 start:"",
                 end:"",
                 lama:0,
@@ -192,7 +209,11 @@ export default{
     },
     props:{
         nip:{
-            type: String,
+            type: Number,
+        },
+        no_cuti:{
+          type:Number,
+          default: null
         },
         startDate:{
             type:Date,
@@ -251,7 +272,8 @@ export default{
                     if((ndate.getDay() != this.hari.minggu && ndate.getDay() != this.hari.sabtu) && !this.disableCuti.includes(ndate.toISOString().slice(0,10)))
                     {
                         //console.log("inserted = "+ndate.toISOString().slice(0,10));
-                        baseDate.push(ndate.toLocaleString());
+                        //baseDate.push(ndate.toLocaleString());
+                        baseDate.push(ndate.toISOString().slice(0,10));
                     }
                     else
                         continue
@@ -259,16 +281,11 @@ export default{
                 }
                 this.form.jumlahHari = baseDate.length;
                 this.dataCuti.tanggal = baseDate.slice(0,this.form.batashari);
-                //this.$refs.modal1.setAttribute('style','z-index:1;');
                 this.$refs['modal1'].toggle('#btn-submit-cuti');
-                
                 
             }
             else
                 alert('Harap periksa masukan Tanggal Mulai dan Tanggal Akhir anda');
-
-            
-
         },
         formSubmit(){
             
@@ -278,20 +295,63 @@ export default{
             this.dataCuti.jenisCuti = this.form.jcuti;
             this.dataCuti.alamat = this.form.alamat;
             this.dataCuti.alasan = this.form.alasan;
+            this.dataCuti.lama = this.form.jumlahHari;
 
-            
-            axios.post(`/form/create`,this.dataCuti)
+            axios.post(`form/create`,this.dataCuti)
             .then(resp => {
-                alert("Permohonan cuti berhasil dibuat!");
+                alert(resp.data);
             })
             .catch( err =>{
                 console.log("Error submit cuti : "+err);
-                alert("Permohonan cuti gagal dibuat!");
+                alert("Gagal terhubung ke database!");
             });
         },
         formUpdate(){
-            this.alert.type = "failed";
-            this.alert.message = "Haha Told Ya!";
+            
+            if( this.form.lama > 0)
+            {
+                var baseDate = new Array();
+                for(var i = 0; i<this.form.lama; i++)
+                {
+                    var date = new Date(this.form.start);
+                    var ndate = new Date(date.setDate(date.getDate() + i));
+
+                    if((ndate.getDay() != this.hari.minggu && ndate.getDay() != this.hari.sabtu) && !this.disableCuti.includes(ndate.toISOString().slice(0,10)))
+                    {
+                        //console.log("inserted = "+ndate.toISOString().slice(0,10));
+                        //baseDate.push(ndate.toLocaleString());
+                        baseDate.push(ndate.toISOString().slice(0,10));
+                    }
+                    else
+                        continue
+                    
+                }
+                this.form.jumlahHari = baseDate.length;
+                this.dataCuti.tanggal = baseDate.slice(0,this.form.batashari);
+                //this.$refs['modal1'].toggle('#btn-submit-cuti');
+
+                this.dataCuti.nip = this.form.nip;
+                this.dataCuti.no_cuti = this.no_cuti;
+                this.dataCuti.start = this.form.start;
+                this.dataCuti.end = this.form.end;
+                this.dataCuti.jenisCuti = this.form.jcuti;
+                this.dataCuti.alamat = this.form.alamat;
+                this.dataCuti.alasan = this.form.alasan;
+                this.dataCuti.lama = this.form.jumlahHari;
+
+                axios.patch(`form/update`,this.dataCuti)
+                .then(resp => {
+                  alert(resp.data);
+                })
+                .catch(err => {
+                  console.log("Update cuti gagal : "+err);
+                  alert("Gagal terhubung ke database");
+                });
+                
+            }
+            else
+                alert('Harap periksa masukan Tanggal Mulai dan Tanggal Akhir anda');
+            
         }
     }
 

@@ -29,6 +29,7 @@ Vue.use(require('vue-moment'));
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('admin-calendar', require('./components/AdminCalendar.vue').default);
 Vue.component('form-cuti', require('./components/FormCuti.vue').default);
+Vue.component('basic-modal',require('./components/BasicModal.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

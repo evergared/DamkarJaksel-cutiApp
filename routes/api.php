@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('calendar/array',[App\Http\Controllers\CalendarController::class,'index']);
+//Route::post('/form/create','App\Http\Controllers\FormCutiController@submitCuti')->name('submit-cuti');
