@@ -6,7 +6,7 @@
   <div class="row justify-content ">
 
   <div class="col-md-7 col-sm" id="app">
-    <form-cuti v-bind:nip = '{{ auth()->user()->nip }}'></form-cuti>
+    <form-cuti nip = '{{ auth()->user()->nip }}'></form-cuti>
   </div>
 
 

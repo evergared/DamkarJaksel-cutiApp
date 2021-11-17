@@ -38,7 +38,7 @@ class FormCutiController extends Controller
         $nip = $request->input('nip');
         $tglMulai = Date($request->input('start'));
         $tglSelesai= Date($request->input('end'));
-        $jenisCuti = $request->input('jCuti');
+        $jenisCuti = $request->input('jenisCuti');
         $alamatCuti = $request->input('alamat');
         $alasanCuti = $request->input('alasan');
         $listTanggal = implode('||',$request->input('tanggal'));
@@ -68,7 +68,7 @@ class FormCutiController extends Controller
             //         ->withInput()
             //         ->withErrors('form_error','Proses gagal! Silahkan logout dan login kembali.');
 
-            return "Autentikasi gagal! Silahkan logout dan login kembali untuk memulihkan.";
+            return "fail_submit_role_not_found";
         }
 
 
@@ -82,7 +82,9 @@ class FormCutiController extends Controller
                 'total_cuti' => $lama,
                 'tgl_pengajuan' => Date(today()),
                 'jenis_cuti' => $jenisCuti,
-                'alasan' => $alasanCuti
+                'alasan' => $alasanCuti,
+                'alamat' => $alamatCuti,
+                'tanggal' => $listTanggal
             ]);
             
             $asigment -> insert([
@@ -92,14 +94,14 @@ class FormCutiController extends Controller
             CutiSubmitEvent::dispatch($nip,$id);
 
             //return response('form_success',"Form cuti berhasil diajukan! Cek Report Daftar Cuti untuk detail.");
-            return "Permohonan cuti berhasil dibuat! Cek Report Daftar Cuti untuk melihat persetujuan.";
+            return "success_submit";
         }
 
         catch(Throwable $e)
         {
             error_log("Submit Cuti Gagal : ".$e);
             report("Error input database. User : " . $request->user()->nip . " Time " . now() . "\nException : ".$e);
-            return "Gagal membuat permintaan cuti! Coba lagi dalam beberapa saat atau hubungi admin jika tetap gagal.";
+            return "fail_submit_try_caught";
             //return response('form_error','Insert database gagal! Cek data anda dan coba beberapa saat lagi atau hubungi admin.');
         }
 
@@ -225,36 +227,56 @@ class FormCutiController extends Controller
         // show cuti modify dialog with last input
         // if submit, update table daftar cuti
 
-        $check = DB::table('data_pegawai')->where('nip','=',$request->input('nip'))->get()->first();
-
-        if($check->golongan === "PJLP")
-        {
-            $d = DB::table('daftar_cuti_pjlp');
-            $a = DB::table('asigment_pjlp');
-        }
-        else
-        {
-            $d = DB::table('daftar_cuti_asn');
-            $a = DB::table('asigment_asn');
-        }
-
         try
         {
-            $a->where('no_cuti','=',$request->input('no_cuti'))->get()->first();
 
-            $d->delete($no_cuti);
+            $check = DB::table('data_pegawai')->where('nip','=',$request->input('nip'))->get()->first();
 
-            return redirect()
-                ->back()
-                ->with('report_success','Cuti berhasil dihapus!');
+            if($check->golongan === "PJLP")
+            {
+                $d = DB::table('daftar_cuti_pjlp');
+                $a = DB::table('asigment_pjlp');
+            }
+            else
+            {
+                $d = DB::table('daftar_cuti_asn');
+                $a = DB::table('asigment_asn');
+            }
+
+        
+
+            $no_cuti = $request->input('no_cuti');
+            $start = $request->input('start');
+            $end = $request->input('end');
+            $lama = $request->input('lama');
+            $tanggal = implode('||',$request->input('tanggal'));
+            $jenis = $request->input('jenis_cuti');
+            $alamat = $request->input('alamat');
+            $alasan = $request->input('alasan');
+
+            $d->where('id','=',$no_cuti)->update([
+
+                'tgl_awal' => $start,
+                'tgl_akhir' => $end,
+                'total_cuti' => $lama,
+                'jenis_cuti' => $jenis,
+                'alamat' => $alamat,
+                'alasan' => $alasan,
+                'tanggal' => $tanggal
+
+            ]);
+
+            return "success_update";
+
+            // return redirect()
+            //     ->back()
+            //     ->with('report_success','Cuti berhasil dihapus!');
         }
         
         catch(Throwable $e)
         {
-            report("Error Delete Cuti : ".$nip." No cuti : ".$no_cuti." Exception : ".$e);
-            return redirect()
-                ->back()
-                ->withErrors('report_error','Cuti gagal dihapus!');
+            report("Error Delete Cuti : ".$request->input('nip')." No cuti : ".$no_cuti." Exception : ".$e);
+            return "fail_update_try_caught";
         }
 
     }

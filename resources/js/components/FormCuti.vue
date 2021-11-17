@@ -64,10 +64,10 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-clipboard"></i></span>
                   </div>
-                  <select autocomplete="off" class="form-control" id="jcuti" name="jcuti" type="text" placeholder="Pilih Jenis Cuti" v-model="form.jcuti">
+                  <select autocomplete="off" class="form-control" id="jenisCuti" name="jenisCuti" type="text" placeholder="Pilih Jenis Cuti" v-model="form.jenisCuti">
                       
                         <option value="" disabled>Pilih Jenis Cuti</option >
-                        <option >Tahunan</option >
+                        <option value = "Tahunan">Tahunan</option >
                       
                   </select>
                 </div>
@@ -103,7 +103,7 @@
 
                     <template #modal-footer="{}">
                         <button type="button" class="btn btn-primary" @click="formSubmit()">Setuju dan Buat</button>
-                        <button type="button" class="btn btn-secondary" @click="cancel()">Batal</button>
+                        <button type="button" class="btn btn-secondary" @click="modal1Cancel()">Batal</button>
                     </template>
                 </b-modal>
 
@@ -182,7 +182,7 @@ export default{
                 nip:this.nip,
                 start: "",
                 end:"",
-                jcuti:this.jenis,
+                jenisCuti:this.jenis,
                 alamat:this.alamat,
                 alasan:this.alasan,
                 jumlahHari:0,
@@ -209,10 +209,10 @@ export default{
     },
     props:{
         nip:{
-            type: Number,
+            type: String,
         },
         no_cuti:{
-          type:Number,
+          type:String,
           default: null
         },
         startDate:{
@@ -292,14 +292,28 @@ export default{
             this.dataCuti.nip = this.form.nip;
             this.dataCuti.start = this.form.start;
             this.dataCuti.end = this.form.end;
-            this.dataCuti.jenisCuti = this.form.jcuti;
+            this.dataCuti.jenisCuti = this.form.jenisCuti;
             this.dataCuti.alamat = this.form.alamat;
             this.dataCuti.alasan = this.form.alasan;
             this.dataCuti.lama = this.form.jumlahHari;
 
+            this.$refs['modal1'].hide();
+
+            // some bootstrap spinner while waiting would be nice
+
             axios.post(`form/create`,this.dataCuti)
             .then(resp => {
-                alert(resp.data);
+                var m;
+
+                  switch(resp.data)
+                  {
+                    case "fail_role_not_found": m = "Autentikasi gagal! Silahkan logout dan login kembali untuk memulihkan."; break;
+                    case "success_submit" : m = "Permohonan cuti berhasil dibuat! Cek Report Daftar Cuti untuk melihat persetujuan.";this.clear();break;
+                    case "fail_submit_try_caught" : m = "Gagal membuat permintaan cuti! Coba lagi dalam beberapa saat atau hubungi admin jika tetap gagal."; break;
+                    default : m = "Error : Status unknown";break;
+                  }
+
+                  alert(m);
             })
             .catch( err =>{
                 console.log("Error submit cuti : "+err);
@@ -328,20 +342,30 @@ export default{
                 }
                 this.form.jumlahHari = baseDate.length;
                 this.dataCuti.tanggal = baseDate.slice(0,this.form.batashari);
-                //this.$refs['modal1'].toggle('#btn-submit-cuti');
 
                 this.dataCuti.nip = this.form.nip;
                 this.dataCuti.no_cuti = this.no_cuti;
                 this.dataCuti.start = this.form.start;
                 this.dataCuti.end = this.form.end;
-                this.dataCuti.jenisCuti = this.form.jcuti;
+                this.dataCuti.jenisCuti = this.form.jenisCuti;
                 this.dataCuti.alamat = this.form.alamat;
                 this.dataCuti.alasan = this.form.alasan;
                 this.dataCuti.lama = this.form.jumlahHari;
 
                 axios.patch(`form/update`,this.dataCuti)
                 .then(resp => {
-                  alert(resp.data);
+
+                  var m;
+
+                  switch(resp.data)
+                  {
+                    case "success_update" : m = "Update data cuti berhasil!";this.clear();break;
+                    case "fail_update_try_caught" : m = "Data cuti gagal di update!"; break;
+                    default : m = "Error : Status unknown";break;
+                  }
+
+                  alert(m);
+                  
                 })
                 .catch(err => {
                   console.log("Update cuti gagal : "+err);
@@ -352,6 +376,19 @@ export default{
             else
                 alert('Harap periksa masukan Tanggal Mulai dan Tanggal Akhir anda');
             
+        },
+        clear(){
+          this.form.start = "";
+          this.form.end = "";
+          this.form.jenisCuti = "";
+          this.form.alamat = "";
+          this.form.jumlahHari = 0;
+          this.form.lama = 0;
+          this.form.alasan = "";
+        },
+
+        modal1Cancel(){
+          this.$refs['modal1'].hide()
         }
     }
 

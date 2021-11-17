@@ -8,6 +8,8 @@
                 <th>Nama</th>
                 <th>Penempatan</th>
                 <th>Jenis Cuti</th>
+                <th>Alasan</th>
+                <th>Alamat</th>
                 <th>Tanggal Awal</th>
                 <th>Tanggal Akhir</th>
                 <th>Total Hari Kerja</th>
@@ -19,21 +21,24 @@
     </table>
 </div>
 
+<!-- <a id="testis" href='#'>TESTIS</a>
+
 <div  class="modal fade" tabindex="0" id="form-cuti">
     <div class="col-lg-8 modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-body" id="app">
             
-        <form-cuti></form-cuti>
+        <form-cuti id="cuti-updater" nip="22223333"></form-cuti>
             
       </div>
             
         </div>
     </div>
-</div>
+</div> -->
 
 @push('datatables-script')
 <script type="text/javascript">
+    // import 
     $(function (){
         var table = $('.asn').DataTable({
 
@@ -47,6 +52,8 @@
                 {data: 'nama', name:'nama'},
                 {data: 'penempatan', name:'penempatan'},
                 {data: 'jenis_cuti', name:'jenis_cuti'},
+                {data: 'alasan', name:'alasan'},
+                {data: 'alamat', name:'alamat'},
                 {data: 'tgl_awal', name:'tgl_awal'},
                 {data: 'tgl_akhir', name: 'tgl_akhir'},
                 {data: 'total_cuti', name:'total_cuti'},
@@ -56,6 +63,15 @@
             ],
         });
     });
+
+    function updateModal(targetData){
+        var nip = targetData.getAttribute('data-nip');
+        alert("test modlue : "+$('#cuti-updater').prop('nip'));
+         //$('#testis').attr('class','btn btn-sm');
+        //$('form-cuti').addAttribute('nip',targetData.getAttribute('data-nip'));
+        //alert($('#cuti').attr('nip'));
+         $('#form-cuti').modal('show');
+    }
 </script>
 @endpush
 
