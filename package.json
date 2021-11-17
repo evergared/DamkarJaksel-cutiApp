@@ -33,6 +33,10 @@
         "@fullcalendar/timegrid": "^5.10.0",
         "@fullcalendar/vue": "^5.10.0",
         "bootstrap-vue": "^2.21.2",
+        "datatables.net": "^1.11.3",
+        "datatables.net-bs4": "^1.11.3",
+        "datatables.net-buttons": "^2.0.1",
+        "datatables.net-buttons-bs4": "^2.0.1",
         "vue-moment": "^4.1.0"
     }
 }

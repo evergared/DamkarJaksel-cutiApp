@@ -5,7 +5,7 @@
 <div class="container-fluid mt--7 ">
   <div class="row justify-content ">
 
-  <div class="col-md-7 col-sm" id="app">
+  <div class="col-md-7 col-sm" id="cuti">
     <form-cuti nip = '{{ auth()->user()->nip }}'></form-cuti>
   </div>
 
@@ -69,12 +69,6 @@
 @endsection
 
 @push('js')
-{{-- Datepicker --}}
-<script src="{{ asset('assets') }}/vendor/js-cookie/js.cookie.js"></script>
-<script src="{{ asset('assets') }}/vendor/bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.js"></script>
-<script src="{{ asset('assets') }}/vendor/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.id.min.js"></script>
-
-<script src="{{ asset('js') }}/calendar-tools.js">
 </script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/formCuti.js') }}"></script>
 @endpush

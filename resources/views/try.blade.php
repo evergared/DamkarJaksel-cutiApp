@@ -7,7 +7,7 @@
         User adalah ASN tulen
     @endif
 @endauth
-<div id="app">
+<div id="test">
     <button class="btn" data-toggle="modal" data-target="#modal">test</button>
     
 
@@ -26,5 +26,9 @@
 @endpush
 
 @push('js')
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/formCuti.js') }}"></script>
 @endpush
+
+<!-- <script type="javascript/text">
+    import form-cuti from ''
+</script> -->

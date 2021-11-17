@@ -211,14 +211,14 @@ class TabelController extends Controller
                                 
                                 $btn = '<a href="'.$appRoute.'" class="edit btn btn-info btn-sm">Ambil Surat Cuti</a>';
                                 $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>';
-                                $btn = $btn.'<button class="btn" data-toggle="modal" data-target="#form-cuti-'.$row->no.'"
+                                $btn = $btn.'<button class="btn" data-toggle="modal" data-target="#form-cuti-'.$row->no_cuti.'"
                                         data-nip="'.$row->nip.'">test</button>';
-                                $btn = $btn. '<div  class="modal fade" tabindex="0" id="form-cuti-'.$row->no.'">
+                                $btn = $btn. '<div  class="modal fade" tabindex="0" id="form-cuti-'.$row->no_cuti.'">
                                 <div class="col-lg-8 modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
-                                    <div class="modal-body" id="app">
+                                    <div class="modal-body" >
                                         
-                                    <form-cuti id="cuti-updater" nip="'.$row->nip.'"></form-cuti>
+                                    <form-cuti nip="'.$row->nip.'"></form-cuti>
                                         
                                   </div>
                                         

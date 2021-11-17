@@ -26,10 +26,11 @@ Vue.use(require('vue-moment'));
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('admin-calendar', require('./components/AdminCalendar.vue').default);
-Vue.component('form-cuti', require('./components/FormCuti.vue').default);
-Vue.component('basic-modal',require('./components/BasicModal.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('admin-calendar', require('./components/AdminCalendar.vue').default);
+// Vue.component('form-cuti', require('./components/FormCuti.vue'));
+// Vue.component('basic-modal',require('./components/BasicModal.vue').default);
+// Vue.component('datatable',require('./components/DataTable.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
