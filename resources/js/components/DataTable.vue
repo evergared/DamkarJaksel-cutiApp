@@ -2,15 +2,16 @@
     <table>
         <thead>
         <tr>
-            <th v-for="column in parameters.columns" v-html="title(column)" ></th>
+            <th v-for="column in parameters.columns" v-html="title(column)" :key="column" ></th>
         </tr>
         </thead>
         <tfoot v-if="footer">
         <tr>
-            <th v-for="column in parameters.columns" v-html="column.footer" ></th>
+            <th v-for="column in parameters.columns" v-html="column.footer" :key="column" ></th>
         </tr>
         </tfoot>
     </table>
+    
 </template>
 
 <script>
@@ -41,8 +42,8 @@
                         serverSide: true,
                         processing: true
                    }, {
-                   ajax: this.ajax,
-                   columns: this.columns,
+                   columns:this.columns,
+                   ajax:this.ajax,
                    createdRow(...args) {
                       vm.$emit('created-row', ...args);
                    },

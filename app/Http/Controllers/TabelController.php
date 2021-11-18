@@ -213,29 +213,19 @@ class TabelController extends Controller
                                 $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>';
                                 $btn = $btn.'<button class="btn" data-toggle="modal" data-target="#form-cuti-'.$row->no_cuti.'"
                                         data-nip="'.$row->nip.'">test</button>';
-                                $btn = $btn. '<div  class="modal fade" tabindex="0" id="form-cuti-'.$row->no_cuti.'">
-                                <div class="col-lg-8 modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                    <div class="modal-body" >
-                                        
-                                    <form-cuti nip="'.$row->nip.'"></form-cuti>
-                                        
-                                  </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>';
                             return $btn;
                         })
                         ->rawColumns(['tindakan'])
                         ->make(true);
         }
 
-        if($request->ajax())
-        {
-            return $dt; 
-        }
-        return view('dashboard/report');
+        return $dt;
+
+        // if($request->ajax())
+        // {
+        //     return $dt; 
+        // }
+        //return view('dashboard/report');
     }
 
     public function createTableAssignmentPJLP(Request $request)

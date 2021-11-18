@@ -27,6 +27,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
@@ -39,7 +40,8 @@ __webpack_require__(/*! datatables.net-buttons-bs4 */ "./node_modules/datatables
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {//dataTable: {},
+    return {
+      dataTable: {}
     };
   },
   methods: {
@@ -59,8 +61,8 @@ __webpack_require__(/*! datatables.net-buttons-bs4 */ "./node_modules/datatables
         serverSide: true,
         processing: true
       }, {
-        ajax: this.ajax,
         columns: this.columns,
+        ajax: this.ajax,
         createdRow: function createdRow() {
           for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
@@ -29146,6 +29148,7 @@ var render = function() {
         "tr",
         _vm._l(_vm.parameters.columns, function(column) {
           return _c("th", {
+            key: column,
             domProps: { innerHTML: _vm._s(_vm.title(column)) }
           })
         }),
@@ -29159,6 +29162,7 @@ var render = function() {
             "tr",
             _vm._l(_vm.parameters.columns, function(column) {
               return _c("th", {
+                key: column,
                 domProps: { innerHTML: _vm._s(column.footer) }
               })
             }),
@@ -41407,9 +41411,10 @@ var __webpack_exports__ = {};
   !*** ./resources/js/dataTable.js ***!
   \***********************************/
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"];
-Vue.component('data-table', __webpack_require__(/*! ./components/dataTable.vue */ "./resources/js/components/dataTable.vue")["default"]);
+Vue.component('data-table', __webpack_require__(/*! ./components/dataTable.vue */ "./resources/js/components/dataTable.vue")["default"]); // Vue.component('data-table',require('./components/ExampleComponent.vue').default);
+
 var app = new Vue({
-  el: "#dt",
+  el: '#dt',
   data: function data() {
     return {
       columns: [{
@@ -41419,37 +41424,33 @@ var app = new Vue({
       }, {
         data: 'penempatan'
       }, {
-        data: 'jenis_cuti'
+        data: 'jenis_cuti',
+        title: 'Jenis Cuti'
       }, {
         data: 'alasan'
       }, {
         data: 'alamat'
       }, {
-        data: 'tgl_awal'
+        data: 'tgl_awal',
+        title: 'Tanggal Awal'
       }, {
-        data: 'tgl_akhir'
+        data: 'tgl_akhir',
+        title: 'Tanggal Akhir'
       }, {
-        data: 'total_cuti'
+        data: 'total_cuti',
+        title: 'Lama Hari'
       }, {
-        data: 'tgl_pengajuan'
+        data: 'tgl_pengajuan',
+        title: 'Tanggal Diajukan'
       }],
       ajax: '/report/table/asn'
     };
-  } // columns:[
-  //     {data: 'nip'},
-  //     {data: 'nama'},
-  //     {data: 'penempatan'},
-  //     {data: 'jenis_cuti'},
-  //     {data: 'alasan'},
-  //     {data: 'alamat'},
-  //     {data: 'tgl_awal'},
-  //     {data: 'tgl_akhir'},
-  //     {data: 'total_cuti'},
-  //     {data: 'tgl_pengajuan'},
-  // ],
-  // ajax:'/report/table/asn'
+  } // props:{
+  //     ajax:'/report/table/asn'
+  // }
 
 });
+console.log("Test ajax (props) : " + app.$props.ajax + " Test ajax (data) : " + app.ajax + "\nTest Column : " + app.columns);
 })();
 
 /******/ })()

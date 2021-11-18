@@ -1,6 +1,6 @@
 
 <div id="dt">
-    <data-table></data-table>
+    <data-table :columns="columns" :ajax="ajax"></data-table>
 </div>
 
 @push('js')
