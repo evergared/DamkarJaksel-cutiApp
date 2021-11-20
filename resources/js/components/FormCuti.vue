@@ -4,7 +4,7 @@
 
         <div class="card-body">
           <div class="text-center">
-            <h1 v-if="um == false">Form Pengajuan Cuti</h1>
+            <h1 v-if="!um">Form Pengajuan Cuti</h1>
             <h1 v-else>Ubah Data Cuti</h1>
           </div>
           <div class="col">
@@ -105,26 +105,7 @@
                         <button type="button" class="btn btn-primary" @click="formSubmit()">Setuju dan Buat</button>
                         <button type="button" class="btn btn-secondary" @click="modal1Cancel()">Batal</button>
                     </template>
-                </b-modal>
-
-
-  <!-- <div class="modal fade" tabindex="-1" id="modal1">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-        <div class="modal-body">
-            
-        Test
-            
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-            
-        </div>
-    </div>
-</div> -->
-               
+                </b-modal>         
 
               </div>
             </form>
@@ -138,7 +119,7 @@
 import BootstrapVue from 'bootstrap-vue';
 //import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-
+import eventbus from '../eventbus';
 import axios from 'axios';
 
 Vue.use(BootstrapVue);
@@ -149,6 +130,9 @@ export default{
             axios.get('/calendar/array').then(resp=>{
                 this.disableCuti = resp.data;
             });
+            eventbus.$on('cuti-update-confirm-'+this.index,(payload) => {
+              update();
+            })
     },
 
     data(){
@@ -180,15 +164,16 @@ export default{
 
             form:{
                 nip:this.nip,
-                start: "",
-                end:"",
-                jenisCuti:this.jenis,
+                start: this.tgl_awal,
+                end:this.tgl_akhir,
+                jenisCuti:this.jenis_cuti,
                 alamat:this.alamat,
                 alasan:this.alasan,
                 jumlahHari:0,
-                lama: 0,
-                batashari:this.sisacuti,
+                lama: this.total_cuti,
+                batashari:this.sisa,
                 updateMode : this.um,
+                canUpdate : false
             },
 
             dataCuti:{
@@ -212,16 +197,20 @@ export default{
             type: String,
         },
         no_cuti:{
-          type:String,
+          type:Number,
           default: null
         },
-        startDate:{
-            type:Date,
+        tgl_awal:{
+            type:String,
         },
-        endDate:{
-            type:Date,
+        tgl_akhir:{
+            type:String,
         },
-        jenis:{
+        total_cuti:{
+          type:Number,
+          default:0
+        },
+        jenis_cuti:{
             type: String,
         },
         alamat:{
@@ -230,13 +219,16 @@ export default{
         alasan:{
             type: String,
         },
-        sisacuti:{
+        sisa:{
             type: Number,
             default:20
         },
         um:{
             type: Boolean,
             default:false
+        },
+        index:{
+          default:null
         }
     },
     methods:{
@@ -332,8 +324,6 @@ export default{
 
                     if((ndate.getDay() != this.hari.minggu && ndate.getDay() != this.hari.sabtu) && !this.disableCuti.includes(ndate.toISOString().slice(0,10)))
                     {
-                        //console.log("inserted = "+ndate.toISOString().slice(0,10));
-                        //baseDate.push(ndate.toLocaleString());
                         baseDate.push(ndate.toISOString().slice(0,10));
                     }
                     else
@@ -352,6 +342,21 @@ export default{
                 this.dataCuti.alasan = this.form.alasan;
                 this.dataCuti.lama = this.form.jumlahHari;
 
+              
+
+                eventbus.$emit('cuti-update-callback-'+this.index,this.form);
+
+
+                
+                
+            }
+            else{
+                alert('Harap periksa masukan Tanggal Mulai dan Tanggal Akhir anda');
+                this.form.canUpdate = true;
+            }
+            
+        },
+        update(){
                 axios.patch(`form/update`,this.dataCuti)
                 .then(resp => {
 
@@ -371,11 +376,6 @@ export default{
                   console.log("Update cuti gagal : "+err);
                   alert("Gagal terhubung ke database");
                 });
-                
-            }
-            else
-                alert('Harap periksa masukan Tanggal Mulai dan Tanggal Akhir anda');
-            
         },
         clear(){
           this.form.start = "";

@@ -2065,29 +2065,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
+/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
 /* harmony import */ var bootstrap_vue_dist_bootstrap_vue_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap-vue/dist/bootstrap-vue.css */ "./node_modules/bootstrap-vue/dist/bootstrap-vue.css");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../eventbus */ "./resources/js/eventbus.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2209,13 +2191,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
+
+Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var _this = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/calendar/array').then(function (resp) {
+    axios__WEBPACK_IMPORTED_MODULE_2___default().get('/calendar/array').then(function (resp) {
       _this.disableCuti = resp.data;
+    });
+    _eventbus__WEBPACK_IMPORTED_MODULE_1__["default"].$on('cuti-update-confirm-' + this.index, function (payload) {
+      update();
     });
   },
   data: function data() {
@@ -2242,15 +2228,16 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
       },
       form: {
         nip: this.nip,
-        start: "",
-        end: "",
-        jenisCuti: this.jenis,
+        start: this.tgl_awal,
+        end: this.tgl_akhir,
+        jenisCuti: this.jenis_cuti,
         alamat: this.alamat,
         alasan: this.alasan,
         jumlahHari: 0,
-        lama: 0,
-        batashari: this.sisacuti,
-        updateMode: this.um
+        lama: this.total_cuti,
+        batashari: this.sisa,
+        updateMode: this.um,
+        canUpdate: false
       },
       dataCuti: {
         nip: "",
@@ -2271,16 +2258,20 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
       type: String
     },
     no_cuti: {
-      type: String,
+      type: Number,
       "default": null
     },
-    startDate: {
-      type: Date
+    tgl_awal: {
+      type: String
     },
-    endDate: {
-      type: Date
+    tgl_akhir: {
+      type: String
     },
-    jenis: {
+    total_cuti: {
+      type: Number,
+      "default": 0
+    },
+    jenis_cuti: {
       type: String
     },
     alamat: {
@@ -2289,13 +2280,16 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
     alasan: {
       type: String
     },
-    sisacuti: {
+    sisa: {
       type: Number,
       "default": 20
     },
     um: {
       type: Boolean,
       "default": false
+    },
+    index: {
+      "default": null
     }
   },
   methods: {
@@ -2340,7 +2334,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
       this.dataCuti.lama = this.form.jumlahHari;
       this.$refs['modal1'].hide(); // some bootstrap spinner while waiting would be nice
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default().post("form/create", this.dataCuti).then(function (resp) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post("form/create", this.dataCuti).then(function (resp) {
         var m;
 
         switch (resp.data) {
@@ -2371,8 +2365,6 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
       });
     },
     formUpdate: function formUpdate() {
-      var _this3 = this;
-
       if (this.form.lama > 0) {
         var baseDate = new Array();
 
@@ -2381,8 +2373,6 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
           var ndate = new Date(date.setDate(date.getDate() + i));
 
           if (ndate.getDay() != this.hari.minggu && ndate.getDay() != this.hari.sabtu && !this.disableCuti.includes(ndate.toISOString().slice(0, 10))) {
-            //console.log("inserted = "+ndate.toISOString().slice(0,10));
-            //baseDate.push(ndate.toLocaleString());
             baseDate.push(ndate.toISOString().slice(0, 10));
           } else continue;
         }
@@ -2397,32 +2387,40 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
         this.dataCuti.alamat = this.form.alamat;
         this.dataCuti.alasan = this.form.alasan;
         this.dataCuti.lama = this.form.jumlahHari;
-        axios__WEBPACK_IMPORTED_MODULE_1___default().patch("form/update", this.dataCuti).then(function (resp) {
-          var m;
+        _eventbus__WEBPACK_IMPORTED_MODULE_1__["default"].$emit('cuti-update-callback-' + this.index, this.form);
+      } else {
+        alert('Harap periksa masukan Tanggal Mulai dan Tanggal Akhir anda');
+        this.form.canUpdate = true;
+      }
+    },
+    update: function update() {
+      var _this3 = this;
 
-          switch (resp.data) {
-            case "success_update":
-              m = "Update data cuti berhasil!";
+      axios__WEBPACK_IMPORTED_MODULE_2___default().patch("form/update", this.dataCuti).then(function (resp) {
+        var m;
 
-              _this3.clear();
+        switch (resp.data) {
+          case "success_update":
+            m = "Update data cuti berhasil!";
 
-              break;
+            _this3.clear();
 
-            case "fail_update_try_caught":
-              m = "Data cuti gagal di update!";
-              break;
+            break;
 
-            default:
-              m = "Error : Status unknown";
-              break;
-          }
+          case "fail_update_try_caught":
+            m = "Data cuti gagal di update!";
+            break;
 
-          alert(m);
-        })["catch"](function (err) {
-          console.log("Update cuti gagal : " + err);
-          alert("Gagal terhubung ke database");
-        });
-      } else alert('Harap periksa masukan Tanggal Mulai dan Tanggal Akhir anda');
+          default:
+            m = "Error : Status unknown";
+            break;
+        }
+
+        alert(m);
+      })["catch"](function (err) {
+        console.log("Update cuti gagal : " + err);
+        alert("Gagal terhubung ke database");
+      });
     },
     clear: function clear() {
       this.form.start = "";
@@ -2438,6 +2436,23 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
     }
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/eventbus.js":
+/*!**********************************!*\
+  !*** ./resources/js/eventbus.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vue__WEBPACK_IMPORTED_MODULE_0__["default"]());
 
 /***/ }),
 
@@ -48675,7 +48690,7 @@ var render = function() {
     _c("div", { staticClass: "col card shadow border-0 xl-12" }, [
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "text-center" }, [
-          _vm.um == false
+          !_vm.um
             ? _c("h1", [_vm._v("Form Pengajuan Cuti")])
             : _c("h1", [_vm._v("Ubah Data Cuti")])
         ]),
@@ -49050,7 +49065,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n\n                            Perhitungan jumlah cuti yang diambil : " +
+                        "\n\n                        Perhitungan jumlah cuti yang diambil : " +
                           _vm._s(_vm.form.jumlahHari) +
                           " hari (maks : " +
                           _vm._s(_vm.form.batashari) +
@@ -49076,7 +49091,7 @@ var render = function() {
                       _c("br"),
                       _c("br"),
                       _vm._v(
-                        "\n                            Berikut ini ajuan tanggal cuti yang diterima : "
+                        "\n                        Berikut ini ajuan tanggal cuti yang diterima : "
                       ),
                       _c("br"),
                       _c("br"),

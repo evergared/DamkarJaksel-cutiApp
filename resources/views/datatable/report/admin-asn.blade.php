@@ -1,5 +1,5 @@
 
-<div id="dt">
+<div id="dt" class="table-responsive">
     <data-table :columns="columns" :ajax="ajax"></data-table>
 </div>
 

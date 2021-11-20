@@ -1,5 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/eventbus.js": "/js/eventbus.js",
+    "/js/test.js": "/js/test.js",
     "/js/formCuti.js": "/js/formCuti.js",
     "/js/fullCalendar.js": "/js/fullCalendar.js",
     "/js/dataTable.js": "/js/dataTable.js",

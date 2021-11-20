@@ -9,11 +9,10 @@
 @endauth
 <div id="test">
     <button class="btn" data-toggle="modal" data-target="#modal">test</button>
-    
+    <test></test>
+</div>
 
 
-<form-cuti v-bind:nip = "123456" v-bind:um = "true"></form-cuti>
-            </div>
 
 @endsection
 
@@ -26,7 +25,7 @@
 @endpush
 
 @push('js')
-    <script src="{{ asset('js/formCuti.js') }}"></script>
+    <script src="{{ asset('js/test.js') }}"></script>
 @endpush
 
 <!-- <script type="javascript/text">

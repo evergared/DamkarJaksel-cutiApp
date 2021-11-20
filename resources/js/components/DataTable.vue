@@ -1,5 +1,5 @@
 <template>
-    <table>
+    <table class="table">
         <thead>
         <tr>
             <th v-for="column in parameters.columns" v-html="title(column)" :key="column" ></th>
@@ -20,6 +20,9 @@
     require('datatables.net-bs4');
     require('datatables.net-buttons');
     require('datatables.net-buttons-bs4');
+    
+    import eventbus from '../eventbus';
+
     export default{
         data() {
             return {
@@ -97,6 +100,10 @@
         },
         mounted() {
            this.dataTable = window.$(this.$el).DataTable(this.parameters);
+           eventbus.$on('draw' , (payload)=>{
+               console.log("Event Triggered Message : "+payload.message);
+               this.dataTable.draw(false);
+           });
         },
         destroyed() {
             this.dataTable.destroy();

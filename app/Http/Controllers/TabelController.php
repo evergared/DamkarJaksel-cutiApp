@@ -63,7 +63,8 @@ class TabelController extends Controller
 
     public function createTableAssignmentASN(Request $request)
     {
-        $query = DB::table("asigment_asn",'a')->join('daftar_cuti_asn as d','a.no_cuti','=','d.id');
+        $query = DB::table("asigment_asn",'a')->join('daftar_cuti_asn as d','a.no_cuti','=','d.id')
+        ->join('cuti_tahunan_asn as ct','d.nip','=','ct.nip');
 
         // TODO : buat tampil tabel assignment asn untuk karu
         // TODO : buat tampil tabel assignment asn untuk katon
@@ -199,6 +200,7 @@ class TabelController extends Controller
                     'd.tgl_awal',
                     'd.tgl_akhir',
                     'd.total_cuti',
+                    'ct.sisa',
                     'd.tgl_pengajuan',
                     'd.alamat'
                 ]);

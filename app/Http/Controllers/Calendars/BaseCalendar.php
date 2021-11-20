@@ -43,6 +43,9 @@ abstract class BaseCalendar
 
         try
         {
+            // Akan trigger (invalid_grant, JWT Error : Token must be shortlived) jika jam tidak sama
+            // Solusi : samakan dengan jam server, set date/time automatic (GMT+7)
+            // TODO : prevent user from pick date when this happen
             $events = Event::get();
 
             return $events;
@@ -51,7 +54,7 @@ abstract class BaseCalendar
         catch(Throwable $e)
         {
             report($this->calendarName.' fetch event error, e : '.$e);
-            error_log('Fetch event error for'.$this->calendarName);
+            error_log('Fetch event error for : '.$this->calendarName.' error : '.$e);
         }
     }
 

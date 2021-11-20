@@ -179,42 +179,46 @@ class FormCutiController extends Controller
 
     }
 
-    public function cancelCuti (Request $request,$nip,$no_cuti)
+    public function cancelCuti (Request $request)
     {
         // get user's type (pjlp/asn)
         // delete cuti data from relevant asignment table
         // delete cuti data from daftar cuti
 
-        $check = DB::table('data_pegawai')->where('nip','=',$nip)->get()->first();
-
-        if($check->golongan === "PJLP")
-        {
-            $d = DB::table('daftar_cuti_pjlp');
-            $a = DB::table('asigment_pjlp');
-        }
-        else
-        {
-            $d = DB::table('daftar_cuti_asn');
-            $a = DB::table('asigment_asn');
-        }
-
         try
         {
+
+            $nip = $request->input('nip');
+            $no_cuti = $request->input('no_cuti');
+
+            error_log("request : ".$request->nip);
+            error_log("test delete axios : Nip ".$nip." no cuti ".$no_cuti);
+
+            $check = DB::table('data_pegawai')->where('nip','=',$nip)->get()->first();
+
+            if($check->golongan === "PJLP")
+            {
+                $d = DB::table('daftar_cuti_pjlp');
+                $a = DB::table('asigment_pjlp');
+            }
+            else
+            {
+                $d = DB::table('daftar_cuti_asn');
+                $a = DB::table('asigment_asn');
+            }
+
             $a->where('no_cuti','=',$no_cuti)->delete();
 
             $d->delete($no_cuti);
 
-            return redirect()
-                ->back()
-                ->with('report_success','Cuti berhasil dihapus!');
+            return "delete_success";
         }
         
         catch(Throwable $e)
         {
+            error_log("Error Delete Cuti : ".$nip." No cuti : ".$no_cuti." Exception : ".$e);
             report("Error Delete Cuti : ".$nip." No cuti : ".$no_cuti." Exception : ".$e);
-            return redirect()
-                ->back()
-                ->withErrors('report_error','Cuti gagal dihapus!');
+            return "delete_fail";
         }
 
         
