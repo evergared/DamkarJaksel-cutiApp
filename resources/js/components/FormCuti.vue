@@ -131,7 +131,7 @@ export default{
                 this.disableCuti = resp.data;
             });
             eventbus.$on('cuti-update-confirm-'+this.index,(payload) => {
-              update();
+              this.handleUpdateRequest();
             })
     },
 
@@ -173,7 +173,8 @@ export default{
                 lama: this.total_cuti,
                 batashari:this.sisa,
                 updateMode : this.um,
-                canUpdate : false
+                canUpdate : false,
+                tanggal : []
             },
 
             dataCuti:{
@@ -197,7 +198,7 @@ export default{
             type: String,
         },
         no_cuti:{
-          type:Number,
+          type:String,
           default: null
         },
         tgl_awal:{
@@ -342,13 +343,9 @@ export default{
                 this.dataCuti.alasan = this.form.alasan;
                 this.dataCuti.lama = this.form.jumlahHari;
 
-              
+                this.form.tanggal = this.dataCuti.tanggal
 
                 eventbus.$emit('cuti-update-callback-'+this.index,this.form);
-
-
-                
-                
             }
             else{
                 alert('Harap periksa masukan Tanggal Mulai dan Tanggal Akhir anda');
@@ -356,7 +353,7 @@ export default{
             }
             
         },
-        update(){
+        handleUpdateRequest(){
                 axios.patch(`form/update`,this.dataCuti)
                 .then(resp => {
 
@@ -364,7 +361,7 @@ export default{
 
                   switch(resp.data)
                   {
-                    case "success_update" : m = "Update data cuti berhasil!";this.clear();break;
+                    case "success_update" : m = "Update data cuti berhasil!";this.clear();eventbus.$emit('cuti-update-success-'+this.index);break;
                     case "fail_update_try_caught" : m = "Data cuti gagal di update!"; break;
                     default : m = "Error : Status unknown";break;
                   }

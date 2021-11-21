@@ -108,19 +108,52 @@ class FormCutiController extends Controller
 
     }
 
-    public function approveCuti (Request $request)
+    public function approvalStatus(Request $request)
     {
-        // update table asignment cuti
-        // call approvalAction
-    }
+        // get approval status and return the value for radio button
+        try{
+            $nip = $request->nip;
+            $no_cuti = $request->no_cuti;
 
-    public function disapproveCuti (Request $request)
-    {
-        // show modal confirmation
-        // if yes, show modal input keterangan
-        // if submit,
-        // update table asignment cuti
-        // call approvalAction
+            $check = DB::table('data_pegawai')->where('nip','=',$nip)->get('golongan')->first();
+
+            if($check === 'PJLP')
+            {
+                $asigment = DB::table('asigment_pjlp');
+            }
+            else
+            {
+                $asigment = DB::table('asigment_asn');
+            }
+
+            $asigment = $asigment->where('no_cuti','=',$no_cuti);
+
+            if(in_array('KASIE',Auth::user()->roles))
+            {
+                $data = $asigment->get('kasie','ket_kasie')->first();
+            }
+            elseif(in_array('KASUBAGTU',Auth::user()->roles))
+            {
+                $data = $asigment->get('kasubagtu','ket_tu')->first();
+            }
+            elseif(in_array('PPK',Auth::user()->roles) && $check === 'PJLP')
+            {
+                $data = $asigment->get('ppk','ket_ppk')->first();
+            }
+            else
+            {
+                return 'approval_fetch_fail';
+            }
+
+             return ['status' => $data[0], 'keterangan' => $data[1]];
+
+        }
+
+        catch(Throwable $e){
+            error_log('Fetch data approval on '.$nip.' no cuti '.$no_cuti.' error : '.$e);
+            report('Fetch data approval on '.$nip.' no cuti '.$no_cuti.' error : '.$e);
+            return 'approval_fetch_try_caught';
+        }
     }
 
     public function approvalAction (Request $request)
@@ -135,47 +168,48 @@ class FormCutiController extends Controller
         // update the user's datatable able to modify cuti form
         // notify user
 
-
-        $nip = $request->input('thunderbolt');
-        $no_cuti = $request->input('lightning');
-
-        if(DB::table('data_pegawai')->where('nip',$nip)->get('golongan')->first() === "PJLP")
-        {
-            $assignment = DB::table('asigment_pjlp');
-            $daftar = DB::table('daftar_cuti_pjlp');
-        }
-        else
-        {
-            $assignment = DB::table('asigment_asn');
-            $daftar = DB::table('daftar_cuti_asn');
-        }
-
-
         try
         {
+
+            $nip = $request->input('nip');
+            $no_cuti = $request->input('no_cuti');
+
+            $check = DB::table('data_pegawai')->where('nip',$nip)->get('golongan')->first();
+    
+            if($check === "PJLP")
+            {
+                $assignment = DB::table('asigment_pjlp');
+                $daftar = DB::table('daftar_cuti_pjlp');
+            }
+            else
+            {
+                $assignment = DB::table('asigment_asn');
+                $daftar = DB::table('daftar_cuti_asn');
+            }
+
             if(in_array('KASIE',Auth::user()->roles))
             {
-                $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('op'),'ket_kasie'=>$request->input('alasan')]);
+                $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);
             }
             elseif(in_array('KASUBAGTU',Auth::user()->roles))
             {
-                $assignment->where('no_cuti',$no_cuti)->update(['kasubagtu'=>$request->input('op'),'ket_tu'=>$request->input('alasan')]);
+                $assignment->where('no_cuti',$no_cuti)->update(['kasubagtu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan')]);
             }
-            elseif(in_array('PPK',Auth::user()->roles))
+            elseif(in_array('PPK',Auth::user()->roles) && $check === 'PJLP')
             {
-                $assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('op'),'ket_ppk'=>$request->input('alasan')]);
+                $assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('status'),'ket_ppk'=>$request->input('keterangan')]);
             }
             // TODO : jika semua sudah approve, tembak event
 
-            return redirect()->back();
+            return 'approval_update_success';
         }
 
         catch(Throwable $e)
         {
-            report($e);
-            return redirect()->back();
+            error_log('Approval update error on '.$nip.' no cuti '.$no_cuti.' error : '.$e);
+            report('Approval update error on '.$nip.' no cuti '.$no_cuti.' error : '.$e);
+            return 'approval_update_try_caught';
         }
-        return redirect()->back();
 
     }
 
@@ -254,7 +288,7 @@ class FormCutiController extends Controller
             $end = $request->input('end');
             $lama = $request->input('lama');
             $tanggal = implode('||',$request->input('tanggal'));
-            $jenis = $request->input('jenis_cuti');
+            $jenis = $request->input('jenisCuti');
             $alamat = $request->input('alamat');
             $alasan = $request->input('alasan');
 
@@ -279,6 +313,7 @@ class FormCutiController extends Controller
         
         catch(Throwable $e)
         {
+            error_log("Error Delete Cuti : ".$request->input('nip')." No cuti : ".$no_cuti." Exception : ".$e);
             report("Error Delete Cuti : ".$request->input('nip')." No cuti : ".$no_cuti." Exception : ".$e);
             return "fail_update_try_caught";
         }

@@ -4,5 +4,5 @@
 </div>
 
 @push('js')
-    <script src="{{ asset('js/dataTable.js') }}"></script>
+    <script src="{{ asset('js/datatables/admin-asn.js') }}"></script>
 @endpush

@@ -4,7 +4,7 @@
             <slot>Update Data Cuti</slot>
         </button>
 
-        <b-modal size='xl' id="update-window" ref="uw" hide-footer hide-header>
+        <b-modal size='xl' ref="uw" hide-footer hide-header>
             <form-cuti 
             :index='this.DT_RowIndex'
             :nip='this.nip'
@@ -19,13 +19,17 @@
             um='true'></form-cuti>
         </b-modal>
 
-        <b-modal size='lg' id="confirm-window" ref="cw" hide-footer hide-header>
-            Perhitungan jumlah cuti yang diambil : {{updateData.jumlahHari}} hari (maks : {{updateData.sisa}})<br>
+        <b-modal size='lg' ref="cw" hide-header>
+            Perhitungan jumlah cuti yang baru : {{updateData.jumlahHari}} hari (maks : {{updateData.sisa}})<br>
             <span v-if="updateData.jumlahHari > updateData.sisa"><small>Hanya {{updateData.sisa}} hari yang diterima dari {{updateData.jumlahHari}} hari yang diajukan. Terhitung mulai dari tanggal awal ({{updateData.tgl_awal}})</small></span><br><br>
-            Berikut ini ajuan tanggal cuti yang diterima : <br><br>
+            Berikut ini ajuan tanggal cuti baru yang diterima : <br><br>
             <ol>
                 <li v-for="tgl in updateData.tanggal" :key="tgl"><small>{{ tgl }}</small></li>
             </ol>
+            <template #modal-footer="{}">
+                <button type="button" class="btn btn-primary" @click="requestUpdate()">Setuju dan Update</button>
+                <button type="button" class="btn btn-secondary" @click="hideConfirmationWindow()">Batal</button>
+            </template>
         </b-modal>
     </div>
 </template>
@@ -35,7 +39,6 @@
 import formCuti from '../FormCuti'
 import eventbus from '../../eventbus'
 import 'bootstrap-vue'
-import FormCuti from '../FormCuti.vue'
 
     export default{
         props: [
@@ -74,39 +77,36 @@ import FormCuti from '../FormCuti.vue'
             callUpdateWindow() {
                     this.$refs['uw'].show();
             },
-            callConfirmationWindow(){
-                this.$bvModal.msgBoxConfirm('second window',{
-                    title:'Update Data Cuti',
-                    buttonSize:'sm',
-                    okVariant:'primary',
-                    okTitle:'Update',
-                    cancelTitle:'Batal',
-                    hideHeaderClose:false,
-                    centered:true
-                })
-                .then(value =>{
-                    if(value)
-                    console.log('window ok');
-                })
-                .catch(err => {
-                    console.log('window fail');
-                })
+            hideConfirmationWindow(){
+                this.$refs['cw'].hide();
+            },
+            requestUpdate(){
+                eventbus.$emit('cuti-update-confirm-'+this.DT_RowIndex);
+            },
+            handleUpdateSuccess(){
+                this.$refs['uw'].hide();
+                this.$refs['cw'].hide();
+                eventbus.$emit('draw',{message:'Memuat . . .'});
             }
         },
         mounted(){
-                
-                
                 eventbus.$on('cuti-update-callback-'+this.DT_RowIndex, (payload) =>{
-                    this.updateData.tgl_awal = payload.start;
-                    this.updateData.tgl_akhir = payload.end;
+                    this.updateData.tgl_awal = payload.start; 
+                    this.updateData.tgl_akhir = payload.end; 
                     this.updateData.total_cuti= payload.lama;
                     this.updateData.jumlahHari=payload.jumlahHari;
                     this.updateData.jenis_cuti= payload.jenis_cuti;
-                    this.updateData.sisa = payload.batasHari;
+                    this.updateData.sisa = payload.batashari;
                     this.updateData.alamat= payload.alamat;
                     this.updateData.alasan = payload.alasan;
+                    this.updateData.tanggal = payload.tanggal;
+
                     this.$refs['cw'].show();
                 });
+
+                eventbus.$on('cuti-update-success-'+this.DT_RowIndex, (payload) =>{
+                    this.handleUpdateSuccess();
+                })
         }        
     }
 </script>

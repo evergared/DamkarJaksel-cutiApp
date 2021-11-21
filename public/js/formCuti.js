@@ -2201,7 +2201,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
       _this.disableCuti = resp.data;
     });
     _eventbus__WEBPACK_IMPORTED_MODULE_1__["default"].$on('cuti-update-confirm-' + this.index, function (payload) {
-      update();
+      _this.handleUpdateRequest();
     });
   },
   data: function data() {
@@ -2237,7 +2237,8 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
         lama: this.total_cuti,
         batashari: this.sisa,
         updateMode: this.um,
-        canUpdate: false
+        canUpdate: false,
+        tanggal: []
       },
       dataCuti: {
         nip: "",
@@ -2258,7 +2259,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
       type: String
     },
     no_cuti: {
-      type: Number,
+      type: String,
       "default": null
     },
     tgl_awal: {
@@ -2387,13 +2388,14 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
         this.dataCuti.alamat = this.form.alamat;
         this.dataCuti.alasan = this.form.alasan;
         this.dataCuti.lama = this.form.jumlahHari;
+        this.form.tanggal = this.dataCuti.tanggal;
         _eventbus__WEBPACK_IMPORTED_MODULE_1__["default"].$emit('cuti-update-callback-' + this.index, this.form);
       } else {
         alert('Harap periksa masukan Tanggal Mulai dan Tanggal Akhir anda');
         this.form.canUpdate = true;
       }
     },
-    update: function update() {
+    handleUpdateRequest: function handleUpdateRequest() {
       var _this3 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_2___default().patch("form/update", this.dataCuti).then(function (resp) {
@@ -2405,6 +2407,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
             _this3.clear();
 
+            _eventbus__WEBPACK_IMPORTED_MODULE_1__["default"].$emit('cuti-update-success-' + _this3.index);
             break;
 
           case "fail_update_try_caught":
