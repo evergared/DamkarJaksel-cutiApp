@@ -9,26 +9,13 @@
 | Link : https://github.com/uxsolutions/bootstrap-datepicker                            |
 |---------------------------------------------------------------------------------------|
 */
+import axios from 'axios';
 
-/**
- * --------------------------------
- * | Bagian Inisiasi Variabel     |
- * --------------------------------
- */
+disableCuti = [],
 
-// TODO : benahi, jika perhitungan ada di sisi controller, kemungkinan bagian inisiasi variabel tidak diperlukan
-
-// Pada tanggal berapa saja cuti tidak dapat diambil
-let tanggalTanpaCuti = []
-
-// Libur nasional dari data google, variabel ini sebagai wadah penyimpanan data libur nasional
-let liburNasional = []
-
-
-/*  -------------------------
-   | Bagian datepicker      |
-   -------------------------
-*/
+axios.get(axios.get('/calendar/array').then(resp=>{
+  disableCuti = resp.data;
+}),
 
   $('.input-daterange').datepicker({
     language:'id',
@@ -47,14 +34,5 @@ let liburNasional = []
   
     // pengaturan kondisional
     daysOfWeekDisabled:'0,6', // TODO : if else function, jika staff maka sabtu minggu disabled.
-    setDatesDisabled:'' // TODO : masukan data array untuk menonaktifkan tanggal-tanggal tertentu.
-  });
-
-
-
-
-/*
-Salah satu Service atau layanan yang digunakan ialah Google Calendar.
-Fungsinya adalah untuk mendapatkan data :
-- Tanggal-tanggal merah / libur nasional
-*/
+    setDatesDisabled: this.disableCuti// TODO : masukan data array untuk menonaktifkan tanggal-tanggal tertentu.
+  }))

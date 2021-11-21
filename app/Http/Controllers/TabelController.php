@@ -63,7 +63,8 @@ class TabelController extends Controller
 
     public function createTableAssignmentASN(Request $request)
     {
-        $query = DB::table("asigment_asn",'a')->join('daftar_cuti_asn as d','a.no_cuti','=','d.id');
+        $query = DB::table("asigment_asn",'a')->join('daftar_cuti_asn as d','a.no_cuti','=','d.id')
+        ->join('cuti_tahunan_asn as ct','d.nip','=','ct.nip');
 
         // TODO : buat tampil tabel assignment asn untuk karu
         // TODO : buat tampil tabel assignment asn untuk katon
@@ -199,7 +200,9 @@ class TabelController extends Controller
                     'd.tgl_awal',
                     'd.tgl_akhir',
                     'd.total_cuti',
-                    'd.tgl_pengajuan'
+                    'ct.sisa',
+                    'd.tgl_pengajuan',
+                    'd.alamat'
                 ]);
 
                 $dt =  DataTables::of($query)
@@ -209,18 +212,22 @@ class TabelController extends Controller
                                 $appRoute = route('report.asn.app',['nip'=>$row->nip,'no_cuti'=>$row->no_cuti]);
                                 
                                 $btn = '<a href="'.$appRoute.'" class="edit btn btn-info btn-sm">Ambil Surat Cuti</a>';
-                                $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>'; 
+                                $btn = $btn.'<a href="'.$deleteRoute.'" class="edit btn btn-danger btn-sm">Hapus</a>';
+                                $btn = $btn.'<button class="btn" data-toggle="modal" data-target="#form-cuti-'.$row->no_cuti.'"
+                                        data-nip="'.$row->nip.'">test</button>';
                             return $btn;
                         })
                         ->rawColumns(['tindakan'])
                         ->make(true);
         }
 
-        if($request->ajax())
-        {
-            return $dt; 
-        }
-        return view('dashboard/report');
+        return $dt;
+
+        // if($request->ajax())
+        // {
+        //     return $dt; 
+        // }
+        //return view('dashboard/report');
     }
 
     public function createTableAssignmentPJLP(Request $request)

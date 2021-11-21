@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
 
+  // TODO : Ganti fungsi CheckAuth dengan middleware
+
   public function checkAuth()
   {
     if(!Auth::check())
@@ -45,6 +47,11 @@ class DashboardController extends Controller
   {
     $this->checkAuth();
     return view('dashboard/report');
+  }
+
+  public function loadCalendar()
+  {
+    return view('dashboard/admin/calendar');
   }
 
   public function loadForm(Request $request)

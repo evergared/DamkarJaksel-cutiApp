@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Calendars\DisableCutiManual;
+use Illuminate\Support\Facades\Auth;
 
 
 /*
@@ -48,12 +50,11 @@ use Illuminate\Support\Facades\DB;
 
 
 // Dashboard Routes
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 Route::get('/kepegawaian','App\Http\Controllers\DashboardController@loadKepegawaian')->name('kepegawaian');
 Route::get('/report','App\Http\Controllers\DashboardController@loadReport')->name('report');
 Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('form');
+
 
 // TODO : benahi middleware untuk routing, jika database sudah selesai
 
@@ -69,7 +70,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // Cuti CRUD Related Routes
-Route::post('/form','App\Http\Controllers\FormCutiController@submitCuti')->name('submit-cuti');
+Route::post('/form/create','App\Http\Controllers\FormCutiController@submitCuti')->name('submit-cuti');
+Route::patch('/form/update','App\Http\Controllers\FormCutiController@modifyCuti')->name('modify-cuti');
 Route::get('/report/table/self/delete/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'cancelCuti'])->name('report.self.delete');
 Route::get('/report/table/self/application/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('report.self.app');
 Route::get('/report/table/asn/delete/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'cancelCuti'])->name('report.asn.delete');
@@ -79,6 +81,9 @@ Route::get('/report/table/pjlp/application/{nip}/{no_cuti}',[App\Http\Controller
 Route::get('/report/table/asn/approval',[App\Http\Controllers\FormCutiController::class,'approvalAction'])->name('report.asn.approval');
 Route::get('/report/table/pjlp/approval',[App\Http\Controllers\FormCutiController::class,'approvalAction'])->name('report.pjlp.approval');
 
+Route::post('/data-cuti/delete','App\Http\Controllers\FormCutiController@cancelCuti')->name('delete-cuti');
+Route::get('/data-cuti/approval/fetch','App\Http\Controllers\FormCutiControllers@approvalStatus')->name('get-approval');
+Route::post('/data-cuti/approval/action',[App\Http\Controllers\FormCutiController::class,'approvalAction'])->name('action-approval');
 
 // Table Query Routes
 Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class,'createTableASN'])->name('list.asn');
@@ -87,6 +92,27 @@ Route::get('/report/table/self',[App\Http\Controllers\TabelController::class,'cr
 Route::get('/report/table/asn',[App\Http\Controllers\TabelController::class,'createTableAssignmentASN'])->name('report.asn');
 Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'createTableAssignmentPJLP'])->name('report.pjlp');
 
+// Admin Calendar Routes
+// Route::get('/calendar',function(){
+// 	Route::get('/calendar','App\Http\Controllers\DashboardController@loadCalendar')->name('calendar');
+// 	Route::get('/calendar/array',[App\Http\Controllers\CalendarController::class,'index']);
+// 	Route::get('/calendar/json',[App\Http\Controllers\CalendarController::class,'fetchJson']);
+// 	Route::get('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
+// 	Route::get("/calendar/libur",[App\Http\Controllers\CalendarController::class,"fetchLibur"]);
+// 	Route::post('/calendar/create',[App\Http\Controllers\CalendarController::class,'createEvent']);
+// 	Route::post('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
+// 	Route::delete('/calendar/delete/{calId}/{eventId}',[App\Http\Controllers\CalendarController::class,'deleteEvent']);
+// })->middleware('admin');
+
+	Route::get('/calendar','App\Http\Controllers\DashboardController@loadCalendar')->name('calendar');
+	Route::get('/calendar/array',[App\Http\Controllers\CalendarController::class,'index'])->name('calendarArray');
+	Route::get('/calendar/json',[App\Http\Controllers\CalendarController::class,'fetchJson']);
+	Route::get('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
+	Route::get("/calendar/libur",[App\Http\Controllers\CalendarController::class,"fetchLibur"]);
+	Route::post('/calendar/create',[App\Http\Controllers\CalendarController::class,'createEvent']);
+	Route::post('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
+	Route::delete('/calendar/delete/{calId}/{eventId}',[App\Http\Controllers\CalendarController::class,'deleteEvent']);
+
 
 
 // TODO : make route for admin report cuti view
@@ -94,5 +120,12 @@ Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'cr
 
 // Halaman test, utk keperluan test implementasi fungsi
 //Route::get('/try','App\Http\Controllers\TabelController@createTablePegawai');
-Route::get('/try', function(){ return view('try');});
+Route::get('/try', function(){ 
+
+	$test = new DisableCutiManual();
+	return view('try');
+	//return dd($test->fetchEvents());
+	//return dd(implode("|",$test->extractDatesAsArray()));
+	//return dd(Auth::user()->data);
+});
 
