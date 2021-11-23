@@ -4,17 +4,32 @@
              <slot>Ubah Persetujuan</slot>
         </button>
 
-        <b-modal size='xl' ref="approval-window" hide-footer hide-header>
-            test
+        <b-modal size='sm' ref="approval-window" hide-header hide-backdrop>
+            <h3>Ubah Persetujuan Anda</h3>
+            <b-form-radio-group
+            v-model="approval.status"
+            :options="options"
+            stacked>
+            </b-form-radio-group>
+            <br>
+            <b-input v-model="approval.keterangan" placeholder="Keterangan"></b-input>
+            <template #modal-footer="{}">
+                <button type="button" class="btn btn-primary" @click="updateApproval()">Update</button>
+                <button type="button" class="btn btn-secondary" @click="hideApprovalWindow()">Batal</button>
+            </template>
         </b-modal>
     </div>
 </template>
 
 <script>
 
-import axios from 'axios'
-import 'bootstrap-vue'
-    export default{
+import axios from 'axios';
+import BootstrapVue from 'bootstrap-vue';
+import eventbus from '../../eventbus';
+
+Vue.use(BootstrapVue);
+
+export default{
         props: ['DT_RowIndex','nip', 'no_cuti'],
         data(){
             return{
@@ -28,14 +43,21 @@ import 'bootstrap-vue'
                     no_cuti:this.no_cuti,
                     status:'',
                     keterangan:''
-                }
+                },
+                options:[
+                    {text:"Setujui",value:"s"},
+                    {text:"Tangguhkan",value:"t"},
+                    {text:"Ubah",value:"u"},
+                    {text:"Tolak",value:"x"},
+                ]
             }
         },
         methods: {
             callApprovalWindow() {
                 axios.post('/data-cuti/approval/fetch',this.cuti)
                 .then(resp =>{
-                    console.log('data : '+resp.data.approval);
+                    this.approval.status = resp.data.approval;
+                    this.approval.keterangan = resp.data.keterangan;
                     this.$refs['approval-window'].show();
                     // $('#'+this.windowId).modal('show');
                 })
@@ -50,7 +72,7 @@ import 'bootstrap-vue'
                     var m;
                     switch(resp.data)
                     {
-                        case 'approval_update_success': m='Berhasil mengganti persetujuan!';break;
+                        case 'approval_update_success': m='Berhasil mengganti persetujuan!';eventbus.$emit('draw',{message:"Memuat..."});this.hideApprovalWindow();break;
                         case 'approval_update_try_caught':m='Gagal mengganti persetujuan!';break;
                         default:m='Unknown Error';break;
                     }
@@ -61,7 +83,7 @@ import 'bootstrap-vue'
                 })
             },
             hideApprovalWindow(){
-                    this.$refs['aw'].hide();
+                    this.$refs['approval-window'].hide();
             }
         },
     }

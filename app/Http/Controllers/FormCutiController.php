@@ -114,10 +114,8 @@ class FormCutiController extends Controller
     {
         // get approval status and return the value for radio button
         try{
-            error_log("begin approval status");
             $nip = $request->input('nip');
             $no_cuti = $request->input('no_cuti');
-            error_log("Begin check pegawai");
 
 
             $check = DB::table('data_pegawai')->where('nip','=',$nip)->get('golongan')->first();
@@ -130,9 +128,7 @@ class FormCutiController extends Controller
             {
                 $asigment = DB::table('asigment_asn');
             }
-            error_log('begin fetching status');
             $asigment = (array) $asigment->where('no_cuti','=',$no_cuti)->first();
-            error_log('test '.$asigment['no_cuti']);
 
             if(in_array('KASIE',Auth::user()->roles))
             {
@@ -150,7 +146,6 @@ class FormCutiController extends Controller
             {
                 return 'approval_fetch_fail';
             }
-            error_log($data['approval'].'is Jabatan');
 
              return ['approval' => $data['approval'], 'keterangan' => $data['keterangan']];
 
@@ -186,12 +181,10 @@ class FormCutiController extends Controller
             if($check === "PJLP")
             {
                 $assignment = DB::table('asigment_pjlp');
-                $daftar = DB::table('daftar_cuti_pjlp');
             }
             else
             {
                 $assignment = DB::table('asigment_asn');
-                $daftar = DB::table('daftar_cuti_asn');
             }
 
             if(in_array('KASIE',Auth::user()->roles))

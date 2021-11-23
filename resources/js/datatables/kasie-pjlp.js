@@ -24,7 +24,7 @@ const app = new Vue({
                     orderable: false,
                     searchable: false,
                     createdCell(cell,cellData,rowData){
-                        let approvalComponent = Vue.extend(require('../components/datatable-buttons/NewComponent').default);
+                        let approvalComponent = Vue.extend(require('../components/datatable-buttons/ApprovalCuti').default);
 
                         let approvalButton = new approvalComponent({
                             propsData: rowData,
