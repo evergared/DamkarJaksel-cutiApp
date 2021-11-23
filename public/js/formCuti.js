@@ -48946,7 +48946,7 @@ var render = function() {
                       attrs: {
                         id: "alamat",
                         name: "alamat",
-                        placeholder: "Alamat Selama Menjalankan Cuti",
+                        placeholder: "Alamat Lengkap Selama Menjalankan Cuti",
                         type: "text"
                       },
                       domProps: { value: _vm.form.alamat },

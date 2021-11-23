@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Barryvdh\DomPDF\Facade as PDF;
+use Dompdf\Options;
+use Carbon\Carbon;
 use Throwable;
 
 use App\Events\CutiSubmitEvent;
@@ -112,8 +114,11 @@ class FormCutiController extends Controller
     {
         // get approval status and return the value for radio button
         try{
-            $nip = $request->nip;
-            $no_cuti = $request->no_cuti;
+            error_log("begin approval status");
+            $nip = $request->input('nip');
+            $no_cuti = $request->input('no_cuti');
+            error_log("Begin check pegawai");
+
 
             $check = DB::table('data_pegawai')->where('nip','=',$nip)->get('golongan')->first();
 
@@ -125,27 +130,29 @@ class FormCutiController extends Controller
             {
                 $asigment = DB::table('asigment_asn');
             }
-
-            $asigment = $asigment->where('no_cuti','=',$no_cuti);
+            error_log('begin fetching status');
+            $asigment = (array) $asigment->where('no_cuti','=',$no_cuti)->first();
+            error_log('test '.$asigment['no_cuti']);
 
             if(in_array('KASIE',Auth::user()->roles))
             {
-                $data = $asigment->get('kasie','ket_kasie')->first();
+                $data = ['approval' => $asigment['kasie'],'keterangan'=>$asigment['ket_kasie']];
             }
             elseif(in_array('KASUBAGTU',Auth::user()->roles))
             {
-                $data = $asigment->get('kasubagtu','ket_tu')->first();
+                $data = ['approval' => $asigment['kasubagtu'],'keterangan'=>$asigment['ket_tu']];
             }
             elseif(in_array('PPK',Auth::user()->roles) && $check === 'PJLP')
             {
-                $data = $asigment->get('ppk','ket_ppk')->first();
+                $data = ['approval' => $asigment['ppk'],'keterangan'=>$asigment['ket_ppk']];
             }
             else
             {
                 return 'approval_fetch_fail';
             }
+            error_log($data['approval'].'is Jabatan');
 
-             return ['status' => $data[0], 'keterangan' => $data[1]];
+             return ['approval' => $data['approval'], 'keterangan' => $data['keterangan']];
 
         }
 
@@ -331,5 +338,78 @@ class FormCutiController extends Controller
         // get cuti data (user nip/nrk, etc)
         // modify cuti application as necessary
         // show document as dom and able to print
+
+        try{
+            $nip = $request->input('nip');
+            $no_cuti = $request->input('no_cuti');
+    
+            $pegawai = (array) DB::table('data_pegawai')->where('nip','=',$nip)->first();
+            $jabatan = (array) DB::table('jabatan')->where('no','=',$pegawai['jabatan'])->first();
+            if($pegawai['golongan'] === "PJLP")
+            {
+                $asigment = DB::table('asigment_pjlp');
+                $ks = ['ks' => DB::table('asigment_pjlp')->value('kasie')];
+                $cuti = DB::table('daftar_cuti_pjlp');
+                $g = "PJLP";
+            }
+            else
+            {
+                $asigment = DB::table('asigment_asn');
+                $ks = ['ks' => DB::table('asigment_asn')->value('kasie')];
+                $cuti = DB::table('daftar_cuti_asn');
+                $g = "ASN";
+            }
+            $penempatan = (array) DB::table('penempatan')->where('kode_panggil','=',$pegawai['kode_penempatan'])->first();
+            $asigment = (array) $asigment->where('no_cuti','=', $no_cuti)->first();
+            $cuti = (array) $cuti->where('nip','=',$nip)->where('id','=',$no_cuti)->first();
+            $kasek = ['ksk' => DB::table('data_pegawai')->where('jabatan','=',$pegawai['kasie'])->value('data_pegawai.nama')] ;
+            $kasekn = ['kskn' => DB::table('data_pegawai')->where('jabatan','=',$pegawai['kasie'])->value('data_pegawai.nip')] ;
+            $jaket = ['jaket' => DB::table('data_pegawai')->where('nip','=',$nip)->value('data_pegawai.keterangan')] ;
+            $check = array_merge($asigment,$cuti,$ks,$jaket);
+            $check = array_merge($check,$pegawai);
+            $check = array_merge($check,$jabatan);
+            $check = array_merge($check,$penempatan);
+            $check = array_merge($check,$kasek,$kasekn);
+            
+            $start = Carbon::parse($check['tgl_awal'])->locale('id')->isoFormat('DD MMMM YYYY');
+            $end = Carbon::parse($check['tgl_akhir'])->locale('id')->isoFormat('DD MMMM YYYY');
+            $pd =  Carbon::parse(Carbon::now())->locale('id')->isoFormat('DD MMMM YYYY');
+            
+            $date = array("start"=>$start, "end" => $end, "print_date" => $pd);
+    
+            $a =  array_merge($check,$date);
+            
+            //error_log("test check ".$check); 
+            $pdf = PDF::loadView('doc/print',compact('a'))->setPaper('a4','portrait');//->set_option('IsRemoteEnabled',TRUE);
+    
+            //return dd($a);
+            error_log('nip : '.$nip);
+            //return view('print')->with('nip',$nip)->with('no_cuti',$no_cuti)->with($pdf->download('invoice.pdf'));
+            // return [
+            //     'status' => 'print_success',
+            //     'golongan' => $g,
+            //     'data' => $pdf->output()
+            // ];
+            return $pdf->download();
+            //return PDF::loadFile(public_path().'/resource/views/print.blade.php')->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
+        
+        }
+        catch(Throwable $e)
+        {
+            error_log("Print request fail for ".$nip." no cuti ".$no_cuti." error : ".$e);
+            report("Print request fail for ".$nip." no cuti ".$no_cuti." error : ".$e);
+            return [
+                'status' => 'print_fail_try_caught',
+                'data' => null
+            ];
+        }
+
     }
+
+    public function testDocument(Request $request)
+    {
+        $pdf = PDF::loadView('doc/test');
+        return null;
+    }
+
 }

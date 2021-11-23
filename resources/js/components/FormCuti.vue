@@ -76,7 +76,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-route"></i></span>
                   </div>
-                  <input class="form-control" id="alamat" name="alamat" placeholder="Alamat Selama Menjalankan Cuti" type="text" v-model="form.alamat" >
+                  <input class="form-control" id="alamat" name="alamat" placeholder="Alamat Lengkap Selama Menjalankan Cuti" type="text" v-model="form.alamat" >
                 </div>
 
                 <!-- {{-- Bagian Alasan Cuti --}} -->

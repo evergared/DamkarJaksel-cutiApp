@@ -233,7 +233,8 @@ class TabelController extends Controller
     public function createTableAssignmentPJLP(Request $request)
     {
         error_log("Data PJLP Start");
-        $query = DB::table("asigment_pjlp",'a')->join('daftar_cuti_pjlp as d','a.no_cuti','=','d.id');
+        $query = DB::table("asigment_pjlp",'a')->join('daftar_cuti_pjlp as d','a.no_cuti','=','d.id')
+            ->join('cuti_tahunan_pjlp as ct','d.nip','=','ct.nip');
         // TODO : buat tampil tabel assignment pjlp untuk karu
         // TODO : buat tampil tabel assignment pjlp untuk katon
 
@@ -250,6 +251,7 @@ class TabelController extends Controller
                     'a.ket_kasie',
                     'd.jenis_cuti',
                     'd.alasan',
+                    'd.alamat',
                     'd.tgl_awal',
                     'd.tgl_akhir',
                     'd.total_cuti',
@@ -413,6 +415,9 @@ class TabelController extends Controller
                     'a.no_cuti',
                     'd.jenis_cuti',
                     'd.tgl_awal',
+                    'd.alasan',
+                    'd.alamat',
+                    'ct.sisa',
                     'd.tgl_akhir',
                     'd.total_cuti',
                     'd.tgl_pengajuan'

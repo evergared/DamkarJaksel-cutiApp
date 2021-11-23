@@ -18,11 +18,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['nip', 'nama'],
   methods: {
     deleteUser: function deleteUser() {
       alert("I am ".concat(this.nama, "!"));
+      this.$refs['test'].show();
     }
   }
 });
@@ -118,14 +126,24 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "button",
-    { staticClass: "btn btn-primary", on: { click: _vm.deleteUser } },
+    "div",
     [
-      _vm._t("default", function() {
-        return [_vm._v("Delete")]
-      })
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", on: { click: _vm.deleteUser } },
+        [
+          _vm._t("default", function() {
+            return [_vm._v("Delete")]
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("b-modal", { ref: "test" }, [
+        _vm._v("\n        test " + _vm._s(this.nama) + "\n    ")
+      ])
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []

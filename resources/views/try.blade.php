@@ -8,8 +8,7 @@
     @endif
 @endauth
 <div id="test">
-    <button class="btn" data-toggle="modal" data-target="#modal">test</button>
-    <test></test>
+    <button class="btn" >test</button>
 </div>
 
 

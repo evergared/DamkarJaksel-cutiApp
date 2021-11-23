@@ -4,7 +4,7 @@ Vue.component('data-table',require('../components/dataTable.vue').default);
 // Vue.component('data-table',require('./components/ExampleComponent.vue').default);
 
 const app = new Vue({
-    el: '#dt',
+    el: '#dt-admin-asn',
     data(){
         return{
             columns:[
@@ -26,6 +26,7 @@ const app = new Vue({
                     createdCell(cell,cellData,rowData){
                         let deleteComponent = Vue.extend(require('../components/datatable-buttons/DeleteCuti').default);
                         let updateComponent = Vue.extend(require('../components/datatable-buttons/UpdateCuti').default);
+                        let printComponent = Vue.extend(require('../components/datatable-buttons/PrintCuti').default);
 
                         let deleteButton = new deleteComponent({
                             propsData: rowData,
@@ -33,13 +34,18 @@ const app = new Vue({
                         let updateButton = new updateComponent({
                             propsData: rowData
                         });
+                        let printButton = new printComponent({
+                            propsData:rowData
+                        })
 
                         deleteButton.$mount();
                         updateButton.$mount();
+                        printButton.$mount();
 
                         $(cell).empty()
                         .append(deleteButton.$el)
-                        .append(updateButton.$el);
+                        .append(updateButton.$el)
+                        .append(printButton.$el);
                     }
                 }
             ],

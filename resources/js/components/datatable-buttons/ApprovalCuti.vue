@@ -1,34 +1,28 @@
 <template>
     <div>
         <button class="btn btn-sm btn-primary" @click="callApprovalWindow">
-             <slot>Delete</slot>
+             <slot>Ubah Persetujuan</slot>
         </button>
 
-        <b-modal ref="aw" hide-header>
-            <b-form-radio-group>
-                <b-form-radio v-model="approval.status" value='s'>Setujui</b-form-radio>
-                <b-form-radio v-model="approval.status" value='t'>Tangguhkan</b-form-radio>
-                <b-form-radio v-model="approval.status" value='u'>Perubahan</b-form-radio>
-                <b-form-radio v-model="approval.status" value='x'>Tolak</b-form-radio>
-            </b-form-radio-group>
-            <br>
-            <b-form-input v-model="approval.keterangan" placeholder="Alasan persetujuan"></b-form-input>
-            <template #modal-footer="{}">
-                <button type="button" class="btn btn-primary" @click="updateApproval()">Ubah approval</button>
-                <button type="button" class="btn btn-secondary" @click="hideApprovalWindow()">Batal</button>
-            </template>
+        <b-modal size='xl' ref="approval-window" hide-footer hide-header>
+            test
         </b-modal>
-
     </div>
 </template>
 
 <script>
-import 'bootstrap-vue'
+
 import axios from 'axios'
+import 'bootstrap-vue'
     export default{
-        props: ['nip', 'no_cuti'],
+        props: ['DT_RowIndex','nip', 'no_cuti'],
         data(){
             return{
+                windowId:'approval-window-'+this.DT_RowIndex,
+                cuti:{
+                    nip:this.nip,
+                    no_cuti:this.no_cuti
+                },
                 approval:{
                     nip:this.nip,
                     no_cuti:this.no_cuti,
@@ -39,14 +33,14 @@ import axios from 'axios'
         },
         methods: {
             callApprovalWindow() {
-                axios.get('/data-cuti/approval/fetch')
+                axios.post('/data-cuti/approval/fetch',this.cuti)
                 .then(resp =>{
-                    this.approval.status = resp.status;
-                    this.approval.keterangan = resp.keterangan;
-                    this.$refs['aw'].show();
+                    console.log('data : '+resp.data.approval);
+                    this.$refs['approval-window'].show();
+                    // $('#'+this.windowId).modal('show');
                 })
                 .catch(err => {
-                    console.log('Fetch approval status error on '+this.nip+' no cuti '+this.no_cuti);
+                    console.log('Fetch approval status error on '+this.nip+' no cuti '+this.no_cuti+' error : '+err);
                     alert('Gagal mengambil data approval cuti!');
                 })
             },

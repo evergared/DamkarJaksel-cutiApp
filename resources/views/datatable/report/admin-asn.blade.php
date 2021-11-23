@@ -1,5 +1,5 @@
 
-<div id="dt" class="table-responsive">
+<div id="dt-admin-asn" class="table-responsive">
     <data-table :columns="columns" :ajax="ajax"></data-table>
 </div>
 

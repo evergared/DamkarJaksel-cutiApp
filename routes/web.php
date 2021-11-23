@@ -82,8 +82,10 @@ Route::get('/report/table/asn/approval',[App\Http\Controllers\FormCutiController
 Route::get('/report/table/pjlp/approval',[App\Http\Controllers\FormCutiController::class,'approvalAction'])->name('report.pjlp.approval');
 
 Route::post('/data-cuti/delete','App\Http\Controllers\FormCutiController@cancelCuti')->name('delete-cuti');
-Route::get('/data-cuti/approval/fetch','App\Http\Controllers\FormCutiControllers@approvalStatus')->name('get-approval');
+Route::post('/data-cuti/approval/fetch','App\Http\Controllers\FormCutiController@approvalStatus')->name('get-approval');
 Route::post('/data-cuti/approval/action',[App\Http\Controllers\FormCutiController::class,'approvalAction'])->name('action-approval');
+Route::post('/form/print',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('form.print');
+Route::get('/print',[App\Http\Controllers\FormCutiController::class,'testDocument']);
 
 // Table Query Routes
 Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class,'createTableASN'])->name('list.asn');
