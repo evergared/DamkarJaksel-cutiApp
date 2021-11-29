@@ -21,10 +21,10 @@ class CutiSubmitEvent
      *
      * @return void
      */
-    public function __construct($nip, $no_cuti)
+    public function __construct($nip,$no_cuti)
     {
-        $this->nip;
-        $this->no_cuti;
+        $this->nip = $nip;
+        $this->no_cuti = $no_cuti;
     }
 
     /**

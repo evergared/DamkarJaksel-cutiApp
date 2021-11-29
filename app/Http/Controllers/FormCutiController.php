@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use Throwable;
 
 use App\Events\CutiSubmitEvent;
+use App\Events\CutiPrintEvent;
+use Error;
 
 class FormCutiController extends Controller
 {
@@ -117,10 +119,21 @@ class FormCutiController extends Controller
             $nip = $request->input('nip');
             $no_cuti = $request->input('no_cuti');
 
+<<<<<<< Updated upstream
 
             $check = DB::table('data_pegawai')->where('nip','=',$nip)->get('golongan')->first();
 
             if($check === 'PJLP')
+=======
+            // $nip = $test1;
+            // $no_cuti = $test2;
+
+
+            $check = DB::table('data_pegawai')->where('nip','=',$nip)->get('golongan')->first();
+            // error_log("test golongan : ".$check['golongan']);
+            //return dd($check);
+            if(implode('|',$check) === "PJLP")
+>>>>>>> Stashed changes
             {
                 $asigment = DB::table('asigment_pjlp');
             }
@@ -172,6 +185,7 @@ class FormCutiController extends Controller
 
         try
         {
+<<<<<<< Updated upstream
 
             $nip = $request->input('nip');
             $no_cuti = $request->input('no_cuti');
@@ -202,16 +216,70 @@ class FormCutiController extends Controller
             // TODO : jika semua sudah approve, tembak event
 
             return 'approval_update_success';
-        }
+=======
+            
+            $nip = $request->input('nip');
+            $no_cuti = $request->input('no_cuti');
+            
+            $check = (array) DB::table('data_pegawai')->where('nip','=',$nip)->get('golongan')->first();
+            error_log('test check : '.implode('|',$check));
+            // error_log('approval action test nip : '.$nip.' no cuti : '.$no_cuti." check : ".$check);
+            //return dd($nip);
+            if(implode('|',$check) === "PJLP")
+                {
+                    error_log("hit pjlp");
+                $assignment = DB::table('asigment_pjlp'); 
+                if(in_array('KASIE',Auth::user()->roles))
+                {
+                    $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);
+                }
+                elseif(in_array('KASUBAGTU',Auth::user()->roles))
+                {
+                    $assignment->where('no_cuti',$no_cuti)->update(['kasubagtu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan')]);
+                }
+                elseif(in_array('PPK',Auth::user()->roles) )
+                {
+                    $assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('status'),'ket_ppk'=>$request->input('keterangan')]);
+                }
+                // TODO : jika semua sudah approve, tembak event
 
+                return 'approval_update_success';
+            }
+            else {
+                error_log('hit asn');
+                    $assignment = DB::table('asigment_asn');
+                    if(in_array('KASIE',Auth::user()->roles))
+                    {
+                        $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);
+                    }
+                    elseif(in_array('KASUBAGTU',Auth::user()->roles))
+                    {
+                        $assignment->where('no_cuti',$no_cuti)->update(['kasubagtu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan')]);
+                    }
+                    //elseif(in_array('PPK',Auth::user()->roles) && $check === 'PJLP')
+                    //{
+                        //$assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('status'),'ket_ppk'=>$request->input('keterangan')]);
+                    //}
+                    // TODO : jika semua sudah approve, tembak event
+
+                    return 'approval_update_success';
+                
+            }
+            
+>>>>>>> Stashed changes
+        }
         catch(Throwable $e)
         {
             error_log('Approval update error on '.$nip.' no cuti '.$no_cuti.' error : '.$e);
             report('Approval update error on '.$nip.' no cuti '.$no_cuti.' error : '.$e);
             return 'approval_update_try_caught';
         }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     }
+    
 
     public function cancelCuti (Request $request)
     {
@@ -344,6 +412,13 @@ class FormCutiController extends Controller
                 $ks = ['ks' => DB::table('asigment_pjlp')->value('kasie')];
                 $cuti = DB::table('daftar_cuti_pjlp');
                 $g = "PJLP";
+<<<<<<< Updated upstream
+=======
+                // if($asigment['kasie']==="s"&&$asigment['ppk']===){
+
+                // }
+                
+>>>>>>> Stashed changes
             }
             else
             {
@@ -358,6 +433,20 @@ class FormCutiController extends Controller
             $kasek = ['ksk' => DB::table('data_pegawai')->where('jabatan','=',$pegawai['kasie'])->value('data_pegawai.nama')] ;
             $kasekn = ['kskn' => DB::table('data_pegawai')->where('jabatan','=',$pegawai['kasie'])->value('data_pegawai.nip')] ;
             $jaket = ['jaket' => DB::table('data_pegawai')->where('nip','=',$nip)->value('data_pegawai.keterangan')] ;
+<<<<<<< Updated upstream
+=======
+
+            error_log('kasie before : '.$asigment['kasie']);
+            $asigment['kasie'] = $this->approvalAtasan($asigment['kasie']);
+            error_log('kasie now : '.$asigment['kasie']);
+            error_log('kasubagtu before : '.$asigment['kasubagtu']);
+            $asigment['kasubagtu'] = $this->approvalAtasan($asigment['kasubagtu']);
+            error_log('kasubagtu after : '.$asigment['kasubagtu']);
+            if($pegawai['golongan'] === "PJLP"){
+                $asigment['ppk'] = $this->approvalAtasan($asigment['ppk']);
+                $ks['ks'] = $this->approvalAtasan($ks['ks']);}
+
+>>>>>>> Stashed changes
             $check = array_merge($asigment,$cuti,$ks,$jaket);
             $check = array_merge($check,$pegawai);
             $check = array_merge($check,$jabatan);
@@ -371,19 +460,51 @@ class FormCutiController extends Controller
             $date = array("start"=>$start, "end" => $end, "print_date" => $pd);
     
             $a =  array_merge($check,$date);
+<<<<<<< Updated upstream
             
             //error_log("test check ".$check); 
             $pdf = PDF::loadView('doc/print',compact('a'))->setPaper('a4','portrait');//->set_option('IsRemoteEnabled',TRUE);
     
             //return dd($a);
             error_log('nip : '.$nip);
+=======
+            if($pegawai['golongan']==="PJLP"){
+                $pdf = PDF::loadView('doc/print',compact('a'))->setPaper('a4','portrait');
+                error_log('nip : '.$nip);
+                // error_log('array key : '.implode('|',array_keys($a)));
+                // error_log('array value : '.implode('|',$a));
+
+                CutiPrintEvent::dispatch($request->input('nip'),$no_cuti);
+                //return dd($a);
+                
+                return $pdf->download();
+            }
+            else{
+                $pdf = PDF::loadView('doc/print1',compact('a'))->setPaper('a4','portrait');
+                error_log('nip : '.$nip);
+                // error_log('array key : '.implode('|',array_keys($a)));
+                // error_log('array value : '.implode('|',$a));
+                CutiPrintEvent::dispatch($nip,$no_cuti);
+                //return dd($a);
+                return $pdf->download();
+            }
+            //error_log("test check ".$check); 
+            //->set_option('IsRemoteEnabled',TRUE);
+    
+            //return dd($a);
+            
+>>>>>>> Stashed changes
             //return view('print')->with('nip',$nip)->with('no_cuti',$no_cuti)->with($pdf->download('invoice.pdf'));
             // return [
             //     'status' => 'print_success',
             //     'golongan' => $g,
             //     'data' => $pdf->output()
             // ];
+<<<<<<< Updated upstream
             return $pdf->download();
+=======
+            
+>>>>>>> Stashed changes
             //return PDF::loadFile(public_path().'/resource/views/print.blade.php')->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
         
         }
@@ -405,4 +526,20 @@ class FormCutiController extends Controller
         return null;
     }
 
+<<<<<<< Updated upstream
+=======
+    public function approvalAtasan($data)
+    {
+        switch($data)
+        {
+            case '-': return 'Belum Dicek'; break;
+            case 's': return 'Disetujui'; break;
+            case 't': return 'Ditangguhkan'; break;
+            case 'u': return 'Diubah';break;
+            case 'x': return 'Ditolak';break;
+            default : return '-';break;
+        }
+    }
+
+>>>>>>> Stashed changes
 }

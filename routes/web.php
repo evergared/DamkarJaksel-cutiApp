@@ -131,3 +131,5 @@ Route::get('/try', function(){
 	//return dd(Auth::user()->data);
 });
 
+Route::get('/test/{test1}/{test2}','App\Http\Controllers\FormCutiController@approvalStatus');
+
