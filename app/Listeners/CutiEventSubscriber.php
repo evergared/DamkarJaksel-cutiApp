@@ -64,8 +64,16 @@ class CutiEventSubscriber
     
                 if($check !== 'PJLP')
                 {
-                    if($sisa > 6)
-                        return;
+
+                    /**
+                     * NOTE : 
+                     * Jika user tidak cuti / sisa cuti <= 6, maka tahun depan N1 dan N2 = 6
+                     * Jika user cuti melebihi 6 hari, maka tahun depan N1 dan N2 = 0
+                     * 
+                     * Code dibawah mengasumsikan penyesuaian nilai N1 dan N2 = 6, alias tidak cuti 2 tahun.
+                     * N2 diprioritaskan utk dikurang terlebih dahulu
+                     */
+
 
                     $n1 = $item->n1;
                     $n2 = $item->n2;
