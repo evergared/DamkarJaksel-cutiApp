@@ -37,11 +37,7 @@ import eventbus from '../../eventbus'
                     
                 })
                 .catch(err =>{
-<<<<<<< Updated upstream
-                    alert('error print : '+err);
-=======
                     console.log('error print : '+err);
->>>>>>> Stashed changes
                 })
             },
             testPrint(){

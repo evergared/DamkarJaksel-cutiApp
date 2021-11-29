@@ -140,11 +140,7 @@ export default{
         const now = new Date()
         const tmp = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10)
         const minDate = new Date(tmp);
-<<<<<<< Updated upstream
-        const maxDate = new Date(now.getFullYear(),'11','31');
-=======
         const maxDate = new Date(now.getFullYear() + 1,'11','31');
->>>>>>> Stashed changes
         //const maxDateBatas = new Date(new Date(form.start).getFullYear(), new Date(form.start).getMonth(), new Date(form.start).getDate()+this.batashari)
         
 
@@ -261,11 +257,7 @@ export default{
             if( this.form.lama > 0)
             {
                 var baseDate = new Array();
-<<<<<<< Updated upstream
-                for(var i = 0; i<this.form.lama; i++)
-=======
                 for(var i = 0; i<=this.form.lama; i++)
->>>>>>> Stashed changes
                 {
                     var date = new Date(this.form.start);
                     var ndate = new Date(date.setDate(date.getDate() + i));

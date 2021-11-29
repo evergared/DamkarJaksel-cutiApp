@@ -19,27 +19,13 @@ const app = new Vue({
                 {data: 'k_kasie',title:'Keterangan'},
                 {data: 'p_tu', title:'Persetujuan TU'},
                 {data: 'k_tu',title:'Keterangan'},
-<<<<<<< Updated upstream
-                {data: 'p_kasudin', title:'Persetujuan Kasudin'},
-                {data: 'k_kasudin',title:'Keterangan'},{
-=======
                 //{data: 'p_kasudin', title:'Persetujuan Kasudin'},
                 //{data: 'k_kasudin',title:'Keterangan'},
                 {
->>>>>>> Stashed changes
                     data: 'tindakan',
                     orderable: false,
                     searchable: false,
                     createdCell(cell,cellData,rowData){
-<<<<<<< Updated upstream
-                        let deleteComponent = Vue.extend(require('../components/datatable-buttons/DeleteCuti').default);
-                        let updateComponent = Vue.extend(require('../components/datatable-buttons/UpdateCuti').default);
-                        let printComponent = Vue.extend(require('../components/datatable-buttons/PrintCuti').default);
-
-                        let deleteButton = new deleteComponent({
-                            propsData: rowData,
-                        });
-=======
                         //let deleteComponent = Vue.extend(require('../components/datatable-buttons/DeleteCuti').default);
                         let updateComponent = Vue.extend(require('../components/datatable-buttons/UpdateCuti').default);
                         let printComponent = Vue.extend(require('../components/datatable-buttons/PrintCuti').default);
@@ -47,7 +33,6 @@ const app = new Vue({
                         //let deleteButton = new deleteComponent({
                             //propsData: rowData,
                         //});
->>>>>>> Stashed changes
                         let updateButton = new updateComponent({
                             propsData: rowData
                         });
@@ -55,20 +40,12 @@ const app = new Vue({
                             propsData:rowData
                         })
 
-<<<<<<< Updated upstream
-                        deleteButton.$mount();
-=======
                         //deleteButton.$mount();
->>>>>>> Stashed changes
                         updateButton.$mount();
                         printButton.$mount();
 
                         $(cell).empty()
-<<<<<<< Updated upstream
-                        .append(deleteButton.$el)
-=======
                         //.append(deleteButton.$el)
->>>>>>> Stashed changes
                         .append(updateButton.$el)
                         .append(printButton.$el);
                     }
