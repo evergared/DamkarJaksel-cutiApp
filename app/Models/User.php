@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_asn',
         'is_admin',
         'roles',
+        'jabatan',
         'data',
         'has_subordinate',
         'has_subordinate_pjlp',
@@ -56,6 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'roles' => 'array',
+        'jabatan' => 'string',
         'data' => 'array',
         'is_admin' =>'boolean',
         'is_pjlp' => 'boolean',
@@ -72,6 +74,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return (array) DB::table('data_pegawai')->where('nip',$this->nip)->first();
     }
 
+    public function getJabatanAttribute()
+    {
+        return data_pegawai::where('nip',$this->nip)->value('jabatan');
+    }
+
     public function getRolesAttribute()
     {
         return explode('|',$this->level);
@@ -84,7 +91,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getIsPjlpAttribute()
     {
-        return in_array('PJLP',$this->roles);
+        return data_pegawai::where('nip',$this->nip)->value('golongan') === 'PJLP';
     }
 
     public function getIsAsnAttribute()
