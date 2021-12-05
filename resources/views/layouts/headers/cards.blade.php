@@ -25,6 +25,8 @@
     <div class="container-fluid ">
         <div class="header-body">
             <!-- Card stats -->
+            @inject('cuti','App\Services\Stat\Cards')
+
             <div class="row">
 
               {{-- Tampilan Total Cuti --}}
@@ -34,7 +36,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Cuti') }}</h5>
-                                    <span class="h2 font-weight-bold mb-0">350,897</span>
+                                    <span class="h2 font-weight-bold mb-0">{{ $cuti::$total }}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -43,7 +45,7 @@
                                 </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-nowrap">{{ __('Total pengajuan cuti') }}</span>
+                                <span class="text-nowrap">{{ $cuti::$cTotal }}</span>
                             </p>
                         </div>
                     </div>
@@ -56,7 +58,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Approved')}}</h5>
-                                    <span class="h2 font-weight-bold mb-0">2,356</span>
+                                    <span class="h2 font-weight-bold mb-0">{{ $cuti::$approved }}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-success text-white rounded-circle shadow">
@@ -65,7 +67,7 @@
                                 </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-nowrap">{{ __('Total cuti yang telah disetujui') }}</span>
+                                <span class="text-nowrap">{{ $cuti::$cApproved }}</span>
                             </p>
                         </div>
                     </div>
@@ -78,7 +80,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Wait Approval') }}</h5>
-                                    <span class="h2 font-weight-bold mb-0">924</span>
+                                    <span class="h2 font-weight-bold mb-0">{{ $cuti::$wait }}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
@@ -87,7 +89,7 @@
                                 </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-xs">
-                                <span >{{ __('Total cuti yang menunggu persetujuan') }}</span>
+                                <span >{{ $cuti::$cWait }}</span>
                             </p>
                         </div>
                     </div>
@@ -100,7 +102,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Persentase') }}</h5>
-                                    <span class="h2 font-weight-bold mb-0">49,65%</span>
+                                    <span class="h2 font-weight-bold mb-0">{{ $cuti::$persentase }}%</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-info text-white rounded-circle shadow">
@@ -109,7 +111,7 @@
                                 </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-xs">
-                                <span>{{ __('Persentase cuti yang telah disetujui') }}</span>
+                                <span>{{ $cuti::$cPersentase }}</span>
                             </p>
                         </div>
                     </div>
