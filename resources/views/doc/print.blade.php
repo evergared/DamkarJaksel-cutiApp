@@ -14,12 +14,19 @@
       <div></div>
       <div style="margin-left: 10px"></div>
         <p>1. &nbsp;Diberikan Cuti Tahunan untuk tahun 2021 kepada PJLP :</p>
-<p>&nbsp; &nbsp; &nbsp; Nama &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['nama']}} <br>
-&nbsp; &nbsp; &nbsp; Nik &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['nip']}} <br>
-&nbsp; &nbsp; &nbsp; Jabatan &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['jabatan']}} <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{{$a['jaket']}} {{$a['penempatan']}} <br>
-&nbsp; &nbsp; &nbsp; Unit Kerja &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp;Suku Dinas Penanggulangan Kebakaran dan&nbsp; <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Penyelamatan Kota Administrasi Jakarta Selatan</p>
+        <table style="border-collapse:collapse;border:none;">
+          <tbody>
+              <tr>
+                  <td style="width: 487.5pt;border: none;padding: 0cm 5.4pt;height: 84.6pt;vertical-align: top;">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Nama&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; : &nbsp;{{$a['nama']}} <br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;Nik &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['nip']}} <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Jabatan &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['jabatan']}} {{$a['jaket']}} {{$a['penempatan']}} <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Unit Kerja &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp;Suku Dinas Penanggulangan Kebakaran dan&nbsp; <br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Penyelamatan Kota Administrasi Jakarta Selatan</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
 <p>&nbsp; &nbsp; &nbsp; Selama {{$a['total_cuti']}} hari &nbsp;mulai tanggal {{$a['start']}} s/d {{$a['end']}}. Dengan ketentuan&nbsp; <br>
 &nbsp; &nbsp; &nbsp; sebagai berikut :</p>
@@ -28,13 +35,13 @@
 &nbsp; &nbsp; &nbsp; b.<span style="white-space:pre;">&nbsp; &nbsp;&nbsp;</span>Setelah &nbsp;selesai &nbsp;menjalankan &nbsp;cuti &nbsp;tahunan &nbsp;wajib &nbsp;melaporkan &nbsp;diri &nbsp;kepada &nbsp;atasan&nbsp; <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; langsungnya dan bekerja kembali sebagaimana biasa.</p>
 <p>2. &nbsp;Demikian surat izin cuti tahunan ini dibuat untuk dapat dipergunakan &nbsp;sebagaimana&nbsp; <br>
-&nbsp; &nbsp; &nbsp; mestinya.</p> <br> 
+&nbsp; &nbsp; &nbsp; mestinya.</p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Jakarta &nbsp; &nbsp; {{$a['print_date']}} <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kepala Suku Dinas Penanggulangan&nbsp;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kebakaran dan Penyelamatan<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Kota Adm. Jakarta Selatan</p><br><br><br>
 <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Herbert Plider Lumban Gaol, S.Sos, M.M <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; NIP. 196910211990081001 <br><br><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; NIP. 196910211990081001 <br>
 &nbsp; &nbsp; Tembusan&nbsp; <br>
 &nbsp; &nbsp; 1.Kasubbag Tata Usaha <br>
 &nbsp; &nbsp; 2.Kasi {{$a['penempatan']}} <br>
@@ -44,7 +51,6 @@
 
 <body>
 <header class="unix">
-  <br><br>
   <table>
     <td style="width: 244.05pt;border-right:none;border-left:none;border-image: initial;border-top: none;padding: 0cm 5.4pt;vertical-align: top;"></td>
     <td style="width: 241.85pt;border-top: none;border-left: none;border-bottom:none ;border-right:none;padding: 0cm 5.4pt;vertical-align: top;">
