@@ -40,23 +40,23 @@ import eventbus from '../../eventbus'
                     console.log('error print : '+err);
                 })
             },
-            testPrint(){
-                axios.get('/print',{responseType:'arraybuffer'})
-                .then(resp => {
-                    console.log("test data : "+resp.status);
-                    console.log("data null ? "+resp.data == null)
-                        let blob = new Blob([resp.data],{type:'application/pdf'});
-                        const url = window.URL.createObjectURL(blob);
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.setAttribute('download','test print.pdf');
-                        document.body.appendChild(link);
-                        link.click();
-                })
-                .catch(err =>{
-                    alert(err);
-                })
-            }
+            // testPrint(){
+            //     axios.get('/print',{responseType:'arraybuffer'})
+            //     .then(resp => {
+            //         console.log("test data : "+resp.status);
+            //         console.log("data null ? "+resp.data == null)
+            //             let blob = new Blob([resp.data],{type:'application/pdf'});
+            //             const url = window.URL.createObjectURL(blob);
+            //             const link = document.createElement('a');
+            //             link.href = url;
+            //             link.setAttribute('download','test print.pdf');
+            //             document.body.appendChild(link);
+            //             link.click();
+            //     })
+            //     .catch(err =>{
+            //         alert(err);
+            //     })
+            // }
         },
     }
 </script>

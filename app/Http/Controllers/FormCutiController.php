@@ -413,8 +413,8 @@ class FormCutiController extends Controller
             if($pegawai['golongan']==="PJLP"){
                 $pdf = PDF::loadView('doc/print',compact('a'))->setPaper('a4','portrait');
                 error_log('nip : '.$nip);
-                // error_log('array key : '.implode('|',array_keys($a)));
-                // error_log('array value : '.implode('|',$a));
+                 error_log('array key : '.implode('|',array_keys($a)));
+                 error_log('array value : '.implode('|',$a));
 
                 CutiPrintEvent::dispatch($request->input('nip'),$no_cuti);
                 //return dd($a);
@@ -424,8 +424,8 @@ class FormCutiController extends Controller
             else{
                 $pdf = PDF::loadView('doc/print1',compact('a'))->setPaper('a4','portrait');
                 error_log('nip : '.$nip);
-                // error_log('array key : '.implode('|',array_keys($a)));
-                // error_log('array value : '.implode('|',$a));
+                 error_log('array key : '.implode('|',array_keys($a)));
+                 error_log('array value : '.implode('|',$a));
                 CutiPrintEvent::dispatch($nip,$no_cuti);
                 //return dd($a);
                 return $pdf->download();

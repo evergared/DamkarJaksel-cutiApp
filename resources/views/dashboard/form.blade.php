@@ -4,9 +4,11 @@
 
 <div class="container-fluid mt--7 ">
   <div class="row justify-content ">
+    @inject('cuti','App\Services\Stat\SisaCuti')
+
 
   <div class="col-md-7 col-sm" id="cuti">
-    <form-cuti nip = '{{ auth()->user()->nip }}'></form-cuti>
+    <form-cuti nip = '{{ auth()->user()->nip }}' sisa='{{ $cuti::$sisaTahunan }}' ></form-cuti>
   </div>
 
 
@@ -29,7 +31,6 @@
               <tbody class="list">
           
               @if(auth()->user()->is_pjlp)
-              @inject('cuti','App\Services\Stat\SisaCuti')
 
                 <tr>
                   <th scope="col">Tahunan</th>
@@ -37,7 +38,6 @@
                 </tr>
 
               @elseif(auth()->user()->is_asn)
-              @inject('cuti','App\Services\Stat\SisaCuti')
 
                 <tr>
                   <th scope="col">Tahunan</th>
