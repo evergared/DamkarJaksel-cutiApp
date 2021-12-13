@@ -1,9 +1,3 @@
-{{
-
-    abort_unless(Auth::check(),403);
-
-}}
-
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
   <div class="container-fluid">
     <!-- Toggler untuk saat web menampilkan halaman narrow melebihi sidebar / saat web ditampilkan untuk android -->
@@ -70,10 +64,11 @@
       Admin
       <ul class="navbar-nav ">
         <li class="nav-item"><a class="nav-link" href="{{ route('kepegawaian') }}"><i class="ni ni-briefcase-24 text-orange"></i><span class="nav-link-text">{{ __('Kepegawaian')}}</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('pengguna') }}"><i class="fas fa-user text-success"></i><span class="nav-link-text">{{ __('User')}}</span></a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('calendar') }}"><i class="fas fa-calendar text-blue"></i><span class="nav-link-text">{{ __('Kalender')}}</span></a></li>
     </ul>
       @endif
-      <a class="nav-link" href="#"><strong class="nav-link-text">{{ __('Petunjuk Penggunaan')}}</strong></a>
+      <!-- <a class="nav-link" href="#"><strong class="nav-link-text">{{ __('Petunjuk Penggunaan')}}</strong></a> -->
 
     </div>
   </div>

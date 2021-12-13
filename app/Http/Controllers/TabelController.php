@@ -12,10 +12,13 @@ use Illuminate\Support\Facades\Auth;
 // model utk tabel
 use App\Models\Pegawai_ASN as ASN;
 use App\Models\Pegawai_PJLP as PJLP;
+use App\Models\User;
 
 // datatable utk pembuatan table melalui facade
 use App\DataTables\Pegawai_ASNDataTable;
 use App\DataTables\pegawaiDataTable;
+
+use App\View\Components\DataTable;
 
 class TabelController extends Controller
 {
@@ -68,10 +71,10 @@ class TabelController extends Controller
 
         // TODO : buat tampil tabel assignment asn untuk karu
         // TODO : buat tampil tabel assignment asn untuk katon
-        if(in_array('KASIE',Auth::User()->roles)||in_array('KASIE.PENCEGAHAN',Auth::User()->roles))
+        if(Auth::user()->is_kasie)
         {
             $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
-                ->where('dp.kasie','=',Auth::user()->data['jabatan'])
+                ->where('dp.kasie','=',Auth::user()->jabatan)
                 ->get([
                     'dp.nip',
                     'dp.nrk',
@@ -106,9 +109,10 @@ class TabelController extends Controller
                         ->rawColumns(['p_kasie','tindakan','k_kasie'])
                         ->make(true);
         }
-        elseif(in_array('KASUBAGTU',Auth::User()->roles))
+        elseif(Auth::user()->is_kasubag_tu)
         {
             $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
+                ->where('kasie','=','s')
                 ->get([
                     'dp.nip',
                     'dp.nrk',
@@ -143,10 +147,12 @@ class TabelController extends Controller
                         ->rawColumns(['p_tu','tindakan','k_tu'])
                         ->make(true);
         }
-        elseif(in_array('KASUDIN',Auth::User()->roles))
+        elseif(Auth::user()->is_kasudin)
         {
             $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
                 ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
+                ->where('kasie','=','s')
+                ->where('kasubagtu','=','s')
                 ->get([
                     'dp.nip',
                     'dp.nrk',
@@ -242,10 +248,10 @@ class TabelController extends Controller
         // TODO : buat tampil tabel assignment pjlp untuk karu
         // TODO : buat tampil tabel assignment pjlp untuk katon
 
-        if(in_array('KASIE',Auth::User()->roles))
+        if(Auth::user()->is_kasie)
         {
             $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
-                ->where('dp.kasie','=',Auth::user()->data['jabatan'])
+                ->where('dp.kasie','=',Auth::user()->jabatan)
                 ->get([
                     'dp.nip',
                     'dp.nrk',
@@ -280,9 +286,10 @@ class TabelController extends Controller
                         ->rawColumns(['p_kasie','tindakan','k_kasie'])
                         ->make(true);
         }
-        elseif(in_array('KASUBAGTU',Auth::user()->roles))
+        elseif(Auth::user()->is_kasubag_tu)
         {
             $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
+                ->where('a.kasie','=','s')
                 ->get([
                     'dp.nip',
                     'dp.nrk',
@@ -317,9 +324,10 @@ class TabelController extends Controller
                         ->rawColumns(['p_tu','tindakan','k_tu'])
                         ->make(true);
         }
-        elseif(in_array('PPK',Auth::user()->roles))
+        elseif(Auth::user()->ppk)
         {
             $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
+                ->where('a.kasie','=','s')
                 ->get([
                     'dp.nip',
                     'dp.nrk',
@@ -354,10 +362,13 @@ class TabelController extends Controller
                         ->rawColumns(['p_ppk','tindakan','k_ppk'])
                         ->make(true);
         }
-        elseif(in_array('KASUDIN',Auth::user()->roles))
+        elseif(Auth::user()->is_kasudin)
         {
             $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
                 ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
+                ->where('a.kasie','=','s')
+                ->where('a.kasubagtu','=','s')
+                ->where('a.ppk','=','s')
                 ->get([
                     'dp.nip',
                     'dp.nrk',
@@ -596,8 +607,25 @@ class TabelController extends Controller
         return view('dashboard/report');
     }
 
-    public function createTablePegawai(pegawaiDataTable $dataTable)
+    public function createTableUser(Request $request)
     {
-        return $dataTable->render('try');
+        $query = DB::table('user')->get();
+
+        if($request->ajax())
+            return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('roles',function($data){
+                $roles = explode('|',$data->level);
+                $value ="";
+
+                foreach($roles as $role)
+                {
+                    $value .= $role.'<br>';
+                }
+
+                return $value;
+            })
+            ->rawColumns(['roles'])
+            ->make(true);
     }
 }

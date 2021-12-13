@@ -1,6 +1,7 @@
 {
     "/js/eventbus.js": "/js/eventbus.js",
     "/js/formCuti.js": "/js/formCuti.js",
+    "/js/formUser.js": "/js/formUser.js",
     "/js/fullCalendar.js": "/js/fullCalendar.js",
     "/js/datatables/admin-asn.js": "/js/datatables/admin-asn.js",
     "/js/datatables/admin-pjlp.js": "/js/datatables/admin-pjlp.js",
@@ -13,6 +14,7 @@
     "/js/datatables/ppk-pjlp.js": "/js/datatables/ppk-pjlp.js",
     "/js/datatables/self-pjlp.js": "/js/datatables/self-pjlp.js",
     "/js/datatables/self-asn.js": "/js/datatables/self-asn.js",
+    "/js/datatables/user-list.js": "/js/datatables/user-list.js",
     "/js/dataTable.js": "/js/dataTable.js",
     "/css/app.css": "/css/app.css"
 }

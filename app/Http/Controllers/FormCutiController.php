@@ -13,7 +13,6 @@ use Throwable;
 
 use App\Events\CutiSubmitEvent;
 use App\Events\CutiPrintEvent;
-use Error;
 
 class FormCutiController extends Controller
 {
@@ -90,10 +89,19 @@ class FormCutiController extends Controller
                 'alamat' => $alamatCuti,
                 'tanggal' => $listTanggal
             ]);
-            
-            $asigment -> insert([
-                'no_cuti' => $id
-            ]);
+
+            // check jika user staff TU
+            if(Auth::user()->atasan === 11)
+                $asigment -> insert([
+                    'no_cuti' => $id,
+                    'kasie' =>'s'
+                ]);
+
+            // untuk pegawai non TU
+            else
+                $asigment -> insert([
+                    'no_cuti' => $id
+                ]);
 
             CutiSubmitEvent::dispatch($nip,$id);
 
@@ -123,10 +131,10 @@ class FormCutiController extends Controller
             // $no_cuti = $test2;
 
 
-            $check = DB::table('data_pegawai')->where('nip','=',$nip)->get('golongan')->first();
+            $check = DB::table('data_pegawai')->where('nip','=',$nip)->value('golongan');
             // error_log("test golongan : ".$check['golongan']);
             //return dd($check);
-            if(implode('|',$check) === "PJLP")
+            if($check === "PJLP")
             {
                 $asigment = DB::table('asigment_pjlp');
             }
@@ -136,15 +144,15 @@ class FormCutiController extends Controller
             }
             $asigment = (array) $asigment->where('no_cuti','=',$no_cuti)->first();
 
-            if(in_array('KASIE',Auth::user()->roles))
+            if(Auth::user()->is_kasie)
             {
                 $data = ['approval' => $asigment['kasie'],'keterangan'=>$asigment['ket_kasie']];
             }
-            elseif(in_array('KASUBAGTU',Auth::user()->roles))
+            elseif(Auth::user()->is_kasubag_tu)
             {
                 $data = ['approval' => $asigment['kasubagtu'],'keterangan'=>$asigment['ket_tu']];
             }
-            elseif(in_array('PPK',Auth::user()->roles) && $check === 'PJLP')
+            elseif(Auth::user()->is_ppk && $check === 'PJLP')
             {
                 $data = ['approval' => $asigment['ppk'],'keterangan'=>$asigment['ket_ppk']];
             }
@@ -182,23 +190,21 @@ class FormCutiController extends Controller
             $nip = $request->input('nip');
             $no_cuti = $request->input('no_cuti');
             
-            $check = (array) DB::table('data_pegawai')->where('nip','=',$nip)->get('golongan')->first();
-            error_log('test check : '.implode('|',$check));
-            // error_log('approval action test nip : '.$nip.' no cuti : '.$no_cuti." check : ".$check);
-            //return dd($nip);
-            if(implode('|',$check) === "PJLP")
+            $check = DB::table('data_pegawai')->where('nip','=',$nip)->value('golongan');
+            
+            if($check === "PJLP")
                 {
                     error_log("hit pjlp");
                 $assignment = DB::table('asigment_pjlp'); 
-                if(in_array('KASIE',Auth::user()->roles))
+                if(Auth::user()->is_kasie)
                 {
                     $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);
                 }
-                elseif(in_array('KASUBAGTU',Auth::user()->roles))
+                elseif(Auth::user()->is_kasubag_tu)
                 {
                     $assignment->where('no_cuti',$no_cuti)->update(['kasubagtu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan')]);
                 }
-                elseif(in_array('PPK',Auth::user()->roles) )
+                elseif(Auth::user()->is_ppk)
                 {
                     $assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('status'),'ket_ppk'=>$request->input('keterangan')]);
                 }
@@ -209,22 +215,18 @@ class FormCutiController extends Controller
             else {
                 error_log('hit asn');
                     $assignment = DB::table('asigment_asn');
-                    if(in_array('KASIE',Auth::user()->roles))
+                    if(Auth::user()->is_kasie)
                     {
                         $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);
                     }
-                    elseif(in_array('KASUBAGTU',Auth::user()->roles))
+                    elseif(Auth::user()->is_kasubag_tu)
                     {
-                        $assignment->where('no_cuti',$no_cuti)->update(['kasubagtu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan')]);
+                        $assignment->where('no_cuti',$no_cuti)
+                        ->update(['kasubagtu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan')]);
                     }
-                    //elseif(in_array('PPK',Auth::user()->roles) && $check === 'PJLP')
-                    //{
-                        //$assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('status'),'ket_ppk'=>$request->input('keterangan')]);
-                    //}
                     // TODO : jika semua sudah approve, tembak event
 
                     return 'approval_update_success';
-                
             }
             
         }
@@ -413,8 +415,8 @@ class FormCutiController extends Controller
             if($pegawai['golongan']==="PJLP"){
                 $pdf = PDF::loadView('doc/print',compact('a'))->setPaper('a4','portrait');
                 error_log('nip : '.$nip);
-                 error_log('array key : '.implode('|',array_keys($a)));
-                 error_log('array value : '.implode('|',$a));
+                // error_log('array key : '.implode('|',array_keys($a)));
+                // error_log('array value : '.implode('|',$a));
 
                 CutiPrintEvent::dispatch($request->input('nip'),$no_cuti);
                 //return dd($a);
@@ -424,8 +426,8 @@ class FormCutiController extends Controller
             else{
                 $pdf = PDF::loadView('doc/print1',compact('a'))->setPaper('a4','portrait');
                 error_log('nip : '.$nip);
-                 error_log('array key : '.implode('|',array_keys($a)));
-                 error_log('array value : '.implode('|',$a));
+                // error_log('array key : '.implode('|',array_keys($a)));
+                // error_log('array value : '.implode('|',$a));
                 CutiPrintEvent::dispatch($nip,$no_cuti);
                 //return dd($a);
                 return $pdf->download();

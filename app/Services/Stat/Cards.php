@@ -7,7 +7,6 @@ use App\Models\asigment_pjlp;
 use App\Models\daftar_cuti_asn;
 use App\Models\daftar_cuti_pjlp;
 use App\Models\data_pegawai;
-use Illuminate\Database\Eloquent\Builder;
 use Throwable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -90,32 +89,32 @@ class Cards
                 Cards::$total = $totalASN + $totalPJLP;
 
 
-                $approvedASN = data_pegawai::whereHas('daftar_cuti_asn.asigment_asn',
-                            function(Builder $query){
-                                $query->where('kasie','=','s');
-                                })
-                            ->where('kasie','=',Auth::user()->jabatan)
+                $approvedASN = DB::table('asigment_asn as a')
+                            ->join('daftar_cuti_asn as d', 'a.no_cuti','=','d.id')
+                            ->join('data_pegawai as dp','d.nip','=','dp.nip')
+                            ->where('dp.kasie','=',Auth::user()->jabatan)
+                            ->where('a.kasie','=','s')
                             ->count();
-                $approvedPJLP = data_pegawai::whereHas('daftar_cuti_pjlp.asigment_pjlp',
-                            function(Builder $query){
-                                $query->where('kasie','=','s');
-                                })
-                            ->where('kasie','=',Auth::user()->jabatan)
+                $approvedPJLP = DB::table('asigment_pjlp as a')
+                            ->join('daftar_cuti_pjlp as d', 'a.no_cuti','=','d.id')
+                            ->join('data_pegawai as dp','d.nip','=','dp.nip')
+                            ->where('dp.kasie','=',Auth::user()->jabatan)
+                            ->where('a.kasie','=','s')
                             ->count();
                 Cards::$approved = $approvedASN + $approvedPJLP;
 
 
-                $waitASN = data_pegawai::whereHas('daftar_cuti_asn.asigment_asn',
-                            function(Builder $query){
-                                $query->where('kasie','!=','s');
-                                })
-                            ->where('kasie','=',Auth::user()->jabatan)
+                $waitASN = DB::table('asigment_asn as a')
+                            ->join('daftar_cuti_asn as d', 'a.no_cuti','=','d.id')
+                            ->join('data_pegawai as dp','d.nip','=','dp.nip')
+                            ->where('dp.kasie','=',Auth::user()->jabatan)
+                            ->where('a.kasie','!=','s')
                             ->count();
-                $waitPJLP = data_pegawai::whereHas('daftar_cuti_pjlp.asigment_pjlp',
-                            function(Builder $query){
-                                $query->where('kasie','!=','s');
-                                })
-                            ->where('kasie','=',Auth::user()->jabatan)
+                $waitPJLP = DB::table('asigment_pjlp as a')
+                            ->join('daftar_cuti_pjlp as d', 'a.no_cuti','=','d.id')
+                            ->join('data_pegawai as dp','d.nip','=','dp.nip')
+                            ->where('dp.kasie','=',Auth::user()->jabatan)
+                            ->where('a.kasie','!=','s')
                             ->count();
                 Cards::$wait = $waitASN + $waitPJLP;
 
@@ -130,36 +129,55 @@ class Cards
                 Cards::$cTotal = 'Total ajuan cuti yang diterima';
 
 
-                $totalASN = data_pegawai::has('daftar_cuti_asn')
+                $totalASN = DB::table('asigment_asn as a')  // pegawai non TU
+                            ->join('daftar_cuti_asn as d', 'a.no_cuti','=','d.id')
+                            ->join('data_pegawai as dp','d.nip','=','dp.nip')
+                            ->where('dp.atasan','!=',Auth::user()->jabatan)
+                            ->where('a.kasie','=','s')
+                            ->count()
+                            +
+                            DB::table('asigment_asn as a')  // pegawai TU
+                            ->join('daftar_cuti_asn as d', 'a.no_cuti','=','d.id')
+                            ->join('data_pegawai as dp','d.nip','=','dp.nip')
+                            ->where('dp.atasan','=',Auth::user()->jabatan)
                             ->count();
-                $totalPJLP = data_pegawai::has('daftar_cuti_pjlp')
+                $totalPJLP = DB::table('asigment_pjlp as a')
+                            ->join('daftar_cuti_pjlp as d', 'a.no_cuti','=','d.id')
+                            ->where('a.kasie','=','s')
                             ->count();
                 Cards::$total = $totalASN + $totalPJLP;
 
 
-                $approvedASN = data_pegawai::whereHas('daftar_cuti_asn.asigment_asn',
-                            function(Builder $query){
-                                $query->where('kasubagtu','=','s');
-                                })
+                $approvedASN = DB::table('asigment_asn as a')
+                            ->join('daftar_cuti_asn as d', 'a.no_cuti','=','d.id')
+                            ->where('a.kasubagtu','=','s')
                             ->count();
-                $approvedPJLP = data_pegawai::whereHas('daftar_cuti_pjlp.asigment_pjlp',
-                            function(Builder $query){
-                                $query->where('kasubagtu','=','s');
-                                })
+                $approvedPJLP = DB::table('asigment_pjlp as a')
+                            ->join('daftar_cuti_pjlp as d', 'a.no_cuti','=','d.id')
+                            ->where('a.kasubagtu','=','s')
                             ->count();
                 Cards::$approved = $approvedASN + $approvedPJLP;
 
 
-                $waitASN = data_pegawai::whereHas('daftar_cuti_asn.asigment_asn',
-                            function(Builder $query){
-                                $query->where('kasubagtu','!=','s');
-                                })
-                            ->count();
-                $waitPJLP = data_pegawai::whereHas('daftar_cuti_pjlp.asigment_pjlp',
-                            function(Builder $query){
-                                $query->where('kasubagtu','!=','s');
-                                })
-                            ->count();
+                $waitASN = DB::table('asigment_asn as a')  // pegawai non TU
+                        ->join('daftar_cuti_asn as d', 'a.no_cuti','=','d.id')
+                        ->join('data_pegawai as dp','d.nip','=','dp.nip')
+                        ->where('dp.atasan','!=',Auth::user()->jabatan)
+                        ->where('a.kasie','=','s')
+                        ->where('a.kasubagtu','!=','s')
+                        ->count()
+                        +
+                        DB::table('asigment_asn as a')  // pegawai TU
+                        ->join('daftar_cuti_asn as d', 'a.no_cuti','=','d.id')
+                        ->join('data_pegawai as dp','d.nip','=','dp.nip')
+                        ->where('dp.atasan','=',Auth::user()->jabatan)
+                        ->where('a.kasubagtu','!=','s')
+                        ->count();
+                $waitPJLP = DB::table('asigment_asn as a')
+                        ->join('daftar_cuti_asn as d', 'a.no_cuti','=','d.id')
+                        ->where('a.kasie','=','s')
+                        ->where('a.kasubagtu','!=','s')
+                        ->count();
                 Cards::$wait = $waitASN + $waitPJLP;
 
 
@@ -208,23 +226,20 @@ class Cards
                 Cards::$cTotal = 'Total ajuan cuti yang diterima';
 
 
-                $totalPJLP = data_pegawai::has('daftar_cuti_pjlp')
-                            ->count();
+                $totalPJLP = daftar_cuti_pjlp::count();
                 Cards::$total = $totalPJLP;
 
 
-                $approvedPJLP = data_pegawai::whereHas('daftar_cuti_pjlp.asigment_pjlp',
-                            function(Builder $query){
-                                $query->where('ppk','=','s');
-                                })
-                            ->count();
+                $approvedPJLP = daftar_cuti_pjlp::where('kasie','=','s')
+                                ->where('kasubagtu','=','s')
+                                ->where('ppk','=','s')
+                                ->count();
                 Cards::$approved = $approvedPJLP;
 
 
-                $waitPJLP = data_pegawai::whereHas('daftar_cuti_pjlp.asigment_pjlp',
-                            function(Builder $query){
-                                $query->where('ppk','!=','s');
-                                })
+                $waitPJLP = daftar_cuti_pjlp::where('kasie','!=','s')
+                            ->orWhere('kasubagtu','!=','s')
+                            ->orWhere('ppk','!=','s')
                             ->count();
                 Cards::$wait = $waitPJLP;
 
@@ -244,34 +259,38 @@ class Cards
                 {
                     Cards::$total = daftar_cuti_pjlp::where('nip','=',Auth::user()->nip)->count();
 
-                    Cards::$wait = daftar_cuti_pjlp::whereHas('asigment_pjlp',function(Builder $query){
-                                        $query->where('kasie','!=','s')
-                                            ->where('kasubagtu','!=','s')
-                                            ->where('ppk','!=','s');
-                                    })->where('nip','=',Auth::user()->nip)
+                    Cards::$wait = DB::table('asigment_pjlp as a')
+                                    ->join('daftar_cuti_pjlp as d','a.no_cuti','=','d.id')
+                                    ->where('d.nip','=',Auth::user()->nip)
+                                    ->where('a.kasie','!=','s')
+                                    ->orWhere('a.kasubagtu','!=','s')
+                                    ->orWhere('a.ppk','!=','s')
                                     ->count();
 
-                    Cards::$approved = daftar_cuti_pjlp::whereHas('asigment_pjlp',function(Builder $query){
-                                        $query->where('kasie','=','s')
-                                            ->where('kasubagtu','=','s')
-                                            ->where('ppk','=','s');
-                                    })->where('nip','=',Auth::user()->nip)
+                    Cards::$approved = DB::table('asigment_pjlp as a')
+                                    ->join('daftar_cuti_pjlp as d','a.no_cuti','=','d.id')
+                                    ->where('d.nip','=',Auth::user()->nip)
+                                    ->where('a.kasie','=','s')
+                                    ->Where('a.kasubagtu','=','s')
+                                    ->Where('a.ppk','=','s')
                                     ->count();
                 }
                 else
                 {
                     Cards::$total = daftar_cuti_asn::where('nip','=',Auth::user()->nip)->count();
 
-                    Cards::$wait = daftar_cuti_asn::has('asigment_asn',function(Builder $query){
-                                        $query->where('kasie','!=','s')
-                                            ->where('kasubagtu','!=','s');
-                                    })->where('nip','=',Auth::user()->nip)
+                    Cards::$wait = DB::table('asigment_asn as a')
+                                    ->join('daftar_cuti_asn as d','a.no_cuti','=','d.id')
+                                    ->where('d.nip','=',Auth::user()->nip)
+                                    ->where('a.kasie','!=','s')
+                                    ->orWhere('a.kasubagtu','!=','s')
                                     ->count();
-                    
-                    Cards::$approved = daftar_cuti_asn::has('asigment_asn',function(Builder $query){
-                                        $query->where('kasie','=','s')
-                                            ->where('kasubagtu','=','s');
-                                    })->where('nip','=',Auth::user()->nip)
+
+                    Cards::$approved = DB::table('asigment_asn as a')
+                                    ->join('daftar_cuti_asn as d','a.no_cuti','=','d.id')
+                                    ->where('d.nip','=',Auth::user()->nip)
+                                    ->where('a.kasie','=','s')
+                                    ->Where('a.kasubagtu','=','s')
                                     ->count();
                 }
 

@@ -54,6 +54,11 @@ class DashboardController extends Controller
     return view('dashboard/admin/calendar');
   }
 
+  public function loadUser()
+  {
+    return view('dashboard/admin/user');
+  }
+
   public function loadForm(Request $request)
   {
     $cuti = [

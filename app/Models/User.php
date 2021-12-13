@@ -79,6 +79,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return data_pegawai::where('nip',$this->nip)->value('jabatan');
     }
 
+    public function getAtasanAttribute()
+    {
+        return data_pegawai::where('nip',$this->nip)->value('atasan');
+    }
+
     public function getRolesAttribute()
     {
         return explode('|',$this->level);

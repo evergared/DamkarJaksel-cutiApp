@@ -50,10 +50,11 @@ use Illuminate\Support\Facades\Auth;
 
 
 // Dashboard Routes
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
-Route::get('/kepegawaian','App\Http\Controllers\DashboardController@loadKepegawaian')->name('kepegawaian');
-Route::get('/report','App\Http\Controllers\DashboardController@loadReport')->name('report');
-Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('form');
+Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
+Route::get('/kepegawaian','App\Http\Controllers\DashboardController@loadKepegawaian')->name('kepegawaian')->middleware('auth');
+Route::get('/report','App\Http\Controllers\DashboardController@loadReport')->name('report')->middleware('auth');
+Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('form')->middleware('auth');
+Route::get('/pengguna','App\Http\Controllers\DashboardController@loadUser')->name('pengguna')->middleware('auth');
 
 
 // TODO : benahi middleware untuk routing, jika database sudah selesai
@@ -87,12 +88,16 @@ Route::post('/data-cuti/approval/action',[App\Http\Controllers\FormCutiControlle
 Route::post('/form/print',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('form.print');
 Route::get('/print',[App\Http\Controllers\FormCutiController::class,'testDocument']);
 
+Route::get('/admin/list-penempatan',[App\Http\Controllers\UserController::class,'getArrayPenempatan']);
+Route::patch('/user/action/change-password',[App\Http\Controllers\UserController::class,'changePassword']);
+
 // Table Query Routes
 Route::get('/kepegawaian/table/asn',[App\Http\Controllers\TabelController::class,'createTableASN'])->name('list.asn');
 Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::class,'createTablePJLP'])->name('list.pjlp');
 Route::get('/report/table/self',[App\Http\Controllers\TabelController::class,'createTableAssignmentSELF'])->name('report.self');
 Route::get('/report/table/asn',[App\Http\Controllers\TabelController::class,'createTableAssignmentASN'])->name('report.asn');
 Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'createTableAssignmentPJLP'])->name('report.pjlp');
+Route::get('/user/list',[App\Http\Controllers\TabelController::class,'createTableUser']);
 
 // Admin Calendar Routes
 // Route::get('/calendar',function(){
@@ -124,8 +129,8 @@ Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'cr
 //Route::get('/try','App\Http\Controllers\TabelController@createTablePegawai');
 Route::get('/try', function(){ 
 
-	$test = new DisableCutiManual();
-	return view('try');
+	return dd((array)App\Models\User::get());
+	
 	//return dd($test->fetchEvents());
 	//return dd(implode("|",$test->extractDatesAsArray()));
 	//return dd(Auth::user()->data);
