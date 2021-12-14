@@ -89,6 +89,7 @@ Route::post('/form/print',[App\Http\Controllers\FormCutiController::class,'getCu
 Route::get('/print',[App\Http\Controllers\FormCutiController::class,'testDocument']);
 
 Route::get('/admin/list-penempatan',[App\Http\Controllers\UserController::class,'getArrayPenempatan']);
+Route::post('/admin/action/add-user',[App\Http\Controllers\UserController::class,'addUser']);
 Route::patch('/user/action/change-password',[App\Http\Controllers\UserController::class,'changePassword']);
 
 // Table Query Routes

@@ -2067,7 +2067,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
+/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
+/* harmony import */ var _eventbus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../eventbus */ "./resources/js/eventbus.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2139,7 +2165,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
-Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var _this = this;
@@ -2172,10 +2199,173 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
         text: 'Non-pegawai',
         value: true
       }],
-      opsiPenempatan: []
+      opsiPenempatan: [],
+      isASN: false,
+      adminDisabled: false,
+      tipe: [{
+        text: 'PJLP',
+        value: false
+      }, {
+        text: 'ASN',
+        value: true
+      }],
+      level: [{
+        key: 0,
+        text: 'Ka. Sektor',
+        value: "KASIE"
+      }, {
+        key: 1,
+        text: 'Ka. Pencegahan',
+        value: "KASIE.PENCEGAHAN"
+      }, {
+        key: 2,
+        text: 'PPK/PPTK',
+        value: 'PPK'
+      }, {
+        key: 3,
+        text: 'Ka. Sub Bag.TU',
+        value: 'KASUBAGTU'
+      }, {
+        key: 4,
+        text: 'Ka. Sudin',
+        value: 'KASUDIN'
+      }],
+      levelCheck: [false, false, false, false, false]
     };
+  },
+  computed: {
+    isASN: function isASN(val) {
+      if (val) this.setAllInArray(this.form.peran, false);else this.setAllInArray(this.form.peran, true);
+    }
+  },
+  watch: {},
+  methods: {
+    levelOnClick: function levelOnClick() {
+      if (this.isASN) {
+        if (this.form.peran.includes("ADMIN")) {
+          var index = this.form.peran.indexOf("ADMIN");
+          if (index != 0) this.purgeArray(index, this.form.peran);else this.form.peran.length = 1;
+          this.levelCheck[0] = true;
+        } else if (this.form.peran.includes("KASIE")) {
+          var indexA = this.form.peran.indexOf("KASIE");
+          var indexB = this.form.peran.indexOf("KASIE.PENCEGAHAN");
+          console.log(indexA + '&' + indexB);
+          var temporary = [];
+          if (indexA != -1) temporary.push(this.form.peran[indexA]);
+          if (indexB != -1) temporary.push(this.form.peran[indexB]);
+
+          if (temporary.length > 0) {
+            this.form.peran.length = 0;
+            this.setAllInArray(this.levelCheck, true);
+            this.form.peran = temporary;
+          }
+
+          if (indexA != -1) this.levelCheck[0];
+          if (indexB != -1) this.levelCheck[1];
+          this.adminDisabled = true;
+        } else if (this.form.peran.includes("KASIE.PENCEGAHAN")) {
+          var indexA = this.form.peran.indexOf("KASIE");
+          var indexB = this.form.peran.indexOf("KASIE.PENCEGAHAN");
+          console.log(indexA + '&' + indexB);
+          var temporary = [];
+          if (indexA != -1) temporary.push(this.form.peran[indexA]);
+          if (indexB != -1) temporary.push(this.form.peran[indexB]);
+
+          if (temporary.length > 0) {
+            this.form.peran.length = 0;
+            this.setAllInArray(this.levelCheck, true);
+            this.form.peran = temporary;
+          }
+
+          if (indexA != -1) this.levelCheck[0];
+          if (indexB != -1) this.levelCheck[1];
+          this.adminDisabled = true;
+        } else if (this.form.peran.includes("PPK")) {
+          var index = this.form.peran.indexOf("PPK");
+          if (index != 0) this.purgeArray(index, this.form.peran);else this.form.peran.length = 1;
+          this.adminDisabled = true;
+          if (peran.key != 2) return true;
+        } else if (this.form.peran.includes("KASUBAGTU")) {
+          var index = this.form.peran.indexOf("KASUBAGTU");
+          if (index != 0) this.purgeArray(index, this.form.peran);else this.form.peran.length = 1;
+          this.adminDisabled = true;
+          if (peran.key != 3) return true;
+        } else if (this.form.peran.includes("KASUDIN")) {
+          var index = this.form.peran.indexOf("KASUDIN");
+          if (index != 0) this.purgeArray(index, this.form.peran);else this.form.peran.length = 1;
+          this.adminDisabled = true;
+          if (peran.key != 4) return true;
+        } else {
+          this.adminDisabled = false;
+          return false;
+        }
+      } // PJLP
+      else {
+        console.log('hit phl');
+        this.setAllInArray(this.levelCheck, true);
+      }
+    },
+    submitUserForm: function submitUserForm() {
+      if (this.form.bukanPegawai) this.form.peran.push("SEMENTARA");
+      if (this.isASN) this.form.peran.push("ASN");else this.form.peran.push("PJLP");
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/admin/action/add-user', this.form).then(function (resp) {
+        var m;
+
+        switch (resp.data) {
+          case 'success_add_user':
+            m = "Berhasil menambah user!";
+            break;
+
+          case 'fail_add_user_try_caught':
+            m = 'Gagal menambah user! (Error Query/DB)';
+            break;
+
+          default:
+            m = 'Unknown Error';
+            break;
+        }
+
+        alert(m);
+      })["catch"](function (err) {
+        alert('Gagal menambah user! ' + err);
+      });
+    },
+    resetForm: function resetForm() {
+      this.form.nip = '', this.form.password = '', this.form.email = '', this.form.bukanPegawai = false, this.form.nama = '', this.form.peran = [], this.form.penempatan = '';
+      this.setAllInArray(this.levelCheck, true);
+    },
+    setAllInArray: function setAllInArray(array, value) {
+      var i,
+          n = array.length;
+
+      for (i = 0; i < n; i++) {
+        array[i] = value;
+      }
+    },
+    purgeArray: function purgeArray(indexSurvivor) {
+      var array = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+      array.splice(0, 1, array[indexSurvivor]);
+      array.length = 1;
+    }
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/eventbus.js":
+/*!**********************************!*\
+  !*** ./resources/js/eventbus.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vue__WEBPACK_IMPORTED_MODULE_0__["default"]());
 
 /***/ }),
 
@@ -48088,12 +48278,16 @@ var render = function() {
                 id: "input-group-bukan-pegawai",
                 label: "Status Kepegawaian : ",
                 description:
-                  "Non-pegawai untuk test, pelaksana tugas, atau memasukan user diluar data pegawai"
+                  "Non-pegawai untuk test, pelaksana tugas, atau memasukan user diluar data pegawai",
+                "lebel-for": "input-bukan-pegawai"
               }
             },
             [
               _c("b-form-radio-group", {
-                attrs: { options: _vm.statusKepegawaian },
+                attrs: {
+                  id: "input-bukan-pegawai",
+                  options: _vm.statusKepegawaian
+                },
                 model: {
                   value: _vm.form.bukanPegawai,
                   callback: function($$v) {
@@ -48106,7 +48300,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm.form.bukanPegawai
+          this.form.bukanPegawai
             ? _c(
                 "b-form-group",
                 {
@@ -48132,7 +48326,7 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _vm.form.bukanPegawai
+          this.form.bukanPegawai
             ? _c(
                 "b-form-group",
                 {
@@ -48156,7 +48350,86 @@ var render = function() {
                 ],
                 1
               )
-            : _vm._e()
+            : _vm._e(),
+          _vm._v(" "),
+          this.form.bukanPegawai
+            ? _c(
+                "b-form-group",
+                {
+                  attrs: {
+                    id: "input-group-level",
+                    label: "Level Akun : ",
+                    "label-for": "input-level"
+                  }
+                },
+                [
+                  _c("b-form-radio-group", {
+                    attrs: { options: _vm.tipe },
+                    model: {
+                      value: _vm.isASN,
+                      callback: function($$v) {
+                        _vm.isASN = $$v
+                      },
+                      expression: "isASN"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "b-form-checkbox-group",
+                    {
+                      attrs: { id: "input-level" },
+                      on: { input: _vm.levelOnClick },
+                      model: {
+                        value: _vm.form.peran,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form, "peran", $$v)
+                        },
+                        expression: "form.peran"
+                      }
+                    },
+                    [
+                      _c(
+                        "b-form-checkbox",
+                        {
+                          attrs: { value: "ADMIN", disabled: _vm.adminDisabled }
+                        },
+                        [_vm._v("Admin")]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.level, function(peran) {
+                        return _c(
+                          "b-form-checkbox",
+                          {
+                            key: peran.key,
+                            attrs: {
+                              value: peran.value,
+                              disabled: _vm.levelCheck[peran.key]
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(peran.text) +
+                                "\n                "
+                            )
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("b-button", { attrs: { type: "submit", variant: "primary" } }, [
+            _vm._v("Submit")
+          ]),
+          _vm._v(" "),
+          _c("b-button", { attrs: { type: "reset", variant: "danger" } }, [
+            _vm._v("Reset")
+          ])
         ],
         1
       )
