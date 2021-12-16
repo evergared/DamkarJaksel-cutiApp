@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Throwable;
 use App\Models\User;
-
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -25,63 +25,106 @@ class UserController extends Controller
     public function addUser(Request $request)
     {
         try{
-            $nip = $request->input['nip'];
-            $password = $request->input['password'];
-            $email = $request->input['email'];
-            $bukanPegawai = $request->input['bukanPegawai'];
-            $nama = $request->input['nama'];
-            $peran = $request->input['peran'];
-            $penempatan = $request->input['nip'];
+            $nip = $request->input('nip');
+            $password = $request->input('password');
+            $email = $request->input('email');
+            $bukanPegawai = $request->input('bukanPegawai');
+            $nama = $request->input('nama');
+            $peran = $request->input('peran');
+            $penempatan = $request->input('nip');
+            $userExist = false;
 
-            DB::table('user')->insertOrIgnore([
+            if(!DB::table('user')->where('nip','=',$nip)->exists())
+            DB::table('user')->insert([
                 'nip' => $nip,
                 'level' => implode('|',$peran),
-                'password' => $password,
-                'email' => $email
+                'password' => Hash::make($password),
+                'email' => $email,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
+            else
+                $userExist = true;
 
-            if($bukanPegawai)
+            if(!$userExist)
             {
-                if(in_array('PJLP',$peran))
+                if($bukanPegawai)
                 {
-                    $golongan = "PJLP";
-                    $Jabatan = 16;
+                    if(in_array('PJLP',$peran))
+                    {
+                        $golongan = "PJLP";
+                        $Jabatan = 16;
+                    }
+                    else if(in_array('ASN',$peran))
+                    {
+                        $golongan = "ASN";
+                        if(in_array('KASIE',$peran)){
+                            $Jabatan = $this->getJabatanKasieFromPenempatan($penempatan);
+                        }
+                        else if(in_array('KASIE.PENCEGAHAN',$peran)){
+                            $Jabatan = 12;
+                        }
+                        else if(in_array('KASUBAGTU',$peran)){
+                            $Jabatan = 11;
+                        }
+                        else if(in_array('KASUDIN',$peran)){
+                            $Jabatan = 15;
+                        }
+                        else
+                            $Jabatan = 22;
+                    }
+                    if(!DB::table('data_pegawai')->where('nip','=',$nip)->exists())
+                    DB::table('data_pegawai')->insert([
+                        'nip' => $nip,
+                        'nrk' => $nip,
+                        'nama' => $nama,
+                        'golongan' => $golongan,
+                        'jabatan' => $Jabatan,
+                        'kode_penempatan' => $penempatan
+                    ]);
                 }
-                else if(in_array('ASN',$peran))
-                {
-                    $golongan = "ASN";
-                    if(in_array('KASIE',$peran)){
-                        $Jabatan = $this->getJabatanKasieFromPenempatan($penempatan);
-                    }
-                    else if(in_array('KASIE.PENCEGAHAN',$peran)){
-                        $Jabatan = 12;
-                    }
-                    else if(in_array('KASUBAGTU',$peran)){
-                        $Jabatan = 11;
-                    }
-                    else if(in_array('KASUDIN',$peran)){
-                        $Jabatan = 15;
-                    }
-
-                    
-
-                }
-                DB::table('data_pegawai')->insertOrIgnore([
-                    'nip' => $nip,
-                    'nrk' => $nip,
-                    'nama' => $nama,
-                    'golongan' => $golongan,
-                    'jabatan' => $Jabatan,
-                    'kode_penempatan' => $penempatan
-                ]);
+    
+                return 'success_add_user';
             }
 
-            return 'success_add_user';
+            return 'fail_add_user_exist';
+
+            
         }
         catch(Throwable $e){
             report('Add user error : '.$e);
             error_log('Add user error : '.$e);
             return 'fail_add_user_try_caught';
+        }
+    }
+
+    public function deleteUser(Request $request)
+    {
+        try{
+
+            $nip = $request->input('nip');
+
+            if(DB::table('user')->where('nip','=',$nip)->exists())
+            {
+                $user = DB::table('user')->where('nip','=',$nip);
+                $roles = explode('|',$user->value('level'));
+                $sementara = in_array('SEMENTARA',$roles);
+
+                $user->delete();
+
+                if($sementara)
+                    if(DB::table('data_pegawai')->where('nip','=',$nip)->exists())
+                        DB::table('data_pegawai')->where('nip','=',$nip)->delete();
+
+                return "success_delete_user";
+            }
+            else
+                return "fail_delete_user_exist";
+        }
+        catch(Throwable $e){
+            report('Delete user error : '.$e);
+            error_log('Delete user error : '.$e);
+            return 'fail_delete_user_try_caught';
         }
     }
 
@@ -103,6 +146,31 @@ class UserController extends Controller
             report('Password Change Error on Nip '.$nip.'! error : '.$e);
             return 'fail_change_password_try_caught';
         }   
+    }
+
+    public function changeLevel(Request $request)
+    {
+        try{
+            $nip = $request->input('nip');
+            $level = $request->input('peran');
+            $user = DB::table('user')->where('nip','=',$nip);
+
+            if(!$user->exists())
+            {
+                $user->update([
+                    'level' => implode('|',$level)
+                ]);
+            }
+            else
+                return 'fail_change_level_not_exist';
+            
+            return 'success_change_level';
+        }
+        catch(Throwable $e){
+            error_log('Level Change Error on Nip '.$nip.'! error : '.$e);
+            report('Level Change Error on Nip '.$nip.'! error : '.$e);
+            return 'fail_change_level_try_caught';
+        }
     }
 
     public function getArrayPenempatan(Request $request)

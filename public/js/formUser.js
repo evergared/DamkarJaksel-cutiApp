@@ -2199,6 +2199,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
         text: 'Non-pegawai',
         value: true
       }],
+      tempPeran: [],
       opsiPenempatan: [],
       isASN: false,
       adminDisabled: false,
@@ -2230,69 +2231,73 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
         text: 'Ka. Sudin',
         value: 'KASUDIN'
       }],
-      levelCheck: [false, false, false, false, false]
+      levelCheck: [true, true, true, true, true]
     };
   },
-  computed: {
-    isASN: function isASN(val) {
-      if (val) this.setAllInArray(this.form.peran, false);else this.setAllInArray(this.form.peran, true);
-    }
-  },
-  watch: {},
-  methods: {
-    levelOnClick: function levelOnClick() {
+  computed: {},
+  watch: {
+    isASN: function isASN(newVal, oldVal) {
       if (this.isASN) {
-        if (this.form.peran.includes("ADMIN")) {
-          var index = this.form.peran.indexOf("ADMIN");
-          if (index != 0) this.purgeArray(index, this.form.peran);else this.form.peran.length = 1;
+        this.tempPeran.length = 0;
+        this.setAllInArray(this.levelCheck, false);
+      } else {
+        this.tempPeran.length = 0;
+        this.setAllInArray(this.levelCheck, true);
+      }
+    },
+    tempPeran: function tempPeran(newVal, oldVal) {
+      if (this.isASN) {
+        if (this.tempPeran.includes("ADMIN")) {
+          var index = this.tempPeran.indexOf("ADMIN");
+          if (index != 0) this.purgeArray(index, this.tempPeran);else this.tempPeran.length = 1;
           this.levelCheck[0] = true;
-        } else if (this.form.peran.includes("KASIE")) {
-          var indexA = this.form.peran.indexOf("KASIE");
-          var indexB = this.form.peran.indexOf("KASIE.PENCEGAHAN");
+        } else if (this.tempPeran.includes("KASIE")) {
+          var indexA = this.tempPeran.indexOf("KASIE");
+          var indexB = this.tempPeran.indexOf("KASIE.PENCEGAHAN");
           console.log(indexA + '&' + indexB);
           var temporary = [];
-          if (indexA != -1) temporary.push(this.form.peran[indexA]);
-          if (indexB != -1) temporary.push(this.form.peran[indexB]);
+          if (indexA != -1) temporary.push(this.tempPeran[indexA]);
+          if (indexB != -1) temporary.push(this.tempPeran[indexB]);
 
           if (temporary.length > 0) {
-            this.form.peran.length = 0;
+            this.tempPeran.length = 0;
             this.setAllInArray(this.levelCheck, true);
-            this.form.peran = temporary;
+            this.tempPeran = temporary;
+            if (indexA != -1) this.levelCheck[0] = false;
+            if (indexB != -1) this.levelCheck[1] = false;
+          }
+
+          this.adminDisabled = true;
+        } else if (this.tempPeran.includes("KASIE.PENCEGAHAN")) {
+          var indexA = this.tempPeran.indexOf("KASIE");
+          var indexB = this.tempPeran.indexOf("KASIE.PENCEGAHAN");
+          console.log(indexA + '&' + indexB);
+          var temporary = [];
+          if (indexA != -1) temporary.push(this.tempPeran[indexA]);
+          if (indexB != -1) temporary.push(this.tempPeran[indexB]);
+
+          if (temporary.length > 0) {
+            this.tempPeran.length = 0;
+            this.setAllInArray(this.levelCheck, true);
+            this.tempPeran = temporary;
           }
 
           if (indexA != -1) this.levelCheck[0];
           if (indexB != -1) this.levelCheck[1];
           this.adminDisabled = true;
-        } else if (this.form.peran.includes("KASIE.PENCEGAHAN")) {
-          var indexA = this.form.peran.indexOf("KASIE");
-          var indexB = this.form.peran.indexOf("KASIE.PENCEGAHAN");
-          console.log(indexA + '&' + indexB);
-          var temporary = [];
-          if (indexA != -1) temporary.push(this.form.peran[indexA]);
-          if (indexB != -1) temporary.push(this.form.peran[indexB]);
-
-          if (temporary.length > 0) {
-            this.form.peran.length = 0;
-            this.setAllInArray(this.levelCheck, true);
-            this.form.peran = temporary;
-          }
-
-          if (indexA != -1) this.levelCheck[0];
-          if (indexB != -1) this.levelCheck[1];
-          this.adminDisabled = true;
-        } else if (this.form.peran.includes("PPK")) {
-          var index = this.form.peran.indexOf("PPK");
-          if (index != 0) this.purgeArray(index, this.form.peran);else this.form.peran.length = 1;
+        } else if (this.tempPeran.includes("PPK")) {
+          var index = this.tempPeran.indexOf("PPK");
+          if (index != 0) this.purgeArray(index, this.tempPeran);else this.tempPeran.length = 1;
           this.adminDisabled = true;
           if (peran.key != 2) return true;
-        } else if (this.form.peran.includes("KASUBAGTU")) {
-          var index = this.form.peran.indexOf("KASUBAGTU");
-          if (index != 0) this.purgeArray(index, this.form.peran);else this.form.peran.length = 1;
+        } else if (this.tempPeran.includes("KASUBAGTU")) {
+          var index = this.tempPeran.indexOf("KASUBAGTU");
+          if (index != 0) this.purgeArray(index, this.tempPeran);else this.tempPeran.length = 1;
           this.adminDisabled = true;
           if (peran.key != 3) return true;
-        } else if (this.form.peran.includes("KASUDIN")) {
-          var index = this.form.peran.indexOf("KASUDIN");
-          if (index != 0) this.purgeArray(index, this.form.peran);else this.form.peran.length = 1;
+        } else if (this.tempPeran.includes("KASUDIN")) {
+          var index = this.tempPeran.indexOf("KASUDIN");
+          if (index != 0) this.purgeArray(index, this.tempPeran);else this.tempPeran.length = 1;
           this.adminDisabled = true;
           if (peran.key != 4) return true;
         } else {
@@ -2304,8 +2309,13 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
         console.log('hit phl');
         this.setAllInArray(this.levelCheck, true);
       }
-    },
+    }
+  },
+  methods: {
+    levelOnClick: function levelOnClick() {},
     submitUserForm: function submitUserForm() {
+      var _this2 = this;
+
       if (this.form.bukanPegawai) this.form.peran.push("SEMENTARA");
       if (this.isASN) this.form.peran.push("ASN");else this.form.peran.push("PJLP");
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('/admin/action/add-user', this.form).then(function (resp) {
@@ -2314,10 +2324,20 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
         switch (resp.data) {
           case 'success_add_user':
             m = "Berhasil menambah user!";
+            _eventbus__WEBPACK_IMPORTED_MODULE_1__["default"].$emit('draw', {
+              message: 'Memuat ulang...'
+            });
+
+            _this2.resetForm();
+
             break;
 
           case 'fail_add_user_try_caught':
             m = 'Gagal menambah user! (Error Query/DB)';
+            break;
+
+          case 'fail_add_user_exist':
+            m = 'User telah terdaftar!';
             break;
 
           default:
@@ -48195,7 +48215,15 @@ var render = function() {
     [
       _c(
         "b-form",
-        { on: { submit: _vm.submitUserForm, reset: _vm.resetForm } },
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.submitUserForm.apply(null, arguments)
+            },
+            reset: _vm.resetForm
+          }
+        },
         [
           _c(
             "b-form-group",
@@ -48378,13 +48406,12 @@ var render = function() {
                     "b-form-checkbox-group",
                     {
                       attrs: { id: "input-level" },
-                      on: { input: _vm.levelOnClick },
                       model: {
-                        value: _vm.form.peran,
+                        value: _vm.tempPeran,
                         callback: function($$v) {
-                          _vm.$set(_vm.form, "peran", $$v)
+                          _vm.tempPeran = $$v
                         },
-                        expression: "form.peran"
+                        expression: "tempPeran"
                       }
                     },
                     [

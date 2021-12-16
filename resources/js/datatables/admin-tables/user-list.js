@@ -16,16 +16,22 @@ const app = new Vue({
                     searchable: false,
                     createdCell(cell,cellData,rowData){
                         let updateComponent = Vue.extend(require('../../components/datatable-buttons/UserChangePassword').default);
-
+                        let deleteComponent = Vue.extend(require('../../components/datatable-buttons/UserDelete').default);
                         
                         let updateButton = new updateComponent({
                             propsData: rowData
                         });
+                        let deleteButton = new deleteComponent({
+                            propsData: rowData
+                        })
                        
 
                         updateButton.$mount();
+                        deleteButton.$mount();
 
-                        $(cell).empty().append(updateButton.$el);
+                        $(cell).empty()
+                        .append(updateButton.$el)
+                        .append(deleteButton.$el);
                     }
                 }
             ],
