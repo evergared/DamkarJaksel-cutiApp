@@ -625,6 +625,9 @@ class TabelController extends Controller
 
                 return $value;
             })
+            ->addColumn('rolesArray',function($data){
+                return explode('|',$data->level);
+            })
             ->rawColumns(['roles'])
             ->make(true);
     }

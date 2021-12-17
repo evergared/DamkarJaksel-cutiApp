@@ -34,10 +34,15 @@ class UserController extends Controller
             $penempatan = $request->input('nip');
             $userExist = false;
 
+            if(sizeof($peran) == 0)
+                $peran = $this->getRoles($nip);
+            else
+                $peran = implode('|',$peran);
+
             if(!DB::table('user')->where('nip','=',$nip)->exists())
             DB::table('user')->insert([
                 'nip' => $nip,
-                'level' => implode('|',$peran),
+                'level' => $peran,
                 'password' => Hash::make($password),
                 'email' => $email,
                 'created_at' => Carbon::now(),
@@ -153,9 +158,10 @@ class UserController extends Controller
         try{
             $nip = $request->input('nip');
             $level = $request->input('peran');
+            //$penempatan = $request->input('penempatan');
             $user = DB::table('user')->where('nip','=',$nip);
 
-            if(!$user->exists())
+            if($user->exists())
             {
                 $user->update([
                     'level' => implode('|',$level)
@@ -194,5 +200,47 @@ class UserController extends Controller
             case 420: return 10;break;
             default : return 1;break;
         }
+    }
+
+    function getRoles($nip)
+    {
+        $pjlp = [16,17,18,19];
+        $kasie = [1,2,3,4,5,6,7,8,9,10,12];
+        $person = DB::table('data_pegawai')->where('nip',$nip)->first();
+
+        if(in_array($person->jabatan,$pjlp))
+            $this->addRoles($roles,"PJLP");
+        elseif($person->jabatan === "Admin")
+            $this->addRoles($roles,"ADMIN");
+        else
+            $this->addRoles($roles,"ASN");
+
+        if((25 <= $person->jabatan) && ($person->jabatan <= 54))
+            $this->addRoles($roles,"KATON");
+        elseif($person->jabatan === 21)
+            $this->addRoles($roles,"KARU");
+
+        if(in_array($person->jabatan,$kasie))
+            $this->addRoles($roles,"KASIE");
+        elseif($person->jabatan == 11)
+            $this->addRoles($roles, "KASUBAGTU");
+        elseif($person->jabatan == 15)
+            $this->addRoles($roles,"KASUDIN");
+
+        if($person->nip === DB::table('jabatan')->where('no',14)->first()->keterangan)
+            $this->addRoles($roles,"PPK");
+
+        if($person->nip === DB::table('jabatan')->where('no',23)->first()->keterangan)
+            $this->addRoles($roles,"KASIE.PENCEGAHAN");
+
+        return $roles;
+    }
+
+    function addRoles(&$roles,$role)
+    {
+        if(is_null($roles))
+            $roles = $role;
+        else
+            $roles = $roles . "|" . $role;
     }
 }

@@ -16,9 +16,13 @@ const app = new Vue({
                     searchable: false,
                     createdCell(cell,cellData,rowData){
                         let updateComponent = Vue.extend(require('../../components/datatable-buttons/UserChangePassword').default);
+                        let levelComponent = Vue.extend(require('../../components/datatable-buttons/UserChangeLevel').default);
                         let deleteComponent = Vue.extend(require('../../components/datatable-buttons/UserDelete').default);
                         
                         let updateButton = new updateComponent({
+                            propsData: rowData
+                        });
+                        let levelButton = new levelComponent({
                             propsData: rowData
                         });
                         let deleteButton = new deleteComponent({
@@ -27,10 +31,12 @@ const app = new Vue({
                        
 
                         updateButton.$mount();
+                        levelButton.$mount();
                         deleteButton.$mount();
 
                         $(cell).empty()
                         .append(updateButton.$el)
+                        .append(levelButton.$el)
                         .append(deleteButton.$el);
                     }
                 }

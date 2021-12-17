@@ -91,6 +91,7 @@ Route::get('/print',[App\Http\Controllers\FormCutiController::class,'testDocumen
 Route::get('/admin/list-penempatan',[App\Http\Controllers\UserController::class,'getArrayPenempatan']);
 Route::post('/admin/action/add-user',[App\Http\Controllers\UserController::class,'addUser']);
 Route::post('/admin/action/delete-user',[App\Http\Controllers\UserController::class,'deleteUser']);
+Route::patch('/admin/action/change-level',[App\Http\Controllers\UserController::class,'changeLevel']);
 Route::patch('/user/action/change-password',[App\Http\Controllers\UserController::class,'changePassword']);
 
 // Table Query Routes

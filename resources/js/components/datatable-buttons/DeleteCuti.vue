@@ -19,24 +19,25 @@ import eventbus from '../../eventbus'
         },
         methods: {
             hapusCuti() {
-                axios.post('/data-cuti/delete',this.hapus)
-                .then(resp => {
-                    var m;
+                if(confirm('Hapus cuti?'))
+                    axios.post('/data-cuti/delete',this.hapus)
+                    .then(resp => {
+                        var m;
 
-                    switch(resp.data)
-                    {
-                        case 'delete_success' : m = "Berhasil dihapus!";eventbus.$emit('draw',{message:"memuat ulang. . ."});break;
-                        case 'delete_fail' : m = "Gagal dihapus!";break;
-                        default: 'Unknown error : '+resp.data;break;
-                    }
+                        switch(resp.data)
+                        {
+                            case 'delete_success' : m = "Berhasil dihapus!";eventbus.$emit('draw',{message:"memuat ulang. . ."});break;
+                            case 'delete_fail' : m = "Gagal dihapus!";break;
+                            default: 'Unknown error : '+resp.data;break;
+                        }
 
-                    alert(m);
+                        alert(m);
 
-                })
-                .catch(err => {
-                    console.log("Delete Cuti error : "+err);
-                    alert("Gagal membuat sambungan ke server!");
-                })
+                    })
+                    .catch(err => {
+                        console.log("Delete Cuti error : "+err);
+                        alert("Gagal membuat sambungan ke server!");
+                    })
 
                 
             }

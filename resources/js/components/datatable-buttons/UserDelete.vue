@@ -24,23 +24,25 @@ export default{
     },
     methods:{
         deleteUser(){
-            axios.post(`/admin/action/delete-user`,this.user)
-            .then(resp =>{
 
-                var m;
-                switch(resp.data)
-                {
-                    case "success_delete_user":m="Sukses hapus user!";eventbus.$emit('draw',{message:'Memuat...'});break;
-                    case "fail_delete_user_exist":m="User tidak ditemukan!";break;
-                    case "fail_delete_user_try_caught":m="Gagal hapus user! (query/db error)";break;
-                    default: m='Unknown Error';break;
-                }
+            if(confirm('Hapus user '+this.nip+' ?'))
+                axios.post(`/admin/action/delete-user`,this.user)
+                .then(resp =>{
 
-                alert(m);
-            })
-            .catch(err => {
-                alert('Gagal hapus user! '+err);
-            })
+                    var m;
+                    switch(resp.data)
+                    {
+                        case "success_delete_user":m="Sukses hapus user!";eventbus.$emit('draw',{message:'Memuat...'});break;
+                        case "fail_delete_user_exist":m="User tidak ditemukan!";break;
+                        case "fail_delete_user_try_caught":m="Gagal hapus user! (query/db error)";break;
+                        default: m='Unknown Error';break;
+                    }
+
+                    alert(m);
+                })
+                .catch(err => {
+                    alert('Gagal hapus user! '+err);
+                })
         }
     }
 }

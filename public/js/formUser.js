@@ -2163,6 +2163,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2210,7 +2211,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
         text: 'ASN',
         value: true
       }],
-      level: [{
+      levelASN: [{
         key: 0,
         text: 'Ka. Sektor',
         value: "KASIE"
@@ -2231,93 +2232,142 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
         text: 'Ka. Sudin',
         value: 'KASUDIN'
       }],
-      levelCheck: [true, true, true, true, true]
+      levelDisabledASN: [true, true, true, true, true]
     };
   },
   computed: {},
   watch: {
     isASN: function isASN(newVal, oldVal) {
       if (this.isASN) {
-        this.tempPeran.length = 0;
-        this.setAllInArray(this.levelCheck, false);
+        this.tempPeran = [];
+        this.adminDisabled = false;
+        this.setAllInArray(this.levelDisabledASN, false);
       } else {
-        this.tempPeran.length = 0;
-        this.setAllInArray(this.levelCheck, true);
-      }
-    },
-    tempPeran: function tempPeran(newVal, oldVal) {
-      if (this.isASN) {
-        if (this.tempPeran.includes("ADMIN")) {
-          var index = this.tempPeran.indexOf("ADMIN");
-          if (index != 0) this.purgeArray(index, this.tempPeran);else this.tempPeran.length = 1;
-          this.levelCheck[0] = true;
-        } else if (this.tempPeran.includes("KASIE")) {
-          var indexA = this.tempPeran.indexOf("KASIE");
-          var indexB = this.tempPeran.indexOf("KASIE.PENCEGAHAN");
-          console.log(indexA + '&' + indexB);
-          var temporary = [];
-          if (indexA != -1) temporary.push(this.tempPeran[indexA]);
-          if (indexB != -1) temporary.push(this.tempPeran[indexB]);
-
-          if (temporary.length > 0) {
-            this.tempPeran.length = 0;
-            this.setAllInArray(this.levelCheck, true);
-            this.tempPeran = temporary;
-            if (indexA != -1) this.levelCheck[0] = false;
-            if (indexB != -1) this.levelCheck[1] = false;
-          }
-
-          this.adminDisabled = true;
-        } else if (this.tempPeran.includes("KASIE.PENCEGAHAN")) {
-          var indexA = this.tempPeran.indexOf("KASIE");
-          var indexB = this.tempPeran.indexOf("KASIE.PENCEGAHAN");
-          console.log(indexA + '&' + indexB);
-          var temporary = [];
-          if (indexA != -1) temporary.push(this.tempPeran[indexA]);
-          if (indexB != -1) temporary.push(this.tempPeran[indexB]);
-
-          if (temporary.length > 0) {
-            this.tempPeran.length = 0;
-            this.setAllInArray(this.levelCheck, true);
-            this.tempPeran = temporary;
-          }
-
-          if (indexA != -1) this.levelCheck[0];
-          if (indexB != -1) this.levelCheck[1];
-          this.adminDisabled = true;
-        } else if (this.tempPeran.includes("PPK")) {
-          var index = this.tempPeran.indexOf("PPK");
-          if (index != 0) this.purgeArray(index, this.tempPeran);else this.tempPeran.length = 1;
-          this.adminDisabled = true;
-          if (peran.key != 2) return true;
-        } else if (this.tempPeran.includes("KASUBAGTU")) {
-          var index = this.tempPeran.indexOf("KASUBAGTU");
-          if (index != 0) this.purgeArray(index, this.tempPeran);else this.tempPeran.length = 1;
-          this.adminDisabled = true;
-          if (peran.key != 3) return true;
-        } else if (this.tempPeran.includes("KASUDIN")) {
-          var index = this.tempPeran.indexOf("KASUDIN");
-          if (index != 0) this.purgeArray(index, this.tempPeran);else this.tempPeran.length = 1;
-          this.adminDisabled = true;
-          if (peran.key != 4) return true;
-        } else {
-          this.adminDisabled = false;
-          return false;
-        }
-      } // PJLP
-      else {
-        console.log('hit phl');
-        this.setAllInArray(this.levelCheck, true);
+        this.tempPeran = [];
+        this.adminDisabled = false;
+        this.setAllInArray(this.levelDisabledASN, true);
       }
     }
   },
   methods: {
-    levelOnClick: function levelOnClick() {},
+    levelOnClick: function levelOnClick(event) {
+      if (event.target.tagName === 'INPUT') {
+        if (event.target.checked) {
+          if (event.target.value === 'ADMIN') {
+            this.tempPeran = [];
+            this.tempPeran.push('ADMIN');
+            this.setAllInArray(this.levelDisabledASN, true);
+          } else if (event.target.value === 'KASIE') {
+            var indexA = this.tempPeran.includes('KASIE.PENCEGAHAN');
+            var indexB = this.tempPeran.includes('PPK');
+            var temporary = [];
+            if (indexA) temporary.push('KASIE.PENCEGAHAN');
+            if (indexB) temporary.push('PPK');
+            this.tempPeran = [];
+            this.setAllInArray(this.levelDisabledASN, true);
+            this.adminDisabled = true;
+            temporary.push('KASIE');
+            this.tempPeran = temporary;
+            this.levelDisabledASN[0] = false;
+            this.levelDisabledASN[1] = false;
+            this.levelDisabledASN[2] = false;
+          } else if (event.target.value === 'KASIE.PENCEGAHAN') {
+            var indexA = this.tempPeran.includes('KASIE');
+            var indexB = this.tempPeran.includes('PPK');
+            var temporary = [];
+            if (indexA) temporary.push('KASIE');
+            if (indexB) temporary.push('PPK');
+            this.tempPeran = [];
+            this.setAllInArray(this.levelDisabledASN, true);
+            this.adminDisabled = true;
+            temporary.push('KASIE.PENCEGAHAN');
+            this.tempPeran = temporary;
+            this.levelDisabledASN[1] = false;
+            this.levelDisabledASN[2] = false;
+            this.levelDisabledASN[0] = false;
+          } else if (event.target.value === 'PPK') {
+            var indexA = this.tempPeran.includes('KASIE');
+            var indexB = this.tempPeran.includes('KASIE.PENCEGAHAN');
+            var temporary = [];
+            if (indexA) temporary.push('KASIE');
+            if (indexB) temporary.push('KASIE.PENCEGAHAN');
+            this.tempPeran = [];
+            this.setAllInArray(this.levelDisabledASN, true);
+            this.adminDisabled = true;
+            temporary.push('PPK');
+            this.tempPeran = temporary;
+            this.levelDisabledASN[1] = false;
+            this.levelDisabledASN[2] = false;
+            this.levelDisabledASN[0] = false;
+          } else if (event.target.value === 'KASUBAGTU') {
+            this.tempPeran = [];
+            this.tempPeran.push('KASUBAGTU');
+            this.setAllInArray(this.levelDisabledASN, true);
+            this.levelDisabledASN[3] = false;
+            this.adminDisabled = true;
+          } else if (event.target.value === 'KASUDIN') {
+            this.tempPeran = [];
+            this.tempPeran.push('KASUDIN');
+            this.setAllInArray(this.levelDisabledASN, true);
+            this.levelDisabledASN[4] = false;
+            this.adminDisabled = true;
+          }
+        } else {
+          if (event.target.value === 'ADMIN') {
+            this.setAllInArray(this.levelDisabledASN, false);
+            this.tempPeran.pop('ADMIN');
+          } else if (event.target.value === 'KASIE') {
+            var indexA = this.tempPeran.includes("PPK");
+            var indexB = this.tempPeran.includes("KASIE.PENCEGAHAN");
+
+            if (indexA && indexB) {
+              this.setAllInArray(this.levelDisabledASN, false);
+              this.adminDisabled = false;
+            }
+
+            this.tempPeran.pop('KASIE');
+          } else if (event.target.value === 'KASIE.PENCEGAHAN') {
+            var indexA = this.tempPeran.includes("PPK");
+            var indexB = this.tempPeran.includes("KASIE");
+
+            if (indexA && indexB) {
+              this.setAllInArray(this.levelDisabledASN, false);
+              this.adminDisabled = false;
+            }
+
+            this.tempPeran.pop('KASIE.PENCEGAHAN');
+          } else if (event.target.value === 'PPK') {
+            var indexA = this.tempPeran.includes("KASIE.PENCEGAHAN");
+            var indexB = this.tempPeran.includes("KASIE");
+
+            if (indexA && indexB) {
+              this.setAllInArray(this.levelDisabledASN, false);
+              this.adminDisabled = false;
+            }
+
+            this.tempPeran.pop('PPK');
+          } else if (event.target.value === "KASUBAGTU") {
+            this.setAllInArray(this.levelDisabledASN, false);
+            this.adminDisabled = false;
+            this.tempPeran.pop('KASUBAGTU');
+          } else if (event.target.value === "KASUDIN") {
+            this.setAllInArray(this.levelDisabledASN, false);
+            this.adminDisabled = false;
+            this.tempPeran.pop('KASUDIN');
+          }
+        }
+      }
+    },
     submitUserForm: function submitUserForm() {
       var _this2 = this;
 
-      if (this.form.bukanPegawai) this.form.peran.push("SEMENTARA");
-      if (this.isASN) this.form.peran.push("ASN");else this.form.peran.push("PJLP");
+      this.form.peran = this.tempPeran;
+
+      if (this.form.bukanPegawai) {
+        this.form.peran.push("SEMENTARA");
+        if (this.isASN) this.form.peran.push("ASN");else this.form.peran.push("PJLP");
+      }
+
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('/admin/action/add-user', this.form).then(function (resp) {
         var m;
 
@@ -2351,8 +2401,10 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
       });
     },
     resetForm: function resetForm() {
-      this.form.nip = '', this.form.password = '', this.form.email = '', this.form.bukanPegawai = false, this.form.nama = '', this.form.peran = [], this.form.penempatan = '';
-      this.setAllInArray(this.levelCheck, true);
+      this.form.nip = '', this.form.password = '', this.form.email = '', this.form.bukanPegawai = false, this.isASN = false;
+      this.form.nama = '', this.form.peran = [], this.form.penempatan = '';
+      this.tempPeran = [];
+      this.setAllInArray(this.levelDisabledASN, true);
     },
     setAllInArray: function setAllInArray(array, value) {
       var i,
@@ -2364,8 +2416,13 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
     },
     purgeArray: function purgeArray(indexSurvivor) {
       var array = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-      array.splice(0, 1, array[indexSurvivor]);
-      array.length = 1;
+      var t = array[indexSurvivor];
+      array.length = 0;
+      array.push(t);
+    },
+    test: function test() {
+      this.form.peran = this.tempPeran;
+      alert(JSON.stringify(this.tempPeran));
     }
   }
 });
@@ -48406,6 +48463,11 @@ var render = function() {
                     "b-form-checkbox-group",
                     {
                       attrs: { id: "input-level" },
+                      nativeOn: {
+                        click: function($event) {
+                          return _vm.levelOnClick.apply(null, arguments)
+                        }
+                      },
                       model: {
                         value: _vm.tempPeran,
                         callback: function($$v) {
@@ -48418,19 +48480,23 @@ var render = function() {
                       _c(
                         "b-form-checkbox",
                         {
-                          attrs: { value: "ADMIN", disabled: _vm.adminDisabled }
+                          attrs: {
+                            value: "ADMIN",
+                            disabled: _vm.adminDisabled,
+                            checked: "true"
+                          }
                         },
                         [_vm._v("Admin")]
                       ),
                       _vm._v(" "),
-                      _vm._l(_vm.level, function(peran) {
+                      _vm._l(_vm.levelASN, function(peran) {
                         return _c(
                           "b-form-checkbox",
                           {
                             key: peran.key,
                             attrs: {
                               value: peran.value,
-                              disabled: _vm.levelCheck[peran.key]
+                              disabled: _vm.levelDisabledASN[peran.key]
                             }
                           },
                           [
