@@ -44,7 +44,7 @@ class RegisterController extends Controller
 
         $validated = $request->validate([
             'nip-nrk' => ['required','string','max:18', Rule::notIn($nip)],
-            'email' => 'required|email:dns|max:255|unique:user',
+            //'email' => 'email:dns|max:255|unique:user',
             'password' => 'required|string|confirmed'
         ]);
         

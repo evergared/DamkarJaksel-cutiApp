@@ -40,11 +40,11 @@
                   <input class="form-control" id="nrk" name="nrk" placeholder="NRK/NIP" type="text" v-model="form.nip" readonly = "true">
                 </div>
 
-                <div class="row justify-content-center align-items-center my-3">
+                <div class="col justify-content-center align-items-center my-3">
                   <div class="input-group col">
                     <b-form-datepicker v-model="form.start" @input="calculateHari()" :date-disabled-fn="dateDisabled" :min="minDate" :max="maxDate" :start-weekday="1" placeholder="Tanggal Mulai" locale="id"></b-form-datepicker>
                   </div>
-                  <span class="col-sm-auto my-1 mx-auto"><small>Sampai Dengan</small></span>
+                  <p class="col-sm-auto text-center my-1 mx-auto"><small>Sampai Dengan</small></p>
                   <div class="input-group col">
                     <b-form-datepicker v-model="form.end" @input="calculateHari()" :date-disabled-fn="dateDisabled" :min="form.start" :max="maxDate" :start-weekday="1" placeholder="Tanggal Akhir" locale="id"></b-form-datepicker>
                   </div>
@@ -72,12 +72,16 @@
                   </select>
                 </div>
 
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-route"></i></span>
+                <div class="mb-3">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-route"></i></span>
+                    </div>
+                    <input class="form-control" id="alamat" name="alamat" placeholder="Alamat Lengkap Selama Menjalankan Cuti" type="text" aria-describedby="alamat-desc" v-model="form.alamat" >
                   </div>
-                  <input class="form-control" id="alamat" name="alamat" placeholder="Alamat Lengkap Selama Menjalankan Cuti" type="text" v-model="form.alamat" >
+                    <small tabindex="-1" id="alamat-desc" class="form-text text-muted">Alamat diisi lengkap dengan RT/RW, Kelurahan, Kecamatan.</small>
                 </div>
+
 
                 <!-- {{-- Bagian Alasan Cuti --}} -->
                 <div class="input-group">

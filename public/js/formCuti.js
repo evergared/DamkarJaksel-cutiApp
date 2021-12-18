@@ -2187,6 +2187,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
  //import 'bootstrap/dist/css/bootstrap.css';
 
 
@@ -48786,7 +48790,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "row justify-content-center align-items-center my-3"
+                        "col justify-content-center align-items-center my-3"
                     },
                     [
                       _c(
@@ -48930,35 +48934,51 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "input-group mb-3" }, [
-                    _vm._m(7),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.alamat,
-                          expression: "form.alamat"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        id: "alamat",
-                        name: "alamat",
-                        placeholder: "Alamat Lengkap Selama Menjalankan Cuti",
-                        type: "text"
-                      },
-                      domProps: { value: _vm.form.alamat },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                  _c("div", { staticClass: "mb-3" }, [
+                    _c("div", { staticClass: "input-group" }, [
+                      _vm._m(7),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.alamat,
+                            expression: "form.alamat"
                           }
-                          _vm.$set(_vm.form, "alamat", $event.target.value)
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          id: "alamat",
+                          name: "alamat",
+                          placeholder: "Alamat Lengkap Selama Menjalankan Cuti",
+                          type: "text",
+                          "aria-describedby": "alamat-desc"
+                        },
+                        domProps: { value: _vm.form.alamat },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "alamat", $event.target.value)
+                          }
                         }
-                      }
-                    })
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "small",
+                      {
+                        staticClass: "form-text text-muted",
+                        attrs: { tabindex: "-1", id: "alamat-desc" }
+                      },
+                      [
+                        _vm._v(
+                          "Alamat diisi lengkap dengan RT/RW, Kelurahan, Kecamatan."
+                        )
+                      ]
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "input-group" }, [
@@ -49185,7 +49205,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "col-sm-auto my-1 mx-auto" }, [
+    return _c("p", { staticClass: "col-sm-auto text-center my-1 mx-auto" }, [
       _c("small", [_vm._v("Sampai Dengan")])
     ])
   },
