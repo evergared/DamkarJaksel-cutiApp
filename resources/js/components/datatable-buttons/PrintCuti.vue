@@ -28,11 +28,13 @@ import eventbus from '../../eventbus'
                         console.log('status : '+resp.data.status);
                     
                         const url = window.URL.createObjectURL(new Blob([resp.data],{type:'application/pdf'}));
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.setAttribute('download',fname);
-                        document.body.appendChild(link);
-                        link.click();
+                        var print = window.open(url);
+                        print.focus();
+                        // const link = document.createElement('a');
+                        // link.href = url;
+                        // link.setAttribute('download',fname);
+                        // document.body.appendChild(link);
+                        // link.click();
                         eventbus.$emit('loading-end');
                     
                 })

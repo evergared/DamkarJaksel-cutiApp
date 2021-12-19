@@ -61,11 +61,11 @@ class Cards
 
 
                 $waitASN = asigment_asn::where('kasie','!=','s')
-                                ->where('kasubagtu','!=','s')
+                                ->orWhere('kasubagtu','!=','s')
                                 ->count();
                 $waitPJLP = asigment_pjlp::where('kasie','!=','s')
-                                ->where('kasubagtu','!=','s')
-                                ->where('ppk','!=','s')
+                                ->orWhere('kasubagtu','!=','s')
+                                ->orWhere('ppk','!=','s')
                                 ->count();
                 Cards::$wait = $waitASN + $waitPJLP;
 
@@ -207,11 +207,11 @@ class Cards
 
 
                 $waitASN = asigment_asn::where('kasie','!=','s')
-                                ->where('kasubagtu','!=','s')
+                                ->orWhere('kasubagtu','!=','s')
                                 ->count();
                 $waitPJLP = asigment_pjlp::where('kasie','!=','s')
-                                ->where('kasubagtu','!=','s')
-                                ->where('ppk','!=','s')
+                                ->orWhere('kasubagtu','!=','s')
+                                ->orWhere('ppk','!=','s')
                                 ->count();
                 Cards::$wait = $waitASN + $waitPJLP;
 
