@@ -20,9 +20,10 @@
                   <td style="width: 487.5pt;border: none;padding: 0cm 5.4pt;height: 84.6pt;vertical-align: top;">
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;Nama&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; : &nbsp;{{$a['nama']}} <br>
                       &nbsp;&nbsp;&nbsp;&nbsp;Nik &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['nip']}} <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Jabatan &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['jabatan']}} {{$a['jaket']}} {{$a['penempatan']}} <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Unit Kerja &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp;Suku Dinas Penanggulangan Kebakaran dan&nbsp; <br>
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Penyelamatan Kota Administrasi Jakarta Selatan</p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Jabatan &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['golongan']}} Penanggulangan Kebakaran dan Penyelamatan <br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Group {{$a['kompi']}} {{$a['penempatan']}} <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Unit Kerja &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp;Suku Dinas Penanggulangan Kebakaran dan Penyelamatan&nbsp; <br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Kota Administrasi Jakarta Selatan</p>
                 </td>
               </tr>
             </tbody>
@@ -103,7 +104,7 @@
     <tbody>
       <tr>
           <td style="width:218.05pt;border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;">
-            <p style='margin: 0cm 0cm 0.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>PEJABAT PEMBUAT KOMITMEN</span></p>
+            <p style='margin: 0cm 0cm 0.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>PPK/PPTK</span></p>
             {{-- <pstyle='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"TimesNewRoman",serif;text-align:center;'><spanstyle='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p> --}}
           </td>
           <td style="width: 241.85pt;border-top: 1pt solid windowtext;border-right: 1pt solid windowtext;border-bottom: 1pt solid windowtext;border-image: initial;border-left: none;padding: 0cm 5.4pt;vertical-align: top;">
@@ -114,7 +115,7 @@
         <tr>
           <td style="width: 218.05pt;border-right: 1pt solid windowtext;border-bottom: 1pt solid windowtext;border-left: 1pt solid windowtext;border-image: initial;border-top: none;padding: 0cm 5.4pt;vertical-align: top;">
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
-            <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>PPK</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
+            <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>PPK/PPTK</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;{{$a['ppk']}}</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
