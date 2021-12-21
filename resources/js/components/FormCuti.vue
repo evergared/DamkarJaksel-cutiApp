@@ -178,7 +178,7 @@ export default{
                 batashari:this.sisa,
                 updateMode : this.um,
                 canUpdate : false,
-                tanggal : []
+                tanggal : [],
             },
 
             dataCuti:{
@@ -191,6 +191,7 @@ export default{
                 jenisCuti:"",
                 alamat:"",
                 alasan:"",
+                flag : this.flag
             },
 
             disableCuti : [],
@@ -234,6 +235,10 @@ export default{
         },
         index:{
           default:null
+        },
+        flag:{
+          type: String,
+          default:'a'
         }
     },
     methods:{
@@ -242,7 +247,7 @@ export default{
 
             if(this.form.start !=="" && this.form.end !== "")
             {
-                this.form.lama = (new Date(this.form.end).getTime() - new Date(this.form.start).getTime())/(1000*60*60*24);
+                this.form.lama = ((new Date(this.form.end).getTime() - new Date(this.form.start).getTime())/(1000*60*60*24))+1;
             }
             else
                 this.form.lama = 0;

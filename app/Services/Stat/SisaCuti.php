@@ -9,16 +9,39 @@ class SisaCuti
 {
     public static   $sisaTahunan = 0,
                     $n1 = 0,
-                    $n2 = 0;
-    
+                    $n2 = 0,
+                    $pakai = 0,
+                    $flag = '';                    
+
     static $user;
 
     public function __construct()
     {
-        SisaCuti::$user = Auth::user();
-
+        SisaCuti::$user = Auth::user();        
         $this->fetchData();
 
+        if(SisaCuti::$user->is_asn)
+        {
+            SisaCuti::$pakai = SisaCuti::$n2;
+            SisaCuti::$flag = '2';
+            if(SisaCuti::$n2 < 1)
+            {
+                SisaCuti::$pakai = SisaCuti::$n1;
+                SisaCuti::$flag = '1';
+            }
+            if(SisaCuti::$n1 < 1)
+            {
+                SisaCuti::$pakai = SisaCuti::$sisaTahunan;
+                SisaCuti::$flag = '0';
+            }
+        }
+        else 
+            {
+                SisaCuti::$pakai = SisaCuti::$sisaTahunan;
+                SisaCuti::$flag = '0';
+            }
+
+error_log('sisa cuti flag: '.SisaCuti::$flag);
         // TODO : tambah event pada saat persetujuan cuti agar data yg tampil bisa realtime
     }
 

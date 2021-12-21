@@ -8,7 +8,7 @@
 
 
   <div class="col-md-7 col-sm" id="cuti">
-    <form-cuti nip = '{{ auth()->user()->nip }}' sisa='{{ $cuti::$sisaTahunan }}' ></form-cuti>
+    <form-cuti nip = '{{ auth()->user()->nip }}' sisa='{{ $cuti::$pakai }}' :flag='{{ $cuti::$flag }}' ></form-cuti>
   </div>
 
 

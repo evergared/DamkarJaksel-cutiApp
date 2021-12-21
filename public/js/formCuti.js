@@ -2253,7 +2253,8 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
         tanggal: [],
         jenisCuti: "",
         alamat: "",
-        alasan: ""
+        alasan: "",
+        flag: this.flag
       },
       disableCuti: []
     };
@@ -2295,12 +2296,16 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
     },
     index: {
       "default": null
+    },
+    flag: {
+      type: String,
+      "default": 'a'
     }
   },
   methods: {
     calculateHari: function calculateHari() {
       if (this.form.start !== "" && this.form.end !== "") {
-        this.form.lama = (new Date(this.form.end).getTime() - new Date(this.form.start).getTime()) / (1000 * 60 * 60 * 24);
+        this.form.lama = (new Date(this.form.end).getTime() - new Date(this.form.start).getTime()) / (1000 * 60 * 60 * 24) + 1;
       } else this.form.lama = 0;
     },
     dateDisabled: function dateDisabled(ymd, date) {
