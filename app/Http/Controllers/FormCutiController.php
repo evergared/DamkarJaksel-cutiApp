@@ -429,8 +429,9 @@ class FormCutiController extends Controller
             if($pegawai['golongan']==="PJLP"){
                 $pdf = PDF::loadView('doc/print',compact('a'))->setPaper('a4','portrait');
                 error_log('nip : '.$nip);
-                // error_log('array key : '.implode('|',array_keys($a)));
-                // error_log('array value : '.implode('|',$a));
+                error_log('PJLP hit');
+                error_log('array key : '.implode('|',array_keys($a)));
+                error_log('array value : '.implode('|',$a));
 
                 CutiPrintEvent::dispatch($request->input('nip'),$no_cuti);
                 //return dd($a);
@@ -440,8 +441,9 @@ class FormCutiController extends Controller
             else{
                 $pdf = PDF::loadView('doc/print1',compact('a'))->setPaper('a4','portrait');
                 error_log('nip : '.$nip);
-                // error_log('array key : '.implode('|',array_keys($a)));
-                // error_log('array value : '.implode('|',$a));
+                error_log('ASN hit');
+                error_log('array key : '.implode('|',array_keys($a)));
+                error_log('array value : '.implode('|',$a));
                 CutiPrintEvent::dispatch($nip,$no_cuti);
                 //return dd($a);
                 return $pdf->download();
@@ -549,7 +551,6 @@ class FormCutiController extends Controller
                      * N2 diprioritaskan utk dikurang terlebih dahulu
                      */
 
-
                     $n1 = $item->n1;
                     $n2 = $item->n2;
 
@@ -560,22 +561,18 @@ class FormCutiController extends Controller
                     if($sisa < 12 && $n1 > 0)
                     {
                         $sisa += $n1;
-
                         if($sisa > 12)
                         $n1 += ($sisa - 12);
                         else
                         $n1 = 0;
                     }
-
                     $i->update(array(
                         'sisa' => $sisa,
                         'n1' => $n1,
                         'n2' => $n2
                     ));
                 }
-    
                 $asigment->where('no_cuti','=',$no_cuti)->update(array('selesai' => 1));
-                
             }
             else
                 error_log('kelewat');
@@ -585,5 +582,4 @@ class FormCutiController extends Controller
             error_log('error handle cuti print : '.$e);
         }
     }
-
 }
