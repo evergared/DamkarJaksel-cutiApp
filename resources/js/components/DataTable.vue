@@ -1,5 +1,5 @@
 <template>
-    <table class="table">
+    <table class="table-hover">
         <thead>
         <tr>
             <th v-for="column in parameters.columns" v-html="title(column)" :key="column" ></th>
@@ -43,10 +43,25 @@
                 const vm = this;
                 return window.$.extend({
                         serverSide: true,
-                        processing: true
+                        processing: true,
+                        dom: 'B<"row align-items-center"<"col text-left"l><"col text-right"f>>r<"table table-responsive"t>p',
+                        buttons:[
+                            {
+                                extend:'excel',
+                                text: 'Print Hal Ini',
+                                exportOptions:{
+                                    modifier:{
+                                        page:'current'
+                                    }
+                                }
+                            }
+                        ],
+                        lengthMenu:[[10,25,50,-1],["10","25","50","Semua"]],
+                        fixedHeader:true
                    }, {
                    columns:this.columns,
                    ajax:this.ajax,
+                   pagingType:'numbers',
                    createdRow(...args) {
                       vm.$emit('created-row', ...args);
                    },
