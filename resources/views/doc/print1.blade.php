@@ -32,13 +32,13 @@
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>Nama</p>
                         </td>
                         <td style="width: 309pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;height: 14.2pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>Ladiyo</p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>{{$a['nama']}}</p>
                         </td>
                         <td style="width: 13.75pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;height: 14.2pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>NIP</p>
                         </td>
                         <td style="width: 90.35pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;height: 14.2pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>196308131986031013</p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>{{$a['nip']}}</p>
                         </td>
                     </tr>
                     <tr>
@@ -46,7 +46,7 @@
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>Jabatan</p>
                         </td>
                         <td style="width: 309pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;height: 14.2pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>Pengendali Operasi Penanggulangan Kebakaran dan Penyelamatan ( Group A Sektor VIII ) Kec. Pancoran &nbsp;</p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>{{$a['jabket']}} &nbsp;</p>
                         </td>
                         <td style="width: 13.75pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;height: 14.2pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>Masa Kerja</p>
@@ -77,7 +77,7 @@
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>1. Cuti Tahunan</p>
                         </td>
                         <td style="width: 83pt; border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-family:Wingdings;">√</span>&nbsp;</p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-family:Blackadder ITC; font-size:14px;">v</span>&nbsp;</p>
                         </td>
                         <td style="width: 160.4pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:12px;font-family:"Arial",sans-serif;'>2. Cuti Besar</p>
@@ -125,7 +125,7 @@
                     </tr>
                     <tr>
                         <td style="width: 400.5pt;border-right: 1pt solid windowtext;border-bottom: 1pt solid windowtext;border-left: 1pt solid windowtext;border-image: initial;border-top: none;padding: 0cm 5.4pt;height: 12.75pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'>Acara pernikahan saudara</p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'>{{ $a['alasan'] }}</p>
                         </td>
                     </tr>
                 </tbody>
@@ -139,7 +139,7 @@
                     </tr>
                     <tr>
                         <td style="width: 61.95pt;border-right: 1pt solid windowtext;border-bottom: 1pt solid windowtext;border-left: 1pt solid windowtext;border-image: initial;border-top: none;padding: 0cm 5.4pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">Selama 6</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">Selama {{$a['total_cuti']}} hari</span></p>
                         </td>
                         <td style="width: 110.45pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;margin-right:-5.4pt;'><span style="font-size: 11px;">( hari / <s>bulan / tahun</s> )*</span></p>
@@ -148,13 +148,13 @@
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">Mulai tanggal</span></p>
                         </td>
                         <td style="width: 84.45pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="color: black; font-size: 11px;">13 Juni 2019</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="color: black; font-size: 11px;">{{$a['tgl_awal']}}</span></p>
                         </td>
                         <td style="width: 46pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">s/d</span></p>
                         </td>
                         <td style="width: 84.45pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">20 Juni 2019</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">{{$a['tgl_akhir']}}</span></p>
                         </td>
                     </tr>
                 </tbody>
@@ -199,7 +199,7 @@
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">N-2</span></p>
                         </td>
                         <td style="width: 69.5pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">&nbsp;</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">&nbsp;{{ $a['na2'] }}</span></p>
                         </td>
                         <td style="width: 69.15pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">&nbsp;</span></p>
@@ -216,7 +216,7 @@
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">N-1</span></p>
                         </td>
                         <td style="width: 69.5pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">&nbsp;</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">&nbsp;{{ $a['na1'] }}</span></p>
                         </td>
                         <td style="width: 69.15pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">&nbsp;</span></p>
@@ -233,7 +233,7 @@
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">N</span></p>
                         </td>
                         <td style="width: 69.5pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">12</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">{{ $a['na'] }}</span></p>
                         </td>
                         <td style="width: 69.15pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">&nbsp;</span></p>
@@ -262,19 +262,19 @@
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">TELP</span></p>
                         </td>
                         <td style="width: 122.6pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">0812-8222-5163</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">{{$a['tlpn']}}</span></p>
                         </td>
                     </tr>
                     <tr>
                         <td style="width: 310.2pt;border-right: 1pt solid windowtext;border-bottom: 1pt solid windowtext;border-left: 1pt solid windowtext;border-image: initial;border-top: none;padding: 0cm 5.4pt;height: 65.4pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">Desa Ngrombo ll Kel. Balong Kec. Girisubo Gunung Kidul Yogyakarta</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">{{$a['alamat']}}</span></p>
                         </td>
                         <td colspan="2" style="width: 179.3pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;height: 65.4pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">Hormat saya,</span></p>
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">&nbsp;</span></p>
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">&nbsp;</span></p>
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">Ladiyo</span></p>
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">NIP. 196308131986031013</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">{{$a['nama']}}</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">NIP. {{$a['nip']}}</span></p>
                         </td>
                     </tr>
                 </tbody>
@@ -291,7 +291,7 @@
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">KETERANGAN :</span></p>
                         </td>
                         <td colspan="2" style="width: 200.3pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">DISETUJUI</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">{{$a['ket_kasie']}}</span></p>
                         </td>
                     </tr>
                     <tr>
@@ -299,12 +299,12 @@
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">&nbsp;</span></p>
                         </td>
                         <td style="width: 130.45pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">Kasi. Sektor VIII Kec. Pancoran</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">Kasi. {{$a['penempatan']}}</span></p>
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">&nbsp;</span></p>
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">&nbsp;</span></p>
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">&nbsp;</span></p>
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">H. Agus Sukoco, S.Sos</span></p>
-                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">NIP. 197001211990121001</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">{{$a['ksk']}}</span></p>
+                            <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">NIP. {{$a['kskn']}}</span></p>
                         </td>
                     </tr>
                 </tbody>
@@ -321,7 +321,7 @@
                             <p style="margin: 0cm 0cm 0.0001pt; font-size: 15px; font-family: Arial, sans-serif; text-align: center; line-height: 1;"><span style="font-size: 11px; line-height: 1;">KETERANGAN :</span></p>
                         </td>
                         <td colspan="2" style="width: 200.3pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
-                            <p style="margin: 0cm 0cm 0.0001pt; font-size: 15px; font-family: Arial, sans-serif; text-align: center; line-height: 1;"><span style="font-size: 11px; line-height: 1;">DISETUJUI</span></p>
+                            <p style="margin: 0cm 0cm 0.0001pt; font-size: 15px; font-family: Arial, sans-serif; text-align: center; line-height: 1;"><span style="font-size: 11px; line-height: 1;">{{$a['ket_tu']}}</span></p>
                         </td>
                     </tr>
                     <tr>
@@ -351,38 +351,73 @@
     <p style="text-align:center"><b>Nomor : 802021{{$a['no_cuti']}}</b></p>
       <div></div>
       <div style="margin-left: 10px"></div>
-        <p>1. &nbsp;Diberikan Cuti Tahunan untuk tahun 2021 kepada Pegawai Negeri Sipil :</p>
-        <table style="border-collapse:collapse;border:none;">
-          <tbody>
-              <tr>
-                  <td style="width: 487.5pt;border: none;padding: 0cm 5.4pt;height: 84.6pt;vertical-align: top;">
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Nama&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; : &nbsp;{{$a['nama']}} <br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;Nik &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['nip']}} <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Jabatan &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['golongan']}} Penanggulangan Kebakaran dan Penyelamatan <br>
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Group {{$a['kompi']}} {{$a['penempatan']}} <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Unit Kerja &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp;Suku Dinas Penanggulangan Kebakaran dan Penyelamatan&nbsp; <br>
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Kota Administrasi Jakarta Selatan</p>
-                </td>
-              </tr>
+        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'> 1. &nbsp;Diberikan Cuti Tahunan untuk tahun 2021 kepada Pegawai Negeri Sipil :</p>
+        <table style="width:513.05pt;border-collapse:collapse;border:none;">
+            <tbody>
+                <tr>
+                    <td style="width: 82.1pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif; padding-left:11pt;'><span style='font-family:"Arial Narrow",sans-serif;'>Nama &nbsp;</span></p>
+                    </td>
+                    <td style="width: 30pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;text-align:center;'><span style=';font-family:"Arial Narrow",sans-serif;'>:</span></p>
+                    </td>
+                    <td style="width: 372.95pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'><span style=';font-family:"Arial Narrow",sans-serif;'>{{$a['nama']}}</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 82.1pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif; padding-left:11pt;'><span style=';font-family:"Arial Narrow",sans-serif;'>NIP / NRK &nbsp;</span></p>
+                    </td>
+                    <td style="width: 30pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;text-align:center;'><span style=';font-family:"Arial Narrow",sans-serif;'>:</span></p>
+                    </td>
+                    <td style="width: 372.95pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'><span style=';font-family:"Arial Narrow",sans-serif;'>{{$a['nip']}}</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 82.1pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif; padding-left:11pt;'><span style=';font-family:"Arial Narrow",sans-serif;'>Jabatan</span></p>
+                    </td>
+                    <td style="width: 30pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;text-align:center;'><span style=';font-family:"Arial Narrow",sans-serif;'>:</span></p>
+                    </td>
+                    <td style="width: 372.95pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'><span style=';font-family:"Arial Narrow",sans-serif;'>{{$a['jabket']}}</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 82.1pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif; padding-left:11pt;'><span style=';font-family:"Arial Narrow",sans-serif;'>Unit Kerja</span></p>
+                    </td>
+                    <td style="width: 30pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;text-align:center;'><span style=';font-family:"Arial Narrow",sans-serif;'>:</span></p>
+                    </td>
+                    <td style="width: 372.95pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'><span style=';font-family:"Arial Narrow",sans-serif;'>Suku Dinas Penanggulangan Kebakaran dan Penyelamatan Kota Administrasi Jakarta Selatan</span></p>
+                    </td>
+                </tr>
             </tbody>
-          </table>
-
-<p>&nbsp; &nbsp; &nbsp; Selama {{$a['total_cuti']}} hari &nbsp;mulai tanggal {{$a['start']}} s/d {{$a['end']}}. Dengan ketentuan&nbsp; <br>
+        </table>
+<br>
+<p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; Selama {{$a['total_cuti']}} hari &nbsp;mulai tanggal {{$a['start']}} s/d {{$a['end']}}. Dengan ketentuan&nbsp; <br>
 &nbsp; &nbsp; &nbsp; sebagai berikut :</p>
-<p>&nbsp; &nbsp; &nbsp; a.<span style="white-space:pre;">&nbsp; &nbsp;&nbsp;</span>Sebelum menjalankan cuti tahunan wajib menyerahkan pekerjaannya kepada atasan&nbsp; <br>
+<p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; a.<span style="white-space:pre;">&nbsp; &nbsp;&nbsp;</span>Sebelum menjalankan cuti tahunan wajib menyerahkan pekerjaannya kepada atasan&nbsp; <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; langsungnya. <br>
 &nbsp; &nbsp; &nbsp; b.<span style="white-space:pre;">&nbsp; &nbsp;&nbsp;</span>Setelah &nbsp;selesai &nbsp;menjalankan &nbsp;cuti &nbsp;tahunan &nbsp;wajib &nbsp;melaporkan &nbsp;diri &nbsp;kepada &nbsp;atasan&nbsp; <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; langsungnya dan bekerja kembali sebagaimana biasa.</p>
-<p>2. &nbsp;Demikian surat izin cuti tahunan ini dibuat untuk dapat dipergunakan &nbsp;sebagaimana&nbsp; <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; langsungnya dan bekerja kembali sebagaimana biasa.</p><br>
+<p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>2. &nbsp;Demikian surat izin cuti tahunan ini dibuat untuk dapat dipergunakan &nbsp;sebagaimana&nbsp; <br>
 &nbsp; &nbsp; &nbsp; mestinya.</p>
-<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Jakarta &nbsp; &nbsp; {{$a['print_date']}} <br>
+<p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Jakarta &nbsp; &nbsp; {{$a['print_date']}} <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kepala Suku Dinas Penanggulangan&nbsp;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kebakaran dan Penyelamatan<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Kota Adm. Jakarta Selatan</p><br><br><br>
-<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Herbert Plider Lumban Gaol, S.Sos, M.M <br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Kota Adm. Jakarta Selatan</p><br><br><br><br><br>
+<p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Herbert Plider Lumban Gaol, S.Sos, M.M <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; NIP. 196910211990081001 <br>
 &nbsp; &nbsp; Tembusan&nbsp; <br>
 &nbsp; &nbsp; 1.Kasubbag Tata Usaha <br>
 &nbsp; &nbsp; 2.Kasi {{$a['penempatan']}} <br>
-    </body>
+</p>    
+</body>
 </html>

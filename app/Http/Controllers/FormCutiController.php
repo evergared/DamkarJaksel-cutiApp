@@ -402,13 +402,14 @@ class FormCutiController extends Controller
             $kasek = ['ksk' => DB::table('data_pegawai')->where('jabatan','=',$pegawai['kasie'])->value('data_pegawai.nama')] ;
             $kasekn = ['kskn' => DB::table('data_pegawai')->where('jabatan','=',$pegawai['kasie'])->value('data_pegawai.nip')] ;
             $jaket = ['jaket' => DB::table('data_pegawai')->where('nip','=',$nip)->value('data_pegawai.keterangan')] ;
-
+            
             error_log('kasie before : '.$asigment['kasie']);
             $asigment['kasie'] = $this->approvalAtasan($asigment['kasie']);
             error_log('kasie now : '.$asigment['kasie']);
             error_log('kasubagtu before : '.$asigment['kasubagtu']);
             $asigment['kasubagtu'] = $this->approvalAtasan($asigment['kasubagtu']);
             error_log('kasubagtu after : '.$asigment['kasubagtu']);
+
             if($pegawai['golongan'] === "PJLP"){
                 $asigment['ppk'] = $this->approvalAtasan($asigment['ppk']);
                 $ks['ks'] = $this->approvalAtasan($ks['ks']);}
@@ -554,17 +555,16 @@ class FormCutiController extends Controller
                     $n1 = $item->n1;
                     $n2 = $item->n2;
 
-                    $sisa = $sisa + $n1;
-                    $n1 = $n2;
-                    $n2 = 0;
 
-                    if($sisa < 12 && $n1 > 0)
+                    if($n2 == 6 && $n1==6 && $sisa == 12)
                     {
-                        $sisa += $n1;
-                        if($sisa > 12)
-                        $n1 += ($sisa - 12);
-                        else
-                        $n1 = 0;
+                        $n2=$n2-$totalHari;
+                    }
+                    else if($n2 == 0 && $n2==6 && $sisa==12){
+                        $n1=$n1-$totalHari;
+                    }
+                    else if($n2==0 && $n1==0 && $sisa==12){
+                        $sisa=$sisa-$totalHari;
                     }
                     $i->update(array(
                         'sisa' => $sisa,
