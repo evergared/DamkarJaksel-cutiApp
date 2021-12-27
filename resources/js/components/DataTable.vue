@@ -14,13 +14,22 @@
     
 </template>
 
+<style scoped>
+
+</style>
 <script>
     window.$ = window.jQuery = require('jquery');
+    require('jszip');
+    require('xlsx');
+
     require('datatables.net');
     require('datatables.net-bs4');
     require('datatables.net-buttons');
     require('datatables.net-buttons-bs4');
-    
+    require( 'datatables.net-buttons/js/buttons.html5.js' );
+    require( 'datatables.net-buttons/js/buttons.print.js' );
+ 
+
     import eventbus from '../eventbus';
 
     export default{
@@ -44,17 +53,12 @@
                 return window.$.extend({
                         serverSide: true,
                         processing: true,
-                        dom: 'B<"row align-items-center"<"col text-left"l><"col text-right"f>>r<"table table-responsive"t>p',
+                        dom: 'B<"row align-items-center"<"col text-left"l><"col text-right"f>>r<"table table-responsive"t><"row justify-content-center"p>',
                         buttons:[
-                            {
-                                extend:'excel',
-                                text: 'Print Hal Ini',
-                                exportOptions:{
-                                    modifier:{
-                                        page:'current'
-                                    }
-                                }
-                            }
+                            'csvHtml5',
+                            'excelHtml5',
+                            'colvis',
+                            'print'
                         ],
                         lengthMenu:[[10,25,50,-1],["10","25","50","Semua"]],
                         fixedHeader:true
@@ -115,6 +119,10 @@
         },
         mounted() {
            this.dataTable = window.$(this.$el).DataTable(this.parameters);
+
+        //    this.dataTable.buttons().container()
+        //     .appendTo( $('.dt-buttons', this.dataTable.table().container()))
+
            eventbus.$on('draw' , (payload)=>{
                console.log("Event Triggered Message : "+payload.message);
                this.dataTable.draw(false);
