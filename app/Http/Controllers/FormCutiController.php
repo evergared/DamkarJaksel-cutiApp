@@ -91,18 +91,31 @@ class FormCutiController extends Controller
 
             error_log('field : '.$field);
 
-            $id = $daftar->insertGetId([
-                'nip' => $nip,
-                'tgl_awal' => $tglMulai,
-                'tgl_akhir' => $tglSelesai,
-                'total_cuti' => $lama,
-                $field => $lama,
-                'tgl_pengajuan' => Date(today()),
-                'jenis_cuti' => $jenisCuti,
-                'alasan' => $alasanCuti,
-                'alamat' => $alamatCuti,
-                'tanggal' => $listTanggal
-            ]);
+            if(Auth::user()->is_asn)
+                $id = $daftar->insertGetId([
+                    'nip' => $nip,
+                    'tgl_awal' => $tglMulai,
+                    'tgl_akhir' => $tglSelesai,
+                    'total_cuti' => $lama,
+                    $field => $lama,
+                    'tgl_pengajuan' => Date(today()),
+                    'jenis_cuti' => $jenisCuti,
+                    'alasan' => $alasanCuti,
+                    'alamat' => $alamatCuti,
+                    'tanggal' => $listTanggal
+                ]);
+            else
+                $id = $daftar->insertGetId([
+                    'nip' => $nip,
+                    'tgl_awal' => $tglMulai,
+                    'tgl_akhir' => $tglSelesai,
+                    'total_cuti' => $lama,
+                    'tgl_pengajuan' => Date(today()),
+                    'jenis_cuti' => $jenisCuti,
+                    'alasan' => $alasanCuti,
+                    'alamat' => $alamatCuti,
+                    'tanggal' => $listTanggal
+                ]);
 
             // check jika user staff TU
             if(Auth::user()->atasan === 11)
@@ -570,6 +583,15 @@ class FormCutiController extends Controller
                         'sisa' => $sisa,
                         'n1' => $n1,
                         'n2' => $n2
+                    ));
+                }
+                else {
+                    
+                    
+                    $sisa=$sisa-$totalHari;
+                    
+                    $i->update(array(
+                        'sisa' => $sisa,
                     ));
                 }
                 $asigment->where('no_cuti','=',$no_cuti)->update(array('selesai' => 1));

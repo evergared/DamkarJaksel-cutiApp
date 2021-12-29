@@ -266,7 +266,7 @@ export default{
             if( this.form.lama > 0)
             {
                 var baseDate = new Array();
-                for(var i = 0; i<=this.form.lama; i++)
+                for(var i = 0; i<=this.form.lama -1; i++)
                 {
                     var date = new Date(this.form.start);
                     var ndate = new Date(date.setDate(date.getDate() + i));
