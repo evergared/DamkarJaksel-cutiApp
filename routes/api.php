@@ -14,9 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get('calendar/array',[App\Http\Controllers\CalendarController::class,'index']);
 //Route::post('/form/create','App\Http\Controllers\FormCutiController@submitCuti')->name('submit-cuti');

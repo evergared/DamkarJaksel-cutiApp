@@ -17,7 +17,7 @@
               <div class="nav-wrapper text-right">
                 <ul class="nav nav-pills flex-column flex-md-row align-items-right" role=tablist>
                   <li class="nav-item">
-                    <a class="nav-link" href="#tab-asn" role="tab" data-toggle="tab" aria-controls="tab-asn" aria-selected="true">ASN</a>
+                    <a class="nav-link active" href="#tab-asn" role="tab" data-toggle="tab" aria-controls="tab-asn" aria-selected="true">ASN</a>
                   </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#tab-pjlp" role="tab" data-toggle="tab" aria-controls="tab-pjlp">PJLP</a>
@@ -32,7 +32,7 @@
                     <a class="nav-link"  href="#tab-pribadi" role="tab" data-toggle="tab" aria-controls="tab-pribadi" aria-selected="true">Pribadi</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#tab-asn" role="tab" data-toggle="tab" aria-controls="tab-asn">ASN</a>
+                    <a class="nav-link active" href="#tab-asn" role="tab" data-toggle="tab" aria-controls="tab-asn">ASN</a>
                   </li>
                   @if(auth()->user()->has_subordinate_pjlp || auth()->user()->is_ppk || auth()->user()->is_kasubag_tu || auth()->user()->is_kasie)
                   
