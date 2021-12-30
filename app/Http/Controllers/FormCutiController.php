@@ -540,24 +540,22 @@ class FormCutiController extends Controller
                 $totalHari = $t->total_cuti;
                 error_log('total hari ; '.$totalHari);
                 $item = $tahunan->where('nip','=',$nip)->first();
-    
                 $sisa = $item->sisa;
                 error_log('sisa : '.$sisa);
-                $sisa = $sisa - $totalHari;
-    
-                $terpakai = $item->terpakai;
-                $terpakai = $terpakai + $totalHari;
+                
+                // $sisa = $sisa - $totalHari;
+                // $terpakai = $item->terpakai;
+                // $terpakai = $terpakai + $totalHari;
     
                 $i = $tahunan->where('nip','=',$nip);
 
-                $i->update(array(
-                        'sisa' => $sisa,
-                        'terpakai' => $terpakai
-                    ));
+                // $i->update(array(
+                //         'sisa' => $sisa,
+                //         'terpakai' => $terpakai
+                //     ));
     
-                if($check !== 'PJLP')
+                if($check['golongan'] === 'ASN')
                 {
-
                     /**
                      * NOTE : 
                      * Jika user tidak cuti / sisa cuti <= 6, maka tahun depan N1 dan N2 = 6
@@ -566,37 +564,44 @@ class FormCutiController extends Controller
                      * Code dibawah mengasumsikan penyesuaian nilai N1 dan N2 = 6, alias tidak cuti 2 tahun.
                      * N2 diprioritaskan utk dikurang terlebih dahulu
                      */
-
                     $n1 = $item->n1;
                     $n2 = $item->n2;
 
-
-                    if($n2 == 6 && $n1==6 && $sisa == 12)
+                    if($n2 === 6 && $n1===6 && $sisa === 12)
                     {
                         $n2=$n2-$totalHari;
                     }
-                    else if($n2 == 0 && $n2==6 && $sisa==12){
+                    else if($n2 === 0 && $n2===6 && $sisa===12){
                         $n1=$n1-$totalHari;
                     }
-                    else if($n2==0 && $n1==0 && $sisa==12){
+                    else if($n2===0 && $n1===0 && $sisa===12){
                         $sisa=$sisa-$totalHari;
                     }
+
+                    $terpakai=$item->terpakai;
+                    $terpakai= $terpakai+$totalHari;
+
                     $i->update(array(
                         'sisa' => $sisa,
                         'n1' => $n1,
-                        'n2' => $n2
+                        'n2' => $n2,
+                        'terpakai'=>$terpakai
                     ));
+                    
                 }
-                else {
-                    
-                    
+                else if($check['golongan'] === 'PJLP') {
+                     $terpakai=$item->terpakai;             
                     $sisa=$sisa-$totalHari;
-                    
+                    $terpakai= $terpakai+$totalHari;
                     $i->update(array(
                         'sisa' => $sisa,
+                        'terpakai'=>$terpakai
                     ));
+                    error_log('sisa :',$sisa);
+                    error_log('terpakai :',$terpakai);
                 }
-                $asigment->where('no_cuti','=',$no_cuti)->update(array('selesai' => 1));
+                $asigment->where('no_cuti','=',$no_cuti)->update(['selesai' => 1]);
+                
             }
             else
                 error_log('kelewat');

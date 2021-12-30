@@ -351,7 +351,7 @@
     <p style="text-align:center"><b>Nomor : 802021{{$a['no_cuti']}}</b></p>
       <div></div>
       <div style="margin-left: 10px"></div>
-        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'> 1. &nbsp;Diberikan Cuti Tahunan untuk tahun 2021 kepada Pegawai Negeri Sipil :</p>
+        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'> 1. &nbsp;Diberikan Cuti Tahunan untuk tahun 2021 kepada Pegawai Negeri Sipil :</p><br>
         <table style="width:513.05pt;border-collapse:collapse;border:none;">
             <tbody>
                 <tr>
@@ -399,16 +399,15 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
-<br>
+        </table><br>
 <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; Selama {{$a['total_cuti']}} hari &nbsp;mulai tanggal {{$a['start']}} s/d {{$a['end']}}. Dengan ketentuan&nbsp; <br>
-&nbsp; &nbsp; &nbsp; sebagai berikut :</p>
+&nbsp; &nbsp; &nbsp; sebagai berikut :</p><br>
 <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; a.<span style="white-space:pre;">&nbsp; &nbsp;&nbsp;</span>Sebelum menjalankan cuti tahunan wajib menyerahkan pekerjaannya kepada atasan&nbsp; <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; langsungnya. <br>
 &nbsp; &nbsp; &nbsp; b.<span style="white-space:pre;">&nbsp; &nbsp;&nbsp;</span>Setelah &nbsp;selesai &nbsp;menjalankan &nbsp;cuti &nbsp;tahunan &nbsp;wajib &nbsp;melaporkan &nbsp;diri &nbsp;kepada &nbsp;atasan&nbsp; <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; langsungnya dan bekerja kembali sebagaimana biasa.</p><br>
 <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>2. &nbsp;Demikian surat izin cuti tahunan ini dibuat untuk dapat dipergunakan &nbsp;sebagaimana&nbsp; <br>
-&nbsp; &nbsp; &nbsp; mestinya.</p>
+&nbsp; &nbsp; &nbsp;mestinya.</p>
 <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Jakarta &nbsp; &nbsp; {{$a['print_date']}} <br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kepala Suku Dinas Penanggulangan&nbsp;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kebakaran dan Penyelamatan<br>
