@@ -436,13 +436,15 @@ class FormCutiController extends Controller
             $start = Carbon::parse($check['tgl_awal'])->locale('id')->isoFormat('DD MMMM YYYY');
             $end = Carbon::parse($check['tgl_akhir'])->locale('id')->isoFormat('DD MMMM YYYY');
             $pd =  Carbon::parse(Carbon::now())->locale('id')->isoFormat('DD MMMM YYYY');
-            
+            $masakerja= Carbon::parse($pegawai['mas_ker'])->locale('id')->isoFormat('DD MM YYYY');
+            // $masker= $masakerja->diff($pd);
             $date = array("start"=>$start, "end" => $end, "print_date" => $pd);
     
             $a =  array_merge($check,$date);
             if($pegawai['golongan']==="PJLP"){
                 $pdf = PDF::loadView('doc/print',compact('a'))->setPaper('a4','portrait');
                 error_log('nip : '.$nip);
+                error_log('mas :'.$masakerja);
                 error_log('PJLP hit');
                 error_log('array key : '.implode('|',array_keys($a)));
                 error_log('array value : '.implode('|',$a));
