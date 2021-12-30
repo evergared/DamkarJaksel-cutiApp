@@ -57,7 +57,7 @@ class UserController extends Controller
                 {
                     error_log('peran : '.$peran);
                     if(is_string($peran))
-                    $peran = explode(',',$peran);
+                        $peran = explode('|',$peran);
 
                     if(in_array('PJLP',$peran))
                     {

@@ -285,7 +285,9 @@ export default {
                 {
                     if(event.target.value === 'ADMIN')
                     {
-                        this.setAllInArray(this.levelDisabledASN,false);
+                        if(this.isASN)
+                            this.setAllInArray(this.levelDisabledASN,false);
+                            
                         this.tempPeran.pop('ADMIN');
                     }
                     else if(event.target.value === 'KASIE')

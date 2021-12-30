@@ -2314,7 +2314,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
           }
         } else {
           if (event.target.value === 'ADMIN') {
-            this.setAllInArray(this.levelDisabledASN, false);
+            if (this.isASN) this.setAllInArray(this.levelDisabledASN, false);
             this.tempPeran.pop('ADMIN');
           } else if (event.target.value === 'KASIE') {
             var indexA = this.tempPeran.includes("PPK");
