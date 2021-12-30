@@ -554,7 +554,8 @@ class FormCutiController extends Controller
                 //         'terpakai' => $terpakai
                 //     ));
     
-                if($check['golongan'] === 'ASN')
+                // if($check['golongan'] === 'ASN')
+                if(Auth :: user()->is_asn)
                 {
                     /**
                      * NOTE : 
@@ -569,27 +570,33 @@ class FormCutiController extends Controller
 
                     if($n2 === 6 && $n1===6 && $sisa === 12)
                     {
+                        $sisa1=$sisa;
+                        $nn1=$n1;
                         $n2=$n2-$totalHari;
                     }
                     else if($n2 === 0 && $n2===6 && $sisa===12){
+                        $sisa1=$sisa;
+                        $nn2=$n2;
                         $n1=$n1-$totalHari;
                     }
                     else if($n2===0 && $n1===0 && $sisa===12){
-                        $sisa=$sisa-$totalHari;
+                        $nn2=$n2;
+                        $nn1=$n1;
+                        $sisa1=$sisa-$totalHari;
                     }
 
                     $terpakai=$item->terpakai;
                     $terpakai= $terpakai+$totalHari;
 
                     $i->update(array(
-                        'sisa' => $sisa,
-                        'n1' => $n1,
-                        'n2' => $n2,
+                        'sisa' => $sisa1,
+                        'n1' => $nn1,
+                        'n2' => $nn2,
                         'terpakai'=>$terpakai
                     ));
                     
                 }
-                else if($check['golongan'] === 'PJLP') {
+                else if(Auth :: user()->is_pjlp) {
                      $terpakai=$item->terpakai;             
                     $sisa=$sisa-$totalHari;
                     $terpakai= $terpakai+$totalHari;
