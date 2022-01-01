@@ -14,20 +14,18 @@
     
 </template>
 
-<style scoped>
 
-</style>
 <script>
     window.$ = window.jQuery = require('jquery');
-    require('jszip');
+    window.JSZip = require('jszip');
     require('xlsx');
 
     require('datatables.net');
     require('datatables.net-bs4');
     require('datatables.net-buttons');
     require('datatables.net-buttons-bs4');
-    require( 'datatables.net-buttons/js/buttons.html5.js' );
-    require( 'datatables.net-buttons/js/buttons.print.js' );
+    require('datatables.net-buttons/js/buttons.html5.js' );
+    require('datatables.net-buttons/js/buttons.print.js' );
  
 
     import eventbus from '../eventbus';
@@ -53,13 +51,8 @@
                 return window.$.extend({
                         serverSide: true,
                         processing: true,
-                        dom: 'B<"row align-items-center"<"col text-left"l><"col text-right"f>>r<"table table-responsive"t><"row justify-content-center"p>',
-                        buttons:[
-                            'csvHtml5',
-                            'excelHtml5',
-                            'colvis',
-                            'print'
-                        ],
+                        dom: '<"mb-1"B><"row align-items-center"<"col text-left"l><"col text-right"f>>r<"table table-responsive"t><"row justify-content-center"p>',
+                        buttons:this.buttons,
                         lengthMenu:[[10,25,50,-1],["10","25","50","Semua"]],
                         fixedHeader:true
                    }, {
@@ -115,7 +108,8 @@
             footer: { default: false },
             columns: { type: Array },
             ajax: { default: '' },
-            options: { }
+            options: { },
+            buttons:{ }
         },
         mounted() {
            this.dataTable = window.$(this.$el).DataTable(this.parameters);
