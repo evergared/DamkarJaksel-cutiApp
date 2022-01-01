@@ -46,6 +46,7 @@ class FormCutiController extends Controller
         $alasanCuti = $request->input('alasan');
         $listTanggal = implode('||',$request->input('tanggal'));
         $lama = $request->input('lama');
+        $telpon = $request->input('telpon');
 
         // TODO : proses perhitungan hari
         // TODO : alasan cuti 
@@ -78,17 +79,44 @@ class FormCutiController extends Controller
         try
         {
 
-            $id = $daftar->insertGetId([
-                'nip' => $nip,
-                'tgl_awal' => $tglMulai,
-                'tgl_akhir' => $tglSelesai,
-                'total_cuti' => $lama,
-                'tgl_pengajuan' => Date(today()),
-                'jenis_cuti' => $jenisCuti,
-                'alasan' => $alasanCuti,
-                'alamat' => $alamatCuti,
-                'tanggal' => $listTanggal
-            ]);
+            $flag = $request->input('flag');
+
+            $field = 'test';
+            if($flag === 2)
+                $field = 'na2';
+            else if($flag === 1)
+                $field = 'na1';
+            else if($flag === 0)
+                $field = 'na';
+
+
+            if(Auth::user()->is_asn)
+                $id = $daftar->insertGetId([
+                    'nip' => $nip,
+                    'tgl_awal' => $tglMulai,
+                    'tgl_akhir' => $tglSelesai,
+                    'total_cuti' => $lama,
+                    $field => $lama,
+                    'tgl_pengajuan' => Date(today()),
+                    'jenis_cuti' => $jenisCuti,
+                    'alasan' => $alasanCuti,
+                    'alamat' => $alamatCuti,
+                    'tlpn' => $telpon,
+                    'tanggal' => $listTanggal
+                ]);
+            else
+                $id = $daftar->insertGetId([
+                    'nip' => $nip,
+                    'tgl_awal' => $tglMulai,
+                    'tgl_akhir' => $tglSelesai,
+                    'total_cuti' => $lama,
+                    'tgl_pengajuan' => Date(today()),
+                    'jenis_cuti' => $jenisCuti,
+                    'alasan' => $alasanCuti,
+                    'tlpn' => $telpon,
+                    'alamat' => $alamatCuti,
+                    'tanggal' => $listTanggal
+                ]);
 
             // check jika user staff TU
             if(Auth::user()->atasan === 11)
@@ -370,10 +398,6 @@ class FormCutiController extends Controller
                 $ks = ['ks' => DB::table('asigment_pjlp')->value('kasie')];
                 $cuti = DB::table('daftar_cuti_pjlp');
                 $g = "PJLP";
-                // if($asigment['kasie']==="s"&&$asigment['ppk']===){
-
-                // }
-                
             }
             else
             {
@@ -388,16 +412,14 @@ class FormCutiController extends Controller
             $kasek = ['ksk' => DB::table('data_pegawai')->where('jabatan','=',$pegawai['kasie'])->value('data_pegawai.nama')] ;
             $kasekn = ['kskn' => DB::table('data_pegawai')->where('jabatan','=',$pegawai['kasie'])->value('data_pegawai.nip')] ;
             $jaket = ['jaket' => DB::table('data_pegawai')->where('nip','=',$nip)->value('data_pegawai.keterangan')] ;
-
-            error_log('kasie before : '.$asigment['kasie']);
+            
             $asigment['kasie'] = $this->approvalAtasan($asigment['kasie']);
-            error_log('kasie now : '.$asigment['kasie']);
-            error_log('kasubagtu before : '.$asigment['kasubagtu']);
             $asigment['kasubagtu'] = $this->approvalAtasan($asigment['kasubagtu']);
-            error_log('kasubagtu after : '.$asigment['kasubagtu']);
+
             if($pegawai['golongan'] === "PJLP"){
                 $asigment['ppk'] = $this->approvalAtasan($asigment['ppk']);
                 $ks['ks'] = $this->approvalAtasan($ks['ks']);}
+
 
             $check = array_merge($asigment,$cuti,$ks,$jaket);
             $check = array_merge($check,$pegawai);
@@ -408,43 +430,21 @@ class FormCutiController extends Controller
             $start = Carbon::parse($check['tgl_awal'])->locale('id')->isoFormat('DD MMMM YYYY');
             $end = Carbon::parse($check['tgl_akhir'])->locale('id')->isoFormat('DD MMMM YYYY');
             $pd =  Carbon::parse(Carbon::now())->locale('id')->isoFormat('DD MMMM YYYY');
-            
+            $masakerja= Carbon::parse($pegawai['mas_ker'])->locale('id')->isoFormat('DD MM YYYY');
             $date = array("start"=>$start, "end" => $end, "print_date" => $pd);
     
             $a =  array_merge($check,$date);
             if($pegawai['golongan']==="PJLP"){
                 $pdf = PDF::loadView('doc/print',compact('a'))->setPaper('a4','portrait');
-                error_log('nip : '.$nip);
-                // error_log('array key : '.implode('|',array_keys($a)));
-                // error_log('array value : '.implode('|',$a));
-
                 CutiPrintEvent::dispatch($request->input('nip'),$no_cuti);
-                //return dd($a);
                 
                 return $pdf->download();
             }
             else{
                 $pdf = PDF::loadView('doc/print1',compact('a'))->setPaper('a4','portrait');
-                error_log('nip : '.$nip);
-                // error_log('array key : '.implode('|',array_keys($a)));
-                // error_log('array value : '.implode('|',$a));
                 CutiPrintEvent::dispatch($nip,$no_cuti);
-                //return dd($a);
                 return $pdf->download();
             }
-            //error_log("test check ".$check); 
-            //->set_option('IsRemoteEnabled',TRUE);
-    
-            //return dd($a);
-            
-            //return view('print')->with('nip',$nip)->with('no_cuti',$no_cuti)->with($pdf->download('invoice.pdf'));
-            // return [
-            //     'status' => 'print_success',
-            //     'golongan' => $g,
-            //     'data' => $pdf->output()
-            // ];
-            
-            //return PDF::loadFile(public_path().'/resource/views/print.blade.php')->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
         
         }
         catch(Throwable $e)
@@ -477,5 +477,99 @@ class FormCutiController extends Controller
             default : return '-';break;
         }
     }
+    public function sisaCuti($pegawaiNIP, $pegawaiNoCuti)
+    {
+        try
+        {
+            $nip = $pegawaiNIP;
+            $no_cuti = $pegawaiNoCuti;
 
+            $check = (array) DB::table('data_pegawai')->where('nip','=',$nip)->first();
+
+            if($check['golongan'] === 'PJLP')
+            {
+                $asigment = DB::table('asigment_pjlp');
+                $daftar = DB::table('daftar_cuti_pjlp');
+                $tahunan = DB::table('cuti_tahunan_pjlp');
+            }
+            else
+            {
+                $asigment = DB::table('asigment_asn');
+                $daftar = DB::table('daftar_cuti_asn');
+                $tahunan = DB::table('cuti_tahunan_asn');
+            }
+
+
+            $status = $asigment->select('selesai')->where('no_cuti','=',$no_cuti)->value('selesai');
+            
+            if($status == 0)
+            {
+                $t = $daftar->where('id','=',$no_cuti)->first();
+                $totalHari = $t->total_cuti;
+                $item = $tahunan->where('nip','=',$nip)->first();
+                $sisa = $item->sisa;
+    
+                $i = $tahunan->where('nip','=',$nip);
+
+                if(Auth :: user()->is_asn)
+                {
+                    /**
+                     * NOTE : 
+                     * Jika user tidak cuti / sisa cuti <= 6, maka tahun depan N1 dan N2 = 6
+                     * Jika user cuti melebihi 6 hari, maka tahun depan N1 dan N2 = 0
+                     * 
+                     * Code dibawah mengasumsikan penyesuaian nilai N1 dan N2 = 6, alias tidak cuti 2 tahun.
+                     * N2 diprioritaskan utk dikurang terlebih dahulu
+                     */
+                    $n1 = $item->n1;
+                    $n2 = $item->n2;
+
+                    if($n2 === 6 && $n1===6 && $sisa === 12)
+                    {
+                        $sisa1=$sisa;
+                        $nn1=$n1;
+                        $n2=$n2-$totalHari;
+                    }
+                    else if($n2 === 0 && $n2===6 && $sisa===12){
+                        $sisa1=$sisa;
+                        $nn2=$n2;
+                        $n1=$n1-$totalHari;
+                    }
+                    else if($n2===0 && $n1===0 && $sisa===12){
+                        $nn2=$n2;
+                        $nn1=$n1;
+                        $sisa1=$sisa-$totalHari;
+                    }
+
+                    $terpakai=$item->terpakai;
+                    $terpakai= $terpakai+$totalHari;
+
+                    $i->update(array(
+                        'sisa' => $sisa1,
+                        'n1' => $nn1,
+                        'n2' => $nn2,
+                        'terpakai'=>$terpakai
+                    ));
+                    
+                }
+                else if(Auth :: user()->is_pjlp) {
+                     $terpakai=$item->terpakai;             
+                    $sisa=$sisa-$totalHari;
+                    $terpakai= $terpakai+$totalHari;
+                    $i->update(array(
+                        'sisa' => $sisa,
+                        'terpakai'=>$terpakai
+                    ));
+                }
+                $asigment->where('no_cuti','=',$no_cuti)->update(['selesai' => 1]);
+                
+            }
+            else
+                error_log('Cuti no '.$no_cuti.' on '.$check['golongan'].' '.$nip.' has already been calculated');
+        }
+        catch(Throwable $e)
+        {
+            error_log('error handle cuti print : '.$e);
+        }
+    }
 }

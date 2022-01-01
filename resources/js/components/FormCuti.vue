@@ -82,6 +82,15 @@
                     <small tabindex="-1" id="alamat-desc" class="form-text text-muted">Alamat diisi lengkap dengan RT/RW, Kelurahan, Kecamatan.</small>
                 </div>
 
+                <div class="input-group mb-3">
+                  <b-form-input
+                    id="telpon"
+                    type="tel"
+                    placeholder="Nomer yang dapat dihubungi"
+                    :formatter="telp"
+                    v-model="form.telpon"></b-form-input>
+                </div>
+
 
                 <!-- {{-- Bagian Alasan Cuti --}} -->
                 <div class="input-group">
@@ -172,13 +181,14 @@ export default{
                 end:this.tgl_akhir,
                 jenisCuti:this.jenis_cuti,
                 alamat:this.alamat,
+                telpon:this.telpon,
                 alasan:this.alasan,
                 jumlahHari:0,
                 lama: this.total_cuti,
                 batashari:this.sisa,
                 updateMode : this.um,
                 canUpdate : false,
-                tanggal : []
+                tanggal : [],
             },
 
             dataCuti:{
@@ -190,7 +200,9 @@ export default{
                 tanggal:[],
                 jenisCuti:"",
                 alamat:"",
+                telpon:"",
                 alasan:"",
+                flag : this.flag
             },
 
             disableCuti : [],
@@ -221,6 +233,9 @@ export default{
         alamat:{
             type:String,
         },
+        telpon:{
+          type:String
+        },
         alasan:{
             type: String,
         },
@@ -234,15 +249,24 @@ export default{
         },
         index:{
           default:null
+        },
+        flag:{
+          type: String,
+          default:'a'
         }
     },
     methods:{
+
+      telp(value){
+        if(/^(\d|[+-])+$/.test(value))
+        return value;
+      },
 
         calculateHari(){
 
             if(this.form.start !=="" && this.form.end !== "")
             {
-                this.form.lama = (new Date(this.form.end).getTime() - new Date(this.form.start).getTime())/(1000*60*60*24);
+                this.form.lama = ((new Date(this.form.end).getTime() - new Date(this.form.start).getTime())/(1000*60*60*24))+1;
             }
             else
                 this.form.lama = 0;
@@ -261,7 +285,7 @@ export default{
             if( this.form.lama > 0)
             {
                 var baseDate = new Array();
-                for(var i = 0; i<=this.form.lama; i++)
+                for(var i = 0; i<=this.form.lama -1; i++)
                 {
                     var date = new Date(this.form.start);
                     var ndate = new Date(date.setDate(date.getDate() + i));
@@ -291,6 +315,7 @@ export default{
             this.dataCuti.end = this.form.end;
             this.dataCuti.jenisCuti = this.form.jenisCuti;
             this.dataCuti.alamat = this.form.alamat;
+            this.dataCuti.telpon = this.form.telpon;
             this.dataCuti.alasan = this.form.alasan;
             this.dataCuti.lama = this.form.jumlahHari;
 

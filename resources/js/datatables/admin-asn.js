@@ -14,6 +14,7 @@ const app = new Vue({
                 {data: 'penempatan'},
                 {data: 'jenis_cuti', title:'Jenis Cuti'},
                 {data: 'alasan'},
+                {data: 'tlpn', title:'Telpon'},
                 {data: 'alamat'},
                 {data: 'tgl_awal',title:'Tanggal Awal'},
                 {data: 'tgl_akhir', title:'Tanggal Akhir'},

@@ -55,6 +55,10 @@ class UserController extends Controller
             {
                 if($bukanPegawai)
                 {
+                    error_log('peran : '.$peran);
+                    if(is_string($peran))
+                        $peran = explode('|',$peran);
+
                     if(in_array('PJLP',$peran))
                     {
                         $golongan = "PJLP";
@@ -210,10 +214,12 @@ class UserController extends Controller
 
         if(in_array($person->jabatan,$pjlp))
             $this->addRoles($roles,"PJLP");
-        elseif($person->jabatan === "Admin")
-            $this->addRoles($roles,"ADMIN");
         else
             $this->addRoles($roles,"ASN");
+
+        $ket = explode('|',$person->keterangan);
+        if(in_array("Admin",$ket))
+        $this->addRoles($roles,"ADMIN");
 
         if((25 <= $person->jabatan) && ($person->jabatan <= 54))
             $this->addRoles($roles,"KATON");

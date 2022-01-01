@@ -34,9 +34,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'data',
         'has_subordinate',
         'has_subordinate_pjlp',
+        'can_request_cuti',
         'is_kasie',
         'is_kasubag_tu',
-        'is_ppk'
+        'is_ppk',
+        'is_kasudin',
+        'is_approver'
     ];
 
     /**
@@ -65,8 +68,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_kasie' => 'boolean',
         'is_kasubag_tu' => 'boolean',
         'is_ppk' => 'boolean',
+        'is_kasudin' => 'boolean',
         'has_subordinate' => 'boolean',
         'has_subordinate_pjlp' => 'boolean',
+        'can_request_cuti' => 'boolean',
+        'is_approver' => 'boolean'
     ];
 
     public function getDataAttribute()
@@ -119,6 +125,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return in_array('PPK',$this->roles);
     }
 
+    public function getIsKasudinAttribute()
+    {
+        return in_array('KASUDIN',$this->roles);
+    }
+
     public function getHasSubordinateAttribute()
     {
         // TODO : pindahkan fungsi attribute ke constructor untuk memperingan kerja db
@@ -128,5 +139,22 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getHasSubordinatePjlpAttribute()
     {
         return DB::table('data_pegawai')->where('atasan',$this->data['jabatan'])->where('golongan','PJLP')->exists();
+    }
+
+    public function getCanRequestCutiAttribute()
+    {
+        if($this->is_pjlp)
+            return true;
+        else
+        {
+            if($this->is_kasie || $this->is_kasubag_tu || $this->is_ppk || $this->is_kasudin)
+                return false;
+            return true;
+        }
+    }
+
+    public function getIsApproverAttribute()
+    {
+        return ($this->is_kasie || $this->is_kasubag_tu || $this->is_ppk);
     }
 }

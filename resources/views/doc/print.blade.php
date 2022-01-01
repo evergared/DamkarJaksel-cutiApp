@@ -13,40 +13,92 @@
     <p style="text-align:center"><b>Nomor : 802021{{$a['no_cuti']}}</b></p>
       <div></div>
       <div style="margin-left: 10px"></div>
-        <p>1. &nbsp;Diberikan Cuti Tahunan untuk tahun 2021 kepada PJLP :</p>
-        <table style="border-collapse:collapse;border:none;">
-          <tbody>
-              <tr>
-                  <td style="width: 487.5pt;border: none;padding: 0cm 5.4pt;height: 84.6pt;vertical-align: top;">
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Nama&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; : &nbsp;{{$a['nama']}} <br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;Nik &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['nip']}} <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Jabatan &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: &nbsp;{{$a['jabatan']}} {{$a['jaket']}} {{$a['penempatan']}} <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Unit Kerja &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : &nbsp;Suku Dinas Penanggulangan Kebakaran dan&nbsp; <br>
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; Penyelamatan Kota Administrasi Jakarta Selatan</p>
-                </td>
-              </tr>
+        <p style='font-family:"Arial Narrow",sans-serif;'>1. &nbsp;Diberikan Cuti Tahunan untuk tahun 2021 kepada PJLP :</p>
+          <table style="width:513.05pt;border-collapse:collapse;border:none;">
+            <tbody>
+                <tr>
+                    <td style="width: 82.1pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif; padding-left:11pt;'><span style='font-family:"Arial Narrow",sans-serif;'>Nama &nbsp;</span></p>
+                    </td>
+                    <td style="width: 30pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;text-align:center;'><span style=';font-family:"Arial Narrow",sans-serif;'>:</span></p>
+                    </td>
+                    <td style="width: 372.95pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'><span style=';font-family:"Arial Narrow",sans-serif;'>{{$a['nama']}}</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 82.1pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif; padding-left:11pt;'><span style=';font-family:"Arial Narrow",sans-serif;'>NIK &nbsp;</span></p>
+                    </td>
+                    <td style="width: 30pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;text-align:center;'><span style=';font-family:"Arial Narrow",sans-serif;'>:</span></p>
+                    </td>
+                    <td style="width: 372.95pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'><span style=';font-family:"Arial Narrow",sans-serif;'>{{$a['nip']}}</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 82.1pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif; padding-left:11pt;'><span style=';font-family:"Arial Narrow",sans-serif;'>Jabatan</span></p>
+                    </td>
+                    <td style="width: 30pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;text-align:center;'><span style=';font-family:"Arial Narrow",sans-serif;'>:</span></p>
+                    </td>
+                    <td style="width: 372.95pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'><span style=';font-family:"Arial Narrow",sans-serif;'>{{$a['golongan']}} Penanggulangan Kebakaran dan Penyelamatan Group {{$a['kompi']}} {{$a['penempatan']}}</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 82.1pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif; padding-left:11pt;'><span style=';font-family:"Arial Narrow",sans-serif;'>Unit Kerja</span></p>
+                    </td>
+                    <td style="width: 30pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;text-align:center;'><span style=';font-family:"Arial Narrow",sans-serif;'>:</span></p>
+                    </td>
+                    <td style="width: 372.95pt;padding: 0cm 5.4pt;height: 20.05pt;vertical-align: top;">
+                        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'><span style=';font-family:"Arial Narrow",sans-serif;'>Suku Dinas Penanggulangan Kebakaran dan Penyelamatan Kota Administrasi Jakarta Selatan</span></p>
+                    </td>
+                </tr>
             </tbody>
-          </table>
+        </table><br>
+        <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; Selama {{$a['total_cuti']}} hari &nbsp;mulai tanggal {{$a['start']}} s/d {{$a['end']}}. Dengan ketentuan&nbsp; <br>
+          &nbsp; &nbsp; &nbsp; sebagai berikut :</p><br>
+{{-- &nbsp; &nbsp; &nbsp; berikut :</p> --}}
 
-<p>&nbsp; &nbsp; &nbsp; Selama {{$a['total_cuti']}} hari &nbsp;mulai tanggal {{$a['start']}} s/d {{$a['end']}}. Dengan ketentuan&nbsp; <br>
-&nbsp; &nbsp; &nbsp; sebagai berikut :</p>
-<p>&nbsp; &nbsp; &nbsp; a.<span style="white-space:pre;">&nbsp; &nbsp;&nbsp;</span>Sebelum menjalankan cuti tahunan wajib menyerahkan pekerjaannya kepada atasan&nbsp; <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; langsungnya. <br>
-&nbsp; &nbsp; &nbsp; b.<span style="white-space:pre;">&nbsp; &nbsp;&nbsp;</span>Setelah &nbsp;selesai &nbsp;menjalankan &nbsp;cuti &nbsp;tahunan &nbsp;wajib &nbsp;melaporkan &nbsp;diri &nbsp;kepada &nbsp;atasan&nbsp; <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; langsungnya dan bekerja kembali sebagaimana biasa.</p>
-<p>2. &nbsp;Demikian surat izin cuti tahunan ini dibuat untuk dapat dipergunakan &nbsp;sebagaimana&nbsp; <br>
-&nbsp; &nbsp; &nbsp; mestinya.</p>
-<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Jakarta &nbsp; &nbsp; {{$a['print_date']}} <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kepala Suku Dinas Penanggulangan&nbsp;<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kebakaran dan Penyelamatan<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Kota Adm. Jakarta Selatan</p><br><br><br>
-<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Herbert Plider Lumban Gaol, S.Sos, M.M <br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; NIP. 196910211990081001 <br>
-&nbsp; &nbsp; Tembusan&nbsp; <br>
-&nbsp; &nbsp; 1.Kasubbag Tata Usaha <br>
-&nbsp; &nbsp; 2.Kasi {{$a['penempatan']}} <br>
-&nbsp; &nbsp; 3.PPK <br>
-&nbsp; &nbsp; 4.PPTK</p>
+<table style="border-collapse:collapse;border:none;">
+  <tbody>
+      <tr>
+          <td style="width: 55.05pt;padding: 0cm 5.4pt;vertical-align: top;">
+              <p style="margin: 0cm 0cm 0.0001pt; font-size: 15px; font-family: Arial, sans-serif; text-align: center;"><span style='font-size:16px;font-family:"Arial Narrow",sans-serif;'>&nbsp;a.</span></p>
+          </td>
+          <td style="width: 451.8pt;padding: 0cm 5.4pt;vertical-align: top;">
+              <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style='font-size:16px;font-family:"Arial Narrow",sans-serif;'>Sebelum menjalankan cuti tahunan wajib menyerahkan pekerjaannya kepada atasan langsungnya.</span></p>
+          </td>
+      </tr>
+      <tr>
+          <td style="width: 55.05pt;padding: 0cm 5.4pt;vertical-align: top;">
+              <p style="margin: 0cm 0cm 0.0001pt; font-size: 15px; font-family: Arial, sans-serif; text-align: center;"><span style='font-size:16px;font-family:"Arial Narrow",sans-serif;'>&nbsp;b.</span></p>
+          </td>
+          <td style="width: 451.8pt;padding: 0cm 5.4pt;vertical-align: top;">
+              <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style='font-size:16px;font-family:"Arial Narrow",sans-serif;'>Setelah selesai menjalankan cuti tahunan wajib melaporkan diri kepada atasan langsungnya dan bekerja kembali sebagaimana biasa.</span></p>
+          </td>
+      </tr>
+  </tbody>
+</table><br>
+<p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>2. &nbsp;&nbsp;Demikian surat izin cuti tahunan ini dibuat untuk dapat dipergunakan sebagaimana<br>
+  &nbsp; &nbsp;&nbsp;&nbsp; mestinya.</p>
+  <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Jakarta &nbsp; &nbsp; {{$a['print_date']}} <br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kepala Suku Dinas Penanggulangan&nbsp;<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kebakaran dan Penyelamatan<br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Kota Adm. Jakarta Selatan</p><br><br><br><br><br>
+  <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Herbert Plider Lumban Gaol, S.Sos, M.M <br>
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; NIP. 196910211990081001 <br>
+  &nbsp; &nbsp; Tembusan&nbsp; <br>
+  &nbsp; &nbsp; 1.Kasubbag Tata Usaha <br>
+  &nbsp; &nbsp; 2.Kasi {{$a['penempatan']}} <br>
+  &nbsp; &nbsp; 3.PPK <br>
+  &nbsp; &nbsp; 4.PPTK</p>
 </body>
 
 <body>
@@ -71,13 +123,29 @@
   <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1;'><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; N a m a&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>{{$a['nama']}}</span></p>
   <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1;'><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; NIK&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;: {{$a['nip']}}</span></p>
   <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1;'><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; Jabatan&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</span> <span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>{{$a['golongan']}}</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;Penanggulangan Kebakaran dan Penyelamatan</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>{{$a['jaket']}}</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
-  <p style='margin: 0cm 0cm 0.0001pt 72pt; font-size: 16px; font-family: "Times New Roman", serif; text-indent: 36pt; line-height: 1;'><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'> {{$a['penempatan']}}&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'></span></p>
+  <p style='margin: 0cm 0cm 0.0001pt 72pt; font-size: 16px; font-family: "Times New Roman", serif; text-indent: 36pt; line-height: 1;'><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>{{$a['penempatan']}}&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'></span></p>
   <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1;'><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; Unit Kerja &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>Suku Dinas Penanggulangan Kebakaran dan Penyelamatan</span></p>
   <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1;'><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kota Administrasi Jakarta Selatan</span></p>
   <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1;'><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
-  <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; text-align: justify; text-indent: 36pt; line-height: 1;'><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;Dengan ini saya mengajukan permohonan Cuti Tahunan</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>tahun</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;2021, untuk {{$a['alasan']}}&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>selama</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>{{$a['total_cuti']}}</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;<span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'> hari mulai tanggal&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>{{$a['tgl_awal']}}</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;s/d&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>{{$a['tgl_akhir']}}</span>.&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>Selama menjalankan cuti alamat</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>saya berada di</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>{{$a['alamat']}}</span></p>
-  <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; text-align: justify; line-height: 1;'><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
-  <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; text-align: justify; text-indent: 36pt; line-height: 1;'><span style='font-size:15px;line-height:115%;font-family:"Arial",sans-serif;'>Demikian permohonan ini saya buat, untuk dapat dipertimbangkan sebagaimana mestinya.</span></p>
+
+  <table style="border-collapse:collapse;border:none; margin-left:10px">
+    <tbody>
+        <tr>
+            <td style="width: 506.85pt;border: none;padding: 0cm 5.4pt;vertical-align: top;">
+                <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style='font-size:16px;font-family:"Arial Narrow",sans-serif;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dengan ini saya mengajukan permohonan Cuti Tahunan tahun 2021, untuk {{$a['alasan']}} selama {{$a['total_cuti']}} hari mulai tanggal {{$a['tgl_awal']}} s/d {{$a['tgl_akhir']}}. Selama menjalankan cuti alamat saya berada di {{$a['alamat']}}.</span></p>
+            </td>
+        </tr>
+    </tbody>
+</table><br>
+<table style="border-collapse:collapse;border:none; margin-left:10px">
+  <tbody>
+      <tr>
+          <td style="width: 506.85pt;border: none;padding: 0cm 5.4pt;vertical-align: top;">
+              <p style='margin:0cm;margin-bottom:.0001pt;font-size:15px;font-family:"Arial",sans-serif;'><span style='font-size:16px;font-family:"Arial Narrow",sans-serif;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demikian permohonan ini saya buat, untuk dapat dipertimbangkan sebagaimana mestinya.</span></p>
+          </td>
+      </tr>
+  </tbody>
+</table><br>
   <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; text-align: justify; line-height: 1;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
   <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; text-align: justify; text-indent: 36pt; line-height: 1;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>Hormat saya</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>,</span></p> <br><br>
   <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; text-align: justify; text-indent: 36pt; line-height: 1;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
@@ -103,7 +171,7 @@
     <tbody>
       <tr>
           <td style="width:218.05pt;border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;">
-            <p style='margin: 0cm 0cm 0.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>PEJABAT PEMBUAT KOMITMEN</span></p>
+            <p style='margin: 0cm 0cm 0.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>PPK/PPTK</span></p>
             {{-- <pstyle='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"TimesNewRoman",serif;text-align:center;'><spanstyle='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p> --}}
           </td>
           <td style="width: 241.85pt;border-top: 1pt solid windowtext;border-right: 1pt solid windowtext;border-bottom: 1pt solid windowtext;border-image: initial;border-left: none;padding: 0cm 5.4pt;vertical-align: top;">
@@ -114,7 +182,7 @@
         <tr>
           <td style="width: 218.05pt;border-right: 1pt solid windowtext;border-bottom: 1pt solid windowtext;border-left: 1pt solid windowtext;border-image: initial;border-top: none;padding: 0cm 5.4pt;vertical-align: top;">
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
-            <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>PPK</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
+            <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>PPK/PPTK</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;{{$a['ppk']}}</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
