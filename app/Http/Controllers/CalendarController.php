@@ -54,15 +54,20 @@ class CalendarController extends Controller
     {
         try
         {
-            error_log("event is ".$request->event_calendar);
-            switch($request->event_calendar)
+            $calendar = $request->input('event_calendar');
+            $name = $request->input('event_name');
+            $start = $request->input('event_start');
+            $end = $request->input('event_end');
+
+            error_log("event is ".$calendar);
+            switch($calendar)
             {
                 case "Tidak Boleh Cuti": $cal = new DisableCuti();break;
                 case "Boleh Cuti": $cal = new EnableCuti();break;
                 default:$cal = null;break;
             }
 
-            $cal->createEvent($request->event_start,$request->event_end,$request->event_name);
+            $cal->createEvent($start,$end,$name);
             
         }
 
@@ -81,16 +86,16 @@ class CalendarController extends Controller
         {
             //error_log($request);
         
-            $cal = $this->getCalendar($request->event_calendarId);
+            $cal = $this->getCalendar($request->input('event_calendarId'));
 
-            $event = $cal->findEvent($request->event_id);
-            $event->name = $request->event_name;
-            $event->startDate = $this->formatDate($request->event_start);
+            $event = $cal->findEvent($request->input('event_id'));
+            $event->name = $request->input('event_name');
+            $event->startDate = $this->formatDate($request->input('event_start'));
 
             if($request->event_end==="Invalid date")
-                $event->endDate = $this->formatDate($request->event_start);
+                $event->endDate = $this->formatDate($request->input('event_start'));
             else
-            $event->endDate = $this->formatDate($request->event_end,1);
+            $event->endDate = $this->formatDate($request->input('event_end'),1);
 
             $event->save();
         }

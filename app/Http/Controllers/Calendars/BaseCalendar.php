@@ -83,7 +83,7 @@ abstract class BaseCalendar
         catch(Throwable $e)
         {
             report($this->calendarName.' create event error, e : '.$e);
-            error_log('Create event error for '.$this->calendarName);
+            error_log('Create event error for '.$this->calendarName.' on : '.$e);
         }
     }
 
@@ -179,7 +179,7 @@ abstract class BaseCalendar
         catch(Throwable $e)
         {
             report($this->calendarName.' find event error, e : '.$e);
-            error_log('Find event error for '.$this->calendarName.' calendar with id : '.$eventId);
+            error_log('Find event error for '.$this->calendarName.' calendar with id : '.$eventId.' on : '.$e);
         }
     }
 

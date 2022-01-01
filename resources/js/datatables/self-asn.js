@@ -47,8 +47,10 @@ const app = new Vue({
 
                         $(cell).empty()
                         //.append(deleteButton.$el)
-                        .append(updateButton.$el)
-                        .append(printButton.$el);
+                        .append(updateButton.$el);
+
+                        if(rowData['kasie'] == 's' && rowData['kasubagtu'] == 's')
+                        $(cell).append(printButton.$el);
                     }
                 }
             ],
