@@ -1,5 +1,5 @@
 <template>
-    <table class="table">
+    <table class="table-hover">
         <thead>
         <tr>
             <th v-for="column in parameters.columns" v-html="title(column)" :key="column" ></th>
@@ -14,13 +14,20 @@
     
 </template>
 
+
 <script>
     window.$ = window.jQuery = require('jquery');
+    window.JSZip = require('jszip');
+    require('xlsx');
+
     require('datatables.net');
     require('datatables.net-bs4');
     require('datatables.net-buttons');
     require('datatables.net-buttons-bs4');
-    
+    require('datatables.net-buttons/js/buttons.html5.js' );
+    require('datatables.net-buttons/js/buttons.print.js' );
+ 
+
     import eventbus from '../eventbus';
 
     export default{
@@ -43,10 +50,15 @@
                 const vm = this;
                 return window.$.extend({
                         serverSide: true,
-                        processing: true
+                        processing: true,
+                        dom: '<"mb-1"B><"row align-items-center"<"col text-left"l><"col text-right"f>>r<"table table-responsive"t><"row justify-content-center"p>',
+                        buttons:this.buttons,
+                        lengthMenu:[[10,25,50,-1],["10","25","50","Semua"]],
+                        fixedHeader:true
                    }, {
                    columns:this.columns,
                    ajax:this.ajax,
+                   pagingType:'numbers',
                    createdRow(...args) {
                       vm.$emit('created-row', ...args);
                    },
@@ -96,10 +108,15 @@
             footer: { default: false },
             columns: { type: Array },
             ajax: { default: '' },
-            options: { }
+            options: { },
+            buttons:{ }
         },
         mounted() {
            this.dataTable = window.$(this.$el).DataTable(this.parameters);
+
+        //    this.dataTable.buttons().container()
+        //     .appendTo( $('.dt-buttons', this.dataTable.table().container()))
+
            eventbus.$on('draw' , (payload)=>{
                console.log("Event Triggered Message : "+payload.message);
                this.dataTable.draw(false);
