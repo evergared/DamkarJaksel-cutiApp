@@ -1,4 +1,4 @@
-<div id="dt-kasudin-asn" class="table-responsive">
+<div id="dt-kasudin-asn">
     <data-table :columns="columns" :ajax="ajax"></data-table>
 </div>
 

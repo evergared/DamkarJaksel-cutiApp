@@ -46,7 +46,7 @@
           <div class="tab-content" id="tab-content-report">
 
               @if(auth()->user()->can_request_cuti)
-                <div class="tab-pane fade show active" id="tab-pribadi" role="tabpanel" aria-labelledby="tab-pribadi-tab" >
+                <div class="tab-pane fade" id="tab-pribadi" role="tabpanel" aria-labelledby="tab-pribadi-tab" >
                   @include('datatable.report.self')
                 </div>
               @endif

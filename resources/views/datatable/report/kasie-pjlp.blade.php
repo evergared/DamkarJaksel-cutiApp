@@ -1,4 +1,4 @@
-<div id="dt-kasie-pjlp" class="table-responsive">
+<div id="dt-kasie-pjlp">
     <data-table :columns="columns" :ajax="ajax"></data-table>
 </div>
 

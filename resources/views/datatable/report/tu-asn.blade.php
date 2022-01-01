@@ -1,4 +1,4 @@
-<div id="dt-tu-asn" class="table-responsive">
+<div id="dt-tu-asn">
     <data-table :columns="columns" :ajax="ajax"></data-table>
 </div>
 

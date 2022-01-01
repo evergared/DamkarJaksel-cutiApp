@@ -1,4 +1,4 @@
-<div id="dt-ppk-pjlp" class="table-responsive">
+<div id="dt-ppk-pjlp">
     <data-table :columns="columns" :ajax="ajax"></data-table>
 </div>
 

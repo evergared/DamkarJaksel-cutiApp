@@ -1,5 +1,5 @@
 @if(auth()->user()->is_asn)
-        <div id="dt-self-asn" class="table-responsive">
+        <div id="dt-self-asn">
             <data-table :columns="columns" :ajax="ajax"></data-table>
         </div>
         @push('js')
@@ -7,7 +7,7 @@
         @endpush
 
 @elseif(auth()->user()->is_pjlp)
-        <div id="dt-self-pjlp" class="table-responsive">
+        <div id="dt-self-pjlp">
             <data-table :columns="columns" :ajax="ajax"></data-table>
         </div>
         @push('js')

@@ -109,7 +109,7 @@
             columns: { type: Array },
             ajax: { default: '' },
             options: { },
-            buttons:{ }
+            buttons:{ default:[]}
         },
         mounted() {
            this.dataTable = window.$(this.$el).DataTable(this.parameters);
