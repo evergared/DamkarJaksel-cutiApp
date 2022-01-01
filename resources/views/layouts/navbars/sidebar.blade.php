@@ -7,7 +7,12 @@
     <a class="navbar-brand pt-0" href="{{ route('home') }}">
         <strong>Web Cuti Pegawai</strong>
     </a>
-    <!-- User -->
+
+    {{-- hilangkan clear-fix jika right side button dipakai --}}
+    <div class="clear-fix"></div>
+
+    {{--
+    <!-- Right Side button -->
     <ul class="nav align-items-center d-md-none">
         <li class="nav-item dropdown">
             <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -30,6 +35,7 @@
             </div>
         </li>
     </ul>
+    --}}
 
 <!-- Menu Sidebar -->
     <div class="collapse navbar-collapse" id="sidenav-collapse-main">
@@ -58,6 +64,7 @@
         <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="ni ni-shop text-blue"></i><span class="nav-link-text">{{ __('Home')}}</span></a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('report') }}"><i class="ni ni-calendar-grid-58 text-red"></i><span class="nav-link-text">{{ __('Report Daftar Cuti')}}</span></a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('form') }}"><i class="ni ni-single-copy-04 text-gray"></i><span class="nav-link-text">{{ __('Form Pengajuan Cuti')}}</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="ni ni-user-run"></i><span>{{ __('Logout') }}</span></a></li>
       </ul>
       <hr class = "my-2">
       @if(auth()->user()->is_admin)
