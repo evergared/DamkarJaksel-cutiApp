@@ -2191,6 +2191,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
  //import 'bootstrap/dist/css/bootstrap.css';
 
 
@@ -2236,6 +2245,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
         end: this.tgl_akhir,
         jenisCuti: this.jenis_cuti,
         alamat: this.alamat,
+        telpon: this.telpon,
         alasan: this.alasan,
         jumlahHari: 0,
         lama: this.total_cuti,
@@ -2253,6 +2263,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
         tanggal: [],
         jenisCuti: "",
         alamat: "",
+        telpon: "",
         alasan: "",
         flag: this.flag
       },
@@ -2283,6 +2294,9 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
     alamat: {
       type: String
     },
+    telpon: {
+      type: String
+    },
     alasan: {
       type: String
     },
@@ -2303,6 +2317,9 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
     }
   },
   methods: {
+    telp: function telp(value) {
+      if (/^(\d|[+-])+$/.test(value)) return value;
+    },
     calculateHari: function calculateHari() {
       if (this.form.start !== "" && this.form.end !== "") {
         this.form.lama = (new Date(this.form.end).getTime() - new Date(this.form.start).getTime()) / (1000 * 60 * 60 * 24) + 1;
@@ -2340,6 +2357,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
       this.dataCuti.end = this.form.end;
       this.dataCuti.jenisCuti = this.form.jenisCuti;
       this.dataCuti.alamat = this.form.alamat;
+      this.dataCuti.telpon = this.form.telpon;
       this.dataCuti.alasan = this.form.alasan;
       this.dataCuti.lama = this.form.jumlahHari;
       this.$refs['modal1'].hide(); // some bootstrap spinner while waiting would be nice
@@ -48985,6 +49003,29 @@ var render = function() {
                       ]
                     )
                   ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "input-group mb-3" },
+                    [
+                      _c("b-form-input", {
+                        attrs: {
+                          id: "telpon",
+                          type: "tel",
+                          placeholder: "Nomer yang dapat dihubungi",
+                          formatter: _vm.telp
+                        },
+                        model: {
+                          value: _vm.form.telpon,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "telpon", $$v)
+                          },
+                          expression: "form.telpon"
+                        }
+                      })
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("div", { staticClass: "input-group" }, [
                     _c("textarea", {

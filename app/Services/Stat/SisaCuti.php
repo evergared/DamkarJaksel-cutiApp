@@ -11,7 +11,7 @@ class SisaCuti
                     $n1 = 0,
                     $n2 = 0,
                     $pakai = 0,
-                    $flag = '';                    
+                    $flag = '0';                    
 
     static $user;
 

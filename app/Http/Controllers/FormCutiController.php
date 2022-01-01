@@ -46,6 +46,7 @@ class FormCutiController extends Controller
         $alasanCuti = $request->input('alasan');
         $listTanggal = implode('||',$request->input('tanggal'));
         $lama = $request->input('lama');
+        $telpon = $request->input('telpon');
 
         // TODO : proses perhitungan hari
         // TODO : alasan cuti 
@@ -79,7 +80,6 @@ class FormCutiController extends Controller
         {
 
             $flag = $request->input('flag');
-            error_log("flag : ".$flag);
 
             $field = 'test';
             if($flag === 2)
@@ -89,7 +89,6 @@ class FormCutiController extends Controller
             else if($flag === 0)
                 $field = 'na';
 
-            error_log('field : '.$field);
 
             if(Auth::user()->is_asn)
                 $id = $daftar->insertGetId([
@@ -102,6 +101,7 @@ class FormCutiController extends Controller
                     'jenis_cuti' => $jenisCuti,
                     'alasan' => $alasanCuti,
                     'alamat' => $alamatCuti,
+                    'tlpn' => $telpon,
                     'tanggal' => $listTanggal
                 ]);
             else
@@ -113,6 +113,7 @@ class FormCutiController extends Controller
                     'tgl_pengajuan' => Date(today()),
                     'jenis_cuti' => $jenisCuti,
                     'alasan' => $alasanCuti,
+                    'tlpn' => $telpon,
                     'alamat' => $alamatCuti,
                     'tanggal' => $listTanggal
                 ]);
@@ -397,10 +398,6 @@ class FormCutiController extends Controller
                 $ks = ['ks' => DB::table('asigment_pjlp')->value('kasie')];
                 $cuti = DB::table('daftar_cuti_pjlp');
                 $g = "PJLP";
-                // if($asigment['kasie']==="s"&&$asigment['ppk']===){
-
-                // }
-                
             }
             else
             {
@@ -416,16 +413,13 @@ class FormCutiController extends Controller
             $kasekn = ['kskn' => DB::table('data_pegawai')->where('jabatan','=',$pegawai['kasie'])->value('data_pegawai.nip')] ;
             $jaket = ['jaket' => DB::table('data_pegawai')->where('nip','=',$nip)->value('data_pegawai.keterangan')] ;
             
-            error_log('kasie before : '.$asigment['kasie']);
             $asigment['kasie'] = $this->approvalAtasan($asigment['kasie']);
-            error_log('kasie now : '.$asigment['kasie']);
-            error_log('kasubagtu before : '.$asigment['kasubagtu']);
             $asigment['kasubagtu'] = $this->approvalAtasan($asigment['kasubagtu']);
-            error_log('kasubagtu after : '.$asigment['kasubagtu']);
 
             if($pegawai['golongan'] === "PJLP"){
                 $asigment['ppk'] = $this->approvalAtasan($asigment['ppk']);
                 $ks['ks'] = $this->approvalAtasan($ks['ks']);}
+
 
             $check = array_merge($asigment,$cuti,$ks,$jaket);
             $check = array_merge($check,$pegawai);
@@ -437,46 +431,20 @@ class FormCutiController extends Controller
             $end = Carbon::parse($check['tgl_akhir'])->locale('id')->isoFormat('DD MMMM YYYY');
             $pd =  Carbon::parse(Carbon::now())->locale('id')->isoFormat('DD MMMM YYYY');
             $masakerja= Carbon::parse($pegawai['mas_ker'])->locale('id')->isoFormat('DD MM YYYY');
-            // $masker= $masakerja->diff($pd);
             $date = array("start"=>$start, "end" => $end, "print_date" => $pd);
     
             $a =  array_merge($check,$date);
             if($pegawai['golongan']==="PJLP"){
                 $pdf = PDF::loadView('doc/print',compact('a'))->setPaper('a4','portrait');
-                error_log('nip : '.$nip);
-                error_log('mas :'.$masakerja);
-                error_log('PJLP hit');
-                error_log('array key : '.implode('|',array_keys($a)));
-                error_log('array value : '.implode('|',$a));
-
                 CutiPrintEvent::dispatch($request->input('nip'),$no_cuti);
-                //return dd($a);
                 
                 return $pdf->download();
             }
             else{
                 $pdf = PDF::loadView('doc/print1',compact('a'))->setPaper('a4','portrait');
-                error_log('nip : '.$nip);
-                error_log('ASN hit');
-                error_log('array key : '.implode('|',array_keys($a)));
-                error_log('array value : '.implode('|',$a));
                 CutiPrintEvent::dispatch($nip,$no_cuti);
-                //return dd($a);
                 return $pdf->download();
             }
-            //error_log("test check ".$check); 
-            //->set_option('IsRemoteEnabled',TRUE);
-    
-            //return dd($a);
-            
-            //return view('print')->with('nip',$nip)->with('no_cuti',$no_cuti)->with($pdf->download('invoice.pdf'));
-            // return [
-            //     'status' => 'print_success',
-            //     'golongan' => $g,
-            //     'data' => $pdf->output()
-            // ];
-            
-            //return PDF::loadFile(public_path().'/resource/views/print.blade.php')->save('/path-to/my_stored_file.pdf')->stream('download.pdf');
         
         }
         catch(Throwable $e)
@@ -538,23 +506,11 @@ class FormCutiController extends Controller
             {
                 $t = $daftar->where('id','=',$no_cuti)->first();
                 $totalHari = $t->total_cuti;
-                error_log('total hari ; '.$totalHari);
                 $item = $tahunan->where('nip','=',$nip)->first();
                 $sisa = $item->sisa;
-                error_log('sisa : '.$sisa);
-                
-                // $sisa = $sisa - $totalHari;
-                // $terpakai = $item->terpakai;
-                // $terpakai = $terpakai + $totalHari;
     
                 $i = $tahunan->where('nip','=',$nip);
 
-                // $i->update(array(
-                //         'sisa' => $sisa,
-                //         'terpakai' => $terpakai
-                //     ));
-    
-                // if($check['golongan'] === 'ASN')
                 if(Auth :: user()->is_asn)
                 {
                     /**
@@ -604,14 +560,12 @@ class FormCutiController extends Controller
                         'sisa' => $sisa,
                         'terpakai'=>$terpakai
                     ));
-                    error_log('sisa :',$sisa);
-                    error_log('terpakai :',$terpakai);
                 }
                 $asigment->where('no_cuti','=',$no_cuti)->update(['selesai' => 1]);
                 
             }
             else
-                error_log('kelewat');
+                error_log('Cuti no '.$no_cuti.' on '.$check['golongan'].' '.$nip.' has already been calculated');
         }
         catch(Throwable $e)
         {

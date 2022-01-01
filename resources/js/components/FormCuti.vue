@@ -82,6 +82,15 @@
                     <small tabindex="-1" id="alamat-desc" class="form-text text-muted">Alamat diisi lengkap dengan RT/RW, Kelurahan, Kecamatan.</small>
                 </div>
 
+                <div class="input-group mb-3">
+                  <b-form-input
+                    id="telpon"
+                    type="tel"
+                    placeholder="Nomer yang dapat dihubungi"
+                    :formatter="telp"
+                    v-model="form.telpon"></b-form-input>
+                </div>
+
 
                 <!-- {{-- Bagian Alasan Cuti --}} -->
                 <div class="input-group">
@@ -172,6 +181,7 @@ export default{
                 end:this.tgl_akhir,
                 jenisCuti:this.jenis_cuti,
                 alamat:this.alamat,
+                telpon:this.telpon,
                 alasan:this.alasan,
                 jumlahHari:0,
                 lama: this.total_cuti,
@@ -190,6 +200,7 @@ export default{
                 tanggal:[],
                 jenisCuti:"",
                 alamat:"",
+                telpon:"",
                 alasan:"",
                 flag : this.flag
             },
@@ -222,6 +233,9 @@ export default{
         alamat:{
             type:String,
         },
+        telpon:{
+          type:String
+        },
         alasan:{
             type: String,
         },
@@ -242,6 +256,11 @@ export default{
         }
     },
     methods:{
+
+      telp(value){
+        if(/^(\d|[+-])+$/.test(value))
+        return value;
+      },
 
         calculateHari(){
 
@@ -296,6 +315,7 @@ export default{
             this.dataCuti.end = this.form.end;
             this.dataCuti.jenisCuti = this.form.jenisCuti;
             this.dataCuti.alamat = this.form.alamat;
+            this.dataCuti.telpon = this.form.telpon;
             this.dataCuti.alasan = this.form.alasan;
             this.dataCuti.lama = this.form.jumlahHari;
 

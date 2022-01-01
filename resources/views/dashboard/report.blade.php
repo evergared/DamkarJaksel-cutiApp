@@ -13,85 +13,60 @@
               <h3>{{ __('Report Data Cuti') }}</h3>
             </div>
 
-              @if(auth()->user()->is_admin)
-              <div class="nav-wrapper text-right">
+            @if(auth()->user()->has_subordinate || auth()->user()->is_admin)
+            <div class="nav-wrapper text-right">
                 <ul class="nav nav-pills flex-column flex-md-row align-items-right" role=tablist>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#tab-asn" role="tab" data-toggle="tab" aria-controls="tab-asn" aria-selected="true">ASN</a>
-                  </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#tab-pjlp" role="tab" data-toggle="tab" aria-controls="tab-pjlp">PJLP</a>
-                    </li>
+
+                      @if(auth()->user()->can_request_cuti)
+                      <li class="nav-item">
+                        <a class="nav-link"  href="#tab-pribadi" role="tab" data-toggle="tab" aria-controls="tab-pribadi" aria-selected="true">Pribadi</a>
+                      </li>
+                      @endif
+
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#tab-asn" role="tab" data-toggle="tab" aria-controls="tab-asn" aria-selected="true">ASN</a>
+                      </li>
+
+                      @if(auth()->user()->has_subordinate_pjlp || auth()->user()->is_ppk || auth()->user()->is_kasubag_tu || auth()->user()->is_kasie || auth()->user()->is_admin)
+                      <li class="nav-item">
+                        <a class="nav-link" href="#tab-pjlp" role="tab" data-toggle="tab" aria-controls="tab-pjlp">PJLP</a>
+                      </li>
+                      @endif
                 </ul>
-              </div>
+            </div>
+            @endif
 
-              @elseif(auth()->user()->has_subordinate)
-              <div class="nav-wrapper text-right">
-                <ul class="nav nav-pills flex-column flex-md-row align-items-right" role=tablist>
-                  <li class="nav-item">
-                    <a class="nav-link"  href="#tab-pribadi" role="tab" data-toggle="tab" aria-controls="tab-pribadi" aria-selected="true">Pribadi</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#tab-asn" role="tab" data-toggle="tab" aria-controls="tab-asn">ASN</a>
-                  </li>
-                  @if(auth()->user()->has_subordinate_pjlp || auth()->user()->is_ppk || auth()->user()->is_kasubag_tu || auth()->user()->is_kasie)
-                  
-                    <li class="nav-item">
-                      <a class="nav-link" href="#tab-pjlp" role="tab" data-toggle="tab" aria-controls="tab-pjlp">PJLP</a>
-                    </li>
-
-                  @endif
-
-                    
-                </ul>
-              </div>
-              
-              @endif
-  
-          </div>
+            </div>
         </div>
+
 
         <div class="card-body">
 
-        @if(auth()->user()->is_admin)
-        
+        @if(auth()->user()->has_subordinate || auth()->user()->is_admin)
           <div class="tab-content" id="tab-content-report">
 
-          <div class="tab-pane fade show active" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
-            @include('datatable.assignment-asn')
-          </div>
-
-          <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
-            @include('datatable.assignment-pjlp')
-          </div>
-
-          </div>
-
-        @elseif(auth()->user()->has_subordinate)
-
-          <div class="tab-content" id="tab-content-report">
-
-            <div class="tab-pane fade show active" id="tab-pribadi" role="tabpanel" aria-labelledby="tab-pribadi-tab" >
-              @include('datatable.report.self')
-            </div>
-
-            <div class="tab-pane fade" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
-              @include('datatable.assignment-asn')
-            </div>
-            
-            @if(auth()->user()->has_subordinate_pjlp || auth()->user()->is_ppk || auth()->user()->is_kasubag_tu || auth()->user()->is_kasie)
-                <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
-                  @include('datatable.assignment-pjlp')
+              @if(auth()->user()->can_request_cuti)
+                <div class="tab-pane fade show active" id="tab-pribadi" role="tabpanel" aria-labelledby="tab-pribadi-tab" >
+                  @include('datatable.report.self')
                 </div>
-            @endif
+              @endif
 
-            
+              @if(auth()->user()->is_approver || auth()->user()->is_kasudin || auth()->user()->is_admin)
+              <div class="tab-pane fade show active" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
+                @include('datatable.assignment-asn')
+              </div>
+                  @if(auth()->user()->has_subordinate_pjlp || auth()->user()->is_approver || auth()->user()->is_kasudin || auth()->user()->is_admin)
+                    <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
+                      @include('datatable.assignment-pjlp')
+                    </div>
+                  @endif
+              @endif
 
           </div>
-
         @else
             @include('datatable.report.self')
         @endif
+        
         </div>
 
     </div>
