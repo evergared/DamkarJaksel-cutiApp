@@ -116,6 +116,7 @@ Route::get('/user/list',[App\Http\Controllers\TabelController::class,'createTabl
 
 	Route::get('/calendar','App\Http\Controllers\DashboardController@loadCalendar')->name('calendar');
 	Route::get('/calendar/array',[App\Http\Controllers\CalendarController::class,'index'])->name('calendarArray');
+	Route::get('/calendar/json/all',[App\Http\Controllers\CalendarController::class,'fetchAll'])->name('calendar.json.all');
 	Route::get('/calendar/json',[App\Http\Controllers\CalendarController::class,'fetchJson']);
 	Route::get('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
 	Route::get("/calendar/libur",[App\Http\Controllers\CalendarController::class,"fetchLibur"]);

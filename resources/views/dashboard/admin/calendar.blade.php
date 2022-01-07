@@ -6,7 +6,7 @@
 <div class="container-fluid mt--7">
 
         <div id="app">
-            <admin-calendar></admin-calendar>
+            <admin-calendar eventSources="{{route('calendar.json.all')}}"></admin-calendar>
         </div>
 
   @include('layouts.footers.nav')

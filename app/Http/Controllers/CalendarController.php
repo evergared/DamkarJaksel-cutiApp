@@ -49,6 +49,11 @@ class CalendarController extends Controller
         return $ln->extractDatesAsJsonFeed();
     }
 
+    public function fetchAll()
+    {
+        return array_merge($this->fetchJson(),$this->fetchLibur());
+    }
+
 
     public function createEvent(Request $request)
     {

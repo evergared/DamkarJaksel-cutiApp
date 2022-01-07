@@ -121,6 +121,11 @@ import moment from 'moment';
         components:{
             Fullcalendar
         },
+        props:{
+            eventSources:{
+                default:[]
+            }
+        },
         data(){
 
             const eventItem = {
@@ -148,10 +153,7 @@ import moment from 'moment';
                         initialView:'dayGridMonth',
                         locale:idLocale,
                         selectable:true,
-                        eventSources : [
-                                            '/calendar/json',
-                                            '/calendar/libur'
-                                        ],
+                        eventSources : this.eventSources,
                         // customButtons:{
                         //     buatEvent:{
                         //         text:"Tambah",
