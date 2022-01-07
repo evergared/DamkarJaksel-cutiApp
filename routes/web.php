@@ -100,7 +100,7 @@ Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::clas
 Route::get('/report/table/self',[App\Http\Controllers\TabelController::class,'createTableAssignmentSELF'])->name('report.self');
 Route::get('/report/table/asn',[App\Http\Controllers\TabelController::class,'createTableAssignmentASN'])->name('report.asn');
 Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'createTableAssignmentPJLP'])->name('report.pjlp');
-Route::get('/user/list',[App\Http\Controllers\TabelController::class,'createTableUser']);
+Route::get('/user/list',[App\Http\Controllers\TabelController::class,'createTableUser'])->name('list.user');
 
 // Admin Calendar Routes
 // Route::get('/calendar',function(){
@@ -116,6 +116,7 @@ Route::get('/user/list',[App\Http\Controllers\TabelController::class,'createTabl
 
 	Route::get('/calendar','App\Http\Controllers\DashboardController@loadCalendar')->name('calendar');
 	Route::get('/calendar/array',[App\Http\Controllers\CalendarController::class,'index'])->name('calendarArray');
+	Route::get('/calendar/json/all',[App\Http\Controllers\CalendarController::class,'fetchAll'])->name('calendar.json.all');
 	Route::get('/calendar/json',[App\Http\Controllers\CalendarController::class,'fetchJson']);
 	Route::get('/calendar/update',[App\Http\Controllers\CalendarController::class,'updateEvent']);
 	Route::get("/calendar/libur",[App\Http\Controllers\CalendarController::class,"fetchLibur"]);

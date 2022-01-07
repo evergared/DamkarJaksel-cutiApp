@@ -1,6 +1,6 @@
 
 <div id="dt-admin-pjlp">
-    <data-table :columns="columns" :ajax="ajax" :buttons="buttons"></data-table>
+    <data-table :columns="columns" ajax="{{route('report.pjlp')}}" :buttons="buttons"></data-table>
 </div>
 
 @push('js')

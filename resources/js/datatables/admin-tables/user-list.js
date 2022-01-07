@@ -41,7 +41,6 @@ const app = new Vue({
                     }
                 }
             ],
-            ajax: '/user/list'
         }
     }
 })
