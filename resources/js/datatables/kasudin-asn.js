@@ -43,7 +43,6 @@ const app = new Vue({
                     }
                 }
             ],
-            ajax:'/report/table/asn'
         }
       
     },

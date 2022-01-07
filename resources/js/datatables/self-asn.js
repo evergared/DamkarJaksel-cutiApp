@@ -54,7 +54,6 @@ const app = new Vue({
                     }
                 }
             ],
-            ajax:'/report/table/self'
         }
       
     },

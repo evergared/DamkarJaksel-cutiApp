@@ -100,7 +100,7 @@ Route::get('/kepegawaian/table/pjlp',[App\Http\Controllers\TabelController::clas
 Route::get('/report/table/self',[App\Http\Controllers\TabelController::class,'createTableAssignmentSELF'])->name('report.self');
 Route::get('/report/table/asn',[App\Http\Controllers\TabelController::class,'createTableAssignmentASN'])->name('report.asn');
 Route::get('/report/table/pjlp',[App\Http\Controllers\TabelController::class,'createTableAssignmentPJLP'])->name('report.pjlp');
-Route::get('/user/list',[App\Http\Controllers\TabelController::class,'createTableUser']);
+Route::get('/user/list',[App\Http\Controllers\TabelController::class,'createTableUser'])->name('list.user');
 
 // Admin Calendar Routes
 // Route::get('/calendar',function(){

@@ -50,7 +50,6 @@ const app = new Vue({
                     }
                 }
             ],
-            ajax:'/report/table/pjlp',
             buttons:[
                 'excelHtml5'
             ]
