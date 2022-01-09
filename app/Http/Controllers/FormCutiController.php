@@ -58,12 +58,14 @@ class FormCutiController extends Controller
             $asigment = DB::table('asigment_pjlp');
             $daftar = DB::table('daftar_cuti_pjlp');
             $tahunan = DB::table('cuti_tahunan_pjlp');
+            $pegawai = DB::table('data_pegawai');
         }
         elseif(Auth::user()->is_asn)
         {
             $asigment = DB::table('asigment_asn');
             $daftar = DB::table('daftar_cuti_asn');
             $tahunan = DB::table('cuti_tahunan_asn');
+            $pegawai = DB::table('data_pegawai');
         }
         else
         {
@@ -90,7 +92,7 @@ class FormCutiController extends Controller
                 $field = 'na';
 
 
-            if(Auth::user()->is_asn)
+            if(Auth::user()->is_asn){
                 $id = $daftar->insertGetId([
                     'nip' => $nip,
                     'tgl_awal' => $tglMulai,
@@ -103,8 +105,8 @@ class FormCutiController extends Controller
                     'alamat' => $alamatCuti,
                     'tlpn' => $telpon,
                     'tanggal' => $listTanggal
-                ]);
-            else
+                ]);}
+            else {
                 $id = $daftar->insertGetId([
                     'nip' => $nip,
                     'tgl_awal' => $tglMulai,
@@ -116,20 +118,22 @@ class FormCutiController extends Controller
                     'tlpn' => $telpon,
                     'alamat' => $alamatCuti,
                     'tanggal' => $listTanggal
-                ]);
-
+                ]);}
+            $test= Auth::user()->kasie;
             // check jika user staff TU
-            if(Auth::user()->atasan === 11)
+            if(Auth::user()->kasie == '11') {
                 $asigment -> insert([
                     'no_cuti' => $id,
                     'kasie' =>'s'
-                ]);
+                ]);}
 
             // untuk pegawai non TU
-            else
+            else {
                 $asigment -> insert([
                     'no_cuti' => $id
                 ]);
+                error_log("kasie : ".$test);
+            }
 
             CutiSubmitEvent::dispatch($nip,$id);
 
