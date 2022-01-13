@@ -425,28 +425,44 @@ class FormCutiController extends Controller
                 $ks['ks'] = $this->approvalAtasan($ks['ks']);}
 
 
+            
+            $years = Carbon::parse($pegawai['mas_ker'])->diff(Carbon::now())->format('%y Tahun, %m Bulan and %d hari');
+            $masa = array("masa"=>$years);
+            $cuti1= DB::table('daftar_cuti_asn')->where('id','=',$no_cuti)->first();
+            $cuti3= DB::table('cuti_tahunan_asn')->where('nip','=',$nip)->first();
+            $ncob=$cuti1->na;
+            $ncoa=$cuti3->sisa;
+            $ncob1=$ncoa-$ncob;
+            $ncoa1= array("sis"=>$ncob1);
+            // $ncob2= array("nacob"=>$ncob1);
             $check = array_merge($asigment,$cuti,$ks,$jaket);
             $check = array_merge($check,$pegawai);
             $check = array_merge($check,$jabatan);
             $check = array_merge($check,$penempatan);
             $check = array_merge($check,$kasek,$kasekn);
-            
+            // $check = array_merge($check,$ncob2);
+            $check = array_merge($check,$masa);
+            $check = array_merge($check,$ncoa1);
+
             $start = Carbon::parse($check['tgl_awal'])->locale('id')->isoFormat('DD MMMM YYYY');
             $end = Carbon::parse($check['tgl_akhir'])->locale('id')->isoFormat('DD MMMM YYYY');
             $pd =  Carbon::parse(Carbon::now())->locale('id')->isoFormat('DD MMMM YYYY');
-            $masakerja= Carbon::parse($pegawai['mas_ker'])->locale('id')->isoFormat('DD MM YYYY');
+            // $masakerja= Carbon::parse($pegawai['mas_ker'])->locale('id')->isoFormat('DD MM YYYY');
             $date = array("start"=>$start, "end" => $end, "print_date" => $pd);
-    
             $a =  array_merge($check,$date);
             if($pegawai['golongan']==="PJLP"){
                 $pdf = PDF::loadView('doc/print',compact('a'))->setPaper('a4','portrait');
                 CutiPrintEvent::dispatch($request->input('nip'),$no_cuti);
-                
+                error_log('array key : '.implode('|',array_keys($a)));
+                error_log('array value : '.implode('|',$a));
                 return $pdf->download();
             }
             else{
                 $pdf = PDF::loadView('doc/print1',compact('a'))->setPaper('a4','portrait');
                 CutiPrintEvent::dispatch($nip,$no_cuti);
+                error_log('array key : '.implode('|',array_keys($a)));
+                error_log('array value : '.implode('|',$a));
+                error_log('test '.$ncob1);
                 return $pdf->download();
             }
         
@@ -534,7 +550,7 @@ class FormCutiController extends Controller
                         $nn1=$n1;
                         $n2=$n2-$totalHari;
                     }
-                    else if($n2 === 0 && $n2===6 && $sisa===12){
+                    else if($n2 === 0 && $n1===6 && $sisa===12){
                         $sisa1=$sisa;
                         $nn2=$n2;
                         $n1=$n1-$totalHari;
