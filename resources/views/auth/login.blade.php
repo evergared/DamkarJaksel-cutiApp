@@ -18,6 +18,17 @@
                                     Jika mengalami kendala saat login, seperti lupa password, <strong>harap hubungi admin</strong>.
                             </small>
                         </div>
+                        
+                        @if(session()->has('registerSuccess'))
+                        <div class="alert alert-success alert-dismissible fade show focus" role="alert">
+                            <span class="alert-inner--icon"><i class="fas fa-user-check"></i></span>
+                            <span class="alert-inner--text">{{ session('registerSuccess') }}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
+                        
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf
 

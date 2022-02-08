@@ -10,7 +10,12 @@
     </div>
   </header>
     <h4 style="text-align:center;">SURAT IZIN CUTI TAHUNAN</h4>
-    <p style="text-align:center"><b>Nomor : 802021{{$a['no_cuti']}}</b></p>
+    <table>
+    <td style="width: 120.05pt;border-right:none;border-left:none;border-image: initial;border-top: none;padding: 0cm 5.4pt;vertical-align: top;"></td>
+    <td style="width: 100.85pt;border-top: none;border-left: none;border-bottom:none ;border-right:none;padding: 0cm 5.4pt;vertical-align: top;">
+      <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'><span style='font-size:15px;font-family:"Arial",sans-serif;'></span><span style='font-size:15px;font-family:"Arial",sans-serif;'><b>Nomor :</b></span></p>
+  </td>
+</table>
       <div></div>
       <div style="margin-left: 10px"></div>
         <p style='font-family:"Arial Narrow",sans-serif;'>1. &nbsp;Diberikan Cuti Tahunan untuk tahun 2021 kepada PJLP :</p>
@@ -87,18 +92,28 @@
   </tbody>
 </table><br>
 <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>2. &nbsp;&nbsp;Demikian surat izin cuti tahunan ini dibuat untuk dapat dipergunakan sebagaimana<br>
-  &nbsp; &nbsp;&nbsp;&nbsp; mestinya.</p>
-  <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Jakarta &nbsp; &nbsp; {{$a['print_date']}} <br>
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kepala Suku Dinas Penanggulangan&nbsp;<br>
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Kebakaran dan Penyelamatan<br>
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Kota Adm. Jakarta Selatan</p><br><br><br><br><br>
-  <p style='margin:0cm;margin-bottom:.0001pt;font-family:"Arial",sans-serif;'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Herbert Plider Lumban Gaol, S.Sos, M.M <br>
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; NIP. 196910211990081001 <br>
-  &nbsp; &nbsp; Tembusan&nbsp; <br>
-  &nbsp; &nbsp; 1.Kasubbag Tata Usaha <br>
-  &nbsp; &nbsp; 2.Kasi {{$a['penempatan']}} <br>
-  &nbsp; &nbsp; 3.PPK <br>
-  &nbsp; &nbsp; 4.PPTK</p>
+  &nbsp; &nbsp;&nbsp;&nbsp; mestinya.</p><br><br>
+  <table>
+    <td style="width: 244.05pt;border-right:none;border-left:none;border-image: initial;border-top: none;padding: 0cm 5.4pt;vertical-align: top;"></td>
+    <td style="width: 241.85pt;border-top: none;border-left: none;border-bottom:none ;border-right:none;padding: 0cm 5.4pt;vertical-align: top;">
+     <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>Jakarta {{$a['print_date']}}</span></p><br>
+      <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1; text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>Kepala Suku Dinas Penanggulangan</span><span style='font-size:15px;font-family:"Arial",sans-serif;'></span></p>
+      <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'><span style='font-size:15px;font-family:"Arial",sans-serif;'></span><span style='font-size:15px;font-family:"Arial",sans-serif;'>Kebakaran dan Penyelamatan</span></p>
+      <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1; text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>Kota Adm. Jakarta Selatan</span></p>
+  </td>
+</table><br><br><br><br><br>
+ <table>
+    <td style="width: 244.05pt;border-right:none;border-left:none;border-image: initial;border-top: none;padding: 0cm 5.4pt;vertical-align: top;"></td>
+    <td style="width: 241.85pt;border-top: none;border-left: none;border-bottom:none ;border-right:none;padding: 0cm 5.4pt;vertical-align: top;">
+      <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'><span style='font-size:15px;font-family:"Arial",sans-serif;'></span><span style='font-size:15px;font-family:"Arial",sans-serif;'>Herbert Plider Lumban Gaol, S.Sos, M.M</span></p>
+      <p style='margin: 0cm 0cm 0.0001pt; font-size: 16px; font-family: "Times New Roman", serif; line-height: 1; text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>NIP. 196910211990081001</span></p>
+  </td>
+</table><br>
+  <!--&nbsp; &nbsp; Tembusan&nbsp; <br>-->
+  <!--&nbsp; &nbsp; 1.Kasubbag Tata Usaha <br>-->
+  <!--&nbsp; &nbsp; 2.Kasi {{$a['penempatan']}} <br>-->
+  <!--&nbsp; &nbsp; 3.PPK <br>-->
+  <!--&nbsp; &nbsp; 4.PPTK</p>-->
 </body>
 
 <body>
@@ -184,7 +199,7 @@
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>PPK/PPTK</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
-            <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;{{$a['ppk']}}</span></p>
+            <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>Sutaka, S.E.</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>NIP.&nbsp;</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>197209081997031003</span></p>
@@ -193,7 +208,7 @@
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>Kepala Seksi {{$a['penempatan']}}</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
-            <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span>{{$a['ks']}}</p>
+            <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>{{ $a['ksk'] }}</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>NIP</span><span style='font-size:15px;font-family:"Arial",sans-serif;'>.</span> <span style='font-size:15px;font-family:"Arial",sans-serif;'>{{$a['kskn']}}</span></p>
@@ -227,7 +242,7 @@
         </tr>
         <tr>
           <td style="width: 218.05pt;border-right: 1pt solid windowtext;border-bottom: 1pt solid windowtext;border-left: 1pt solid windowtext;border-image: initial;border-top: none;padding: 0cm 5.4pt;height: 3.5pt;vertical-align: top;">
-            <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span>{{$a['kasubagtu']}}</p>
+            <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>&nbsp;</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>Endang Suhartiningsih, S.Sos.</span></p>
             <p style='margin:0cm;margin-bottom:.0001pt;font-size:16px;font-family:"Times New Roman",serif;text-align:center;'><span style='font-size:15px;font-family:"Arial",sans-serif;'>NIP.196705211989032003</span></p>

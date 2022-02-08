@@ -258,39 +258,78 @@ class TabelController extends Controller
 
     public function createTableAssignmentPJLP(Request $request)
     {
-        error_log("Data PJLP Start");
         $query = DB::table("asigment_pjlp as a")->join('daftar_cuti_pjlp as d','a.no_cuti','=','d.id')
             ->join('cuti_tahunan_pjlp as ct','d.nip','=','ct.nip');
         // TODO : buat tampil tabel assignment pjlp untuk karu
         // TODO : buat tampil tabel assignment pjlp untuk katon
 
         try{
-            if(Auth::user()->is_kasie)
+            if(Auth::user()->is_kasie )
             {
-                $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
+                $query_kasie = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
+                    ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
                     ->where('dp.kasie','=',Auth::user()->jabatan)
                     ->get([
                         'dp.nip',
                         'dp.nrk',
                         'dp.nama',
+                        'p.penempatan',
                         'a.no_cuti',
                         'a.kasie',
                         'a.ket_kasie',
+                        'a.ppk as p',
+                        'a.ket_ppk as k',
                         'd.jenis_cuti',
                         'd.alasan',
-                        'd.alamat',
                         'd.tlpn',
+                        'd.alamat',
                         'd.tgl_awal',
                         'd.tgl_akhir',
                         'd.total_cuti',
                         'd.tgl_pengajuan'
                     ]);
 
-                    $dt =  DataTables::of($query)
+                $query_n = $query_kasie;
+
+                    if(Auth::user()->is_ppk)
+                    {
+                        $query_ppk = DB::table("asigment_pjlp as a")->join('daftar_cuti_pjlp as d','a.no_cuti','=','d.id')
+                        ->join('cuti_tahunan_pjlp as ct','d.nip','=','ct.nip')->join('data_pegawai as dp','d.nip','=','dp.nip')
+                        ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
+                        ->where('a.kasie','=','s')
+                        ->get([
+                        'dp.nip',
+                        'dp.nrk',
+                        'dp.nama',
+                        'p.penempatan',
+                        'a.no_cuti',
+                        'a.kasie',
+                        'a.ket_kasie',
+                        'a.ppk as p',
+                        'a.ket_ppk as k',
+                        'd.jenis_cuti',
+                        'd.alasan',
+                        'd.tlpn',
+                        'd.alamat',
+                        'd.tgl_awal',
+                        'd.tgl_akhir',
+                        'd.total_cuti',
+                        'd.tgl_pengajuan'
+                    ]);
+                        
+                        $query_n = $query_ppk->union($query_kasie);
+                    }
+
+                    
+                    $dt =  DataTables::of($query_n)
                             ->addIndexColumn()
                             ->addColumn('p_kasie',function($data){
                                 $dat = (array) $data;
                                 return $this->approvalAtasan($dat['kasie']);
+                            })
+                            ->addColumn('p',function($data){
+                                $dat = (array) $data;
+                                return $this->approvalAtasan($dat['p']);
                             })
                             ->addColumn('tindakan',function($row){
                                     $btn = '<a href="" class="act_ btn btn-primary btn-sm" data-galileo = "'.$row->nip.'" data-figaro="'.$row->no_cuti.'">Ubah Persetujuan</a>';
@@ -301,13 +340,18 @@ class TabelController extends Controller
                                 $dat = (array) $data;
                                 return "<i id='ket'>".$dat['ket_kasie']."</i>";
                             })
-                            ->rawColumns(['p_kasie','tindakan','k_kasie'])
+                            ->addColumn('k',function($data)
+                            {
+                                $dat = (array) $data;
+                                return "<i id='ket'>".$dat['k']."</i>";
+                            })
+                            ->rawColumns(['p_kasie','tindakan','k_kasie','p','k'])
                             ->make(true);
             }
             elseif(Auth::user()->is_kasubag_tu)
             {
                 $query = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
-                    ->where('a.kasie','=','s')
+                    ->where('a.kasie','=','s')->where('a.ppk','=','s')
                     ->get([
                         'dp.nip',
                         'dp.nrk',
@@ -463,6 +507,7 @@ class TabelController extends Controller
                         'd.tgl_pengajuan'
                     ]);
 
+
                 $dt = DataTables::of($query)
                     ->addIndexColumn()
                     ->addColumn('tindakan',function($row){
@@ -486,12 +531,13 @@ class TabelController extends Controller
                     
             }
 
-            if($request->ajax())
-            {
-                return $dt;
-            }
+            // if($request->ajax())
+            // {
+            //     return $dt;
+            // }
             
-            return view('dashboard/report');
+            // return view('dashboard/report');
+            return $dt;
         }
         catch(Throwable $e)
         {
