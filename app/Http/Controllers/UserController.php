@@ -137,6 +137,19 @@ class UserController extends Controller
         }
     }
 
+    public function updateUser(Request $request)
+    {
+        try{
+
+        }
+        catch(Throwable $e)
+        {
+            report('update user error : '.$e);
+            error_log('Update user error : '.$e);
+            return 'fail_update_user_try_caught';
+        }
+    }
+
     public function changePassword(Request $request)
     {
         try{

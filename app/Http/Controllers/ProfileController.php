@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    // This class originate from argon template
+    // Delete this if unnecessary
     /**
      * Show the form for editing the profile.
      *

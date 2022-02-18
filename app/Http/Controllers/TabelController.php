@@ -66,6 +66,16 @@ class TabelController extends Controller
         //return $d;
     }
 
+    public function createTablePegawaiASN(Request $request)
+    {
+        
+    }
+
+    public function createTablePegawaiPJLP(Request $request)
+    {
+
+    }
+
     public function createTableAssignmentASN(Request $request)
     {
         $query = DB::table("asigment_asn as a")->join('daftar_cuti_asn as d','a.no_cuti','=','d.id')
@@ -683,6 +693,37 @@ class TabelController extends Controller
         }
         
         return view('dashboard/report');
+    }
+
+    public function createTablePLTAssignmentASN(Request $request)
+    {
+        $list_jabatan = Auth::user()->jabatan_plt;
+
+        if(is_string($list_jabatan))
+        {
+            error_log("Fetch PLT Assignment ASN data failure with message : ".$list_jabatan);
+            report("Fetch PLT Assignment ASN data failure with message : ".$list_jabatan);
+            return $list_jabatan;
+        }
+
+        try{
+
+            $query = DB::table("asigment_asn as a")->join('daftar_cuti_asn as d','a.no_cuti','=','d.id')
+            ->join('cuti_tahunan_asn as ct','d.nip','=','ct.nip');
+
+            foreach($list_jabatan as $jabatan)
+            {
+                
+            }
+
+        }
+        catch(Throwable $e)
+        {
+            report('Failed to load PLT asigment table ASN on '.$e);
+            error_log('Failed to load PLT asigment table ASN on '.$e);
+            return "fail_plt_try_caught";
+        }
+
     }
 
     public function createTableUser(Request $request)

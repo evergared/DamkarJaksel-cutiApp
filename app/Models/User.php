@@ -26,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'email',
         'email_verified_at',
+        'is_plt',
         'is_pjlp',
         'is_asn',
         'is_admin',
@@ -62,6 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'roles' => 'array',
         'jabatan' => 'string',
         'data' => 'array',
+        'is_plt' => 'boolean',
         'is_admin' =>'boolean',
         'is_pjlp' => 'boolean',
         'is_asn' => 'boolean',
@@ -161,5 +163,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getIsApproverAttribute()
     {
         return ($this->is_kasie || $this->is_kasubag_tu || $this->is_ppk);
+    }
+
+    public function getJabatanPltAttribute()
+    {
+        if(!$this->is_plt)
+        return "fail_plt_user_is_not_plt";
+
+        else
+        {
+            if(DB::table('plt')->where('nip_pelaksana','=',$this->nip)->exists())
+            {
+                return (array) DB::table('plt')->where('nip_pelaksana','=',$this->nip)->get('jabatan');
+            }
+            else
+                return "fail_plt_user_data_not_found";
+        }
     }
 }
