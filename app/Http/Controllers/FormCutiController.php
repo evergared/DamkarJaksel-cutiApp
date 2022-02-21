@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\JabatanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -119,7 +120,7 @@ class FormCutiController extends Controller
                 ]);
 
             // check jika user staff TU
-            if(Auth::user()->kasie == '11')
+            if(Auth::user()->kasie === '11')
                 $asigment -> insert([
                     'no_cuti' => $id,
                     'kasie' =>'s'
@@ -225,36 +226,46 @@ class FormCutiController extends Controller
             
             $nip = $request->input('nip');
             $no_cuti = $request->input('no_cuti');
+
+            $jc = new JabatanController();
             
             $check = DB::table('data_pegawai')->where('nip','=',$nip)->value('golongan');
             
             if($check === "PJLP")
-                {
+            {
                     error_log("hit pjlp");
                 $assignment = DB::table('asigment_pjlp'); 
-                if(Auth::user()->is_kasie)
+                if(Auth::user()->is_kasie || $jc->is_user_plt_kasie())
                 {
-                    if(Auth::user()->is_ppk)
+                    if(Auth::user()->is_ppk || ($jc->is_user_plt_ppk() || $jc->is_user_plt_pptk()) )
                     {
                         $assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('status'),'ket_ppk'=>$request->input('keterangan')]);
                         
-                        $cek_kasie = DB::table('data_pegawai')->where('nip','=',$nip)->value('kasie');
+                        $cek_kasie = DB::table('data_pegawai')->where('nip','=',$nip)->value('kasie'); // if current user is also employee's kasie
                         
-                        if(Auth::user()->jabatan == $cek_kasie)
+                        if((Auth::user()->jabatan === $cek_kasie) || (in_array($cek_kasie,$jc->getJabatanPltKasie())) )
                         {
                             $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);          
                         }
-                        
+                        if($jc->is_user_plt_tu())
+                        {
+                            $assignment->where('no_cuti',$no_cuti)->update(['tu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan')]);          
+                        }
+                    }
+                    else if($jc->is_user_plt_tu())
+                    {
+                        $assignment->where('no_cuti',$no_cuti)->update(['tu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan'),
+                        'kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);
                     }
                     else{
                     $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);
                     }
                 }
-                elseif(Auth::user()->is_kasubag_tu)
+                elseif(Auth::user()->is_kasubag_tu || $jc->is_user_plt_tu() )
                 {
                     $assignment->where('no_cuti',$no_cuti)->update(['kasubagtu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan')]);
                 }
-                elseif(Auth::user()->is_ppk)
+                elseif(Auth::user()->is_ppk || ($jc->is_user_plt_ppk() || $jc->is_user_plt_pptk()) )
                 {
                     $assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('status'),'ket_ppk'=>$request->input('keterangan')]);
                 }

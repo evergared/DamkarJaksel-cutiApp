@@ -8,6 +8,7 @@ use Throwable;
 
 class PegawaiController extends Controller
 {
+
     public function addPegawai(Request $request)
     {
         try{

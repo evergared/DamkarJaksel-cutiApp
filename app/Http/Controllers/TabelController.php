@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\JabatanController;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Yajra\DataTables\Html\Builder;
@@ -11,19 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 use Throwable;
 
-// model utk tabel
-use App\Models\Pegawai_ASN as ASN;
-use App\Models\Pegawai_PJLP as PJLP;
-use App\Models\User;
-
-// datatable utk pembuatan table melalui facade
-use App\DataTables\Pegawai_ASNDataTable;
-use App\DataTables\pegawaiDataTable;
-
-use App\View\Components\DataTable;
-
 class TabelController extends Controller
 {
+    private $jabatanController = new JabatanController();
+
     public function approvalAtasan($data)
     {
         switch($data)
@@ -703,25 +695,119 @@ class TabelController extends Controller
         {
             error_log("Fetch PLT Assignment ASN data failure with message : ".$list_jabatan);
             report("Fetch PLT Assignment ASN data failure with message : ".$list_jabatan);
-            return $list_jabatan;
+            return null;
         }
 
         try{
 
-            $query = DB::table("asigment_asn as a")->join('daftar_cuti_asn as d','a.no_cuti','=','d.id')
-            ->join('cuti_tahunan_asn as ct','d.nip','=','ct.nip');
+            $base_query = DB::table("asigment_asn as a")->join('daftar_cuti_asn as d','a.no_cuti','=','d.id')
+                        ->join('cuti_tahunan_asn as ct','d.nip','=','ct.nip')
+                        ->join('data_pegawai as dp','d.nip','=','dp.nip')
+                        ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil');
+            
+            
+            $get_columns = [    
+                                'dp.nip',
+                                'dp.nrk',
+                                'dp.nama',
+                                'p.penempatan',
+                                'a.no_cuti',
+                                'a.kasie',
+                                'a.ket_kasie',
+                                'a.tu',
+                                'a.ket_tu',
+                                'd.jenis_cuti',
+                                'd.alasan',
+                                'd.tlpn',
+                                'd.alamat',
+                                'd.tgl_awal',
+                                'd.tgl_akhir',
+                                'd.total_cuti',
+                                'd.tgl_pengajuan'
+            ];
 
-            foreach($list_jabatan as $jabatan)
+            $f_kasie = false;
+            $f_tu = false;
+
+            // fetch data kasie
+            if($this->jabatanController->is_user_plt_kasie())
             {
-                
+                $list_j_kasie = $this->jabatanController->getJabatanPltKasie();
+                $query_kasie = $base_query;
+
+                if(count($list_j_kasie) == 1)
+                {
+                    $query_kasie = $query_kasie->where('dp.kasie','=',array_pop($list_j_kasie))->get($get_columns);
+                }
+                else{
+
+                    $query_kasie = $query_kasie->where('dp.kasie','=',array_pop($list_j_kasie));
+
+                    foreach($list_j_kasie as $jk)
+                        $query_kasie = $query_kasie->orWhere('dp.kasie','=',$jk);
+                    
+                    $query_kasie->get($get_columns);
+                }
+
+
+                if(!$query_kasie->isEmpty())
+                    $f_kasie = true;
             }
 
+            // fetch data tu
+            if($this->jabatanController->is_user_plt_tu())
+            {
+                $j_tu = $this->jabatanController->j_tu;
+                $query_tu = $base_query;
+
+                $query_tu = $query_tu->where('a.kasie','=','s')->get($get_columns);
+
+                if(!$query_tu->isEmpty())
+                    $f_tu = true;
+            }
+
+            // create final query
+            if($f_kasie)
+                $final_query = $query_kasie;
+            else if($f_tu)
+                $final_query = $query_tu;
+            else if($f_kasie && $f_tu)
+                $final_query = $query_kasie->union($query_tu);
+            else
+                $final_query = $base_query->where('dp.nip','=')->get($get_columns); // dummy query
+
+            // create table for datatables
+            return DataTables::of($final_query)
+                    ->addIndexColumn()
+                    ->addColumn('tindakan',function($row){
+                        return '<p>';
+                    })
+                    ->addColumn('p_kasie',function($data){
+                        $dat = (array) $data;
+                        return $this->approvalAtasan($dat['kasie']);
+                    })
+                    ->addColumn('k_kasie',function($data)
+                            {
+                                $dat = (array) $data;
+                                return "<i id='ket'>".$dat['ket_kasie']."</i>";
+                            })
+                    ->addColumn('p_tu',function($data){
+                        $dat = (array) $data;
+                        return $this->approvalAtasan($dat['kasubagtu']);
+                    })
+                    ->addColumn('k_tu',function($data)
+                            {
+                                $dat = (array) $data;
+                                return "<i id='ket'>".$dat['ket_tu']."</i>";
+                            })
+                    ->rawColumns(['tindakan','p_kasie','k_kasie','p_tu','k_tu'])
+                    ->make(true);
         }
         catch(Throwable $e)
         {
             report('Failed to load PLT asigment table ASN on '.$e);
             error_log('Failed to load PLT asigment table ASN on '.$e);
-            return "fail_plt_try_caught";
+            //return "fail_plt_try_caught";
         }
 
     }

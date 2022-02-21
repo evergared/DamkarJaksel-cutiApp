@@ -19,11 +19,9 @@
                                     <a class="nav-link active" href="#tab-asn" role="tab" data-toggle="tab" aria-controls="tab-asn" aria-selected="true">ASN</a>
                                 </li>
 
-                                @if(auth()->user()->has_subordinate_pjlp || auth()->user()->is_ppk || auth()->user()->is_kasubag_tu || auth()->user()->is_kasie || auth()->user()->is_admin)
                                 <li class="nav-item">
                                     <a class="nav-link" href="#tab-pjlp" role="tab" data-toggle="tab" aria-controls="tab-pjlp">PJLP</a>
                                 </li>
-                                @endif
                             </ul>
                         </div>
 
@@ -38,12 +36,9 @@
                         <div class="tab-pane fade show active" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
                             @include('datatable.assignment-asn')
                         </div>
-                            @if(auth()->user()->has_subordinate_pjlp || auth()->user()->is_approver || auth()->user()->is_kasudin || auth()->user()->is_admin)
-                                <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
+                        <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
                                 @include('datatable.assignment-pjlp')
-                                </div>
-                            @endif
-
+                        </div>
                     </div>
 
                 </div>
