@@ -7,7 +7,7 @@ const app = new Vue({
     data(){
         return{
             columns:[
-                {data: 'DT_RowIndex', title:'no'},
+                {data: 'DT_RowIndex', title:'no', searchable: false, orderable: false},
                 {data: 'nip'},
                 {data: 'nama'},
                 {data: 'jenis_cuti', title:'Jenis Cuti'},

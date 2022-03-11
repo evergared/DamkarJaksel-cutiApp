@@ -10,43 +10,24 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
 
-  // TODO : Ganti fungsi CheckAuth dengan middleware
-
-  public function checkAuth()
-  {
-    if(!Auth::check())
-    {
-      $this->kickUser();
-    }
-  }
-
-  public function kickUser()
-  {
-    //abort(403);
-  }
-
-  public static function getDashboard(Request $request)
-  {
-     $nip = $request->session()->get('roles');
-     route("home");
-  }
-
   public function loadHome(Request $request)
   {
-    $this->checkAuth();
     return view('dashboard/home');
   }
 
   public function loadKepegawaian(Request $request)
   {
-    $this->checkAuth();
-    return view('dashboard/kepegawaian');
+    return view('dashboard/admin/pegawai');
   }
 
   public function loadReport(Request $request)
   {
-    $this->checkAuth();
     return view('dashboard/report');
+  }
+
+  public function loadPltReport(Request $request)
+  {
+    return view('dashboard/plt');
   }
 
   public function loadCalendar()

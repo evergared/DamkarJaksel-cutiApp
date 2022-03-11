@@ -1,6 +1,6 @@
-@extends('layouts.app)
+@extends('layouts.app')
 @section('content')
-    @include('layouts.header.cards')
+    @include('layouts.headers.cards')
 
     <div class="container-fluid mt--7">
         <div class="col-lg-12 md-7">
@@ -9,7 +9,7 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col text-left">
-                        <h3>{{ __('Report Data Cuti (Pelaksana Tugas)') }}</h3>
+                        <h3>Report Data Cuti (Pelaksana Tugas)</h3>
                         </div>
 
                         <div class="nav-wrapper text-right">
@@ -34,10 +34,10 @@
                     <div class="tab-content" id="tab-content-report">
 
                         <div class="tab-pane fade show active" id="tab-asn" role="tabpanel" aria-labelledby="tab-asn-tab" >
-                            @include('datatable.assignment-asn')
+                            @include('datatable.report.plt-asn')
                         </div>
                         <div class="tab-pane fade" id="tab-pjlp" role="tabpanel" aria-labelledby="tab-pjlp-tab" >
-                                @include('datatable.assignment-pjlp')
+                                @include('datatable.report.plt-pjlp')
                         </div>
                     </div>
 

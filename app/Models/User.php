@@ -174,7 +174,9 @@ class User extends Authenticatable implements MustVerifyEmail
         {
             if(DB::table('plt')->where('nip_pelaksana','=',$this->nip)->exists())
             {
-                return (array) DB::table('plt')->where('nip_pelaksana','=',$this->nip)->get('jabatan');
+                $test =  DB::table('plt')->where('nip_pelaksana','=',$this->nip)->pluck('kode_jabatan');
+                error_log('user model get jabatan plt : '.$test);
+                return $test;
             }
             else
                 return "fail_plt_user_data_not_found";

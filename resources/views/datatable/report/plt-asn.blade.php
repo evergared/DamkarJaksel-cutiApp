@@ -1,6 +1,6 @@
 
 <div id="dt-plt-asn">
-    <data-table :columns="columns" ajax="{{route('report.plt.asn')}}" :buttons="buttons"></data-table>
+    <data-table :columns="columns" ajax="{{route('report.plt.asn')}}"></data-table>
 </div>
 
 

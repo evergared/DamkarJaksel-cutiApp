@@ -63,6 +63,9 @@
       <ul class="navbar-nav ">
         <li class="nav-item"><a class="nav-link" href="{{ route('home') }}"><i class="ni ni-shop text-blue"></i><span class="nav-link-text">{{ __('Home')}}</span></a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('report') }}"><i class="ni ni-calendar-grid-58 text-red"></i><span class="nav-link-text">{{ __('Report Daftar Cuti')}}</span></a></li>
+        @if(auth()->user()->is_plt)
+        <li class="nav-item"><a class="nav-link" href="{{ route('plt') }}"><i class="ni ni-calendar-grid-58 text-red"></i><span class="nav-link-text">{{ __('Report Daftar Cuti (PLT)')}}</span></a></li>
+        @endif
         <li class="nav-item"><a class="nav-link" href="{{ route('form') }}"><i class="ni ni-single-copy-04 text-gray"></i><span class="nav-link-text">{{ __('Form Pengajuan Cuti')}}</span></a></li>
       </ul>
       <hr class = "my-2">

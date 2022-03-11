@@ -14,8 +14,18 @@ use Throwable;
 
 class TabelController extends Controller
 {
-    private $jabatanController = new JabatanController();
 
+    function tampilKompi($data)
+    {
+        switch($data)
+        {
+            case 'A': return 'Ambon'; break;
+            case 'B': return 'Bandung';break;
+            case 'C': return 'Cepu';break;
+            default : return '-';break;
+        }
+    }
+    
     public function approvalAtasan($data)
     {
         switch($data)
@@ -29,43 +39,144 @@ class TabelController extends Controller
         }
     }
 
-    public function createTableASN(Request $request)
+    public function createTableMaster(Request $request)
     {
-        $d = DB::table('data_pegawai')->where('golongan','!=','PJLP')->get();
+        $d = DB::table('data_pegawai as dp')->join('jabatan as j','dp.jabatan','=','j.no')
+            ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
+            ->get([
+                'dp.nip',
+                'dp.nrk',
+                'dp.nama',
+                'dp.golongan',
+                'dp.pendidikan',
+                'dp.kode_penempatan',
+                'p.penempatan',
+                'dp.kompi',
+                'dp.jabatan as kode_jabatan',
+                'dp.kasie',
+                'dp.keterangan',
+                'dp.jabket',
+                'j.jabatan',
+                'dp.mas_ker'
+            ]);
         
-        if($request->ajax())
-        {
-            error_log("Permintaan ASN : " . $request);
             return DataTables::of($d)
                 ->addIndexColumn()
+                ->addColumn('grup', function($data){
+                    $dat = (array)$data;
+                    return $this->tampilKompi($dat['kompi']);
+                })
+                ->addColumn('tindakan', function(){
+                    return '<b>Tindakan</b>';
+                })
+                ->rawColumns(['tindakan'])
                 ->make(true);
-        }
-        return view('dashboard/kepegawaian');
+    }
+
+    public function createTableASN(Request $request)
+    {
+        $d = DB::table('data_pegawai as dp')->join('jabatan as j','dp.jabatan','=','j.no')
+            ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
+            ->where('golongan','!=','PJLP')->get([
+                'dp.nip',
+                'dp.nrk',
+                'dp.nama',
+                'dp.golongan',
+                'dp.pendidikan',
+                'p.penempatan',
+                'dp.kompi',
+                'j.jabatan',
+                'dp.mas_ker'
+            ]);
+        
+            return DataTables::of($d)
+                ->addIndexColumn()
+                ->addColumn('grup', function($data){
+                    $dat = (array)$data;
+                    return $this->tampilKompi($dat['kompi']);
+                })
+                ->addColumn('tindakan', function(){
+                    return '<b>Tindakan</b>';
+                })
+                ->rawColumns(['tindakan'])
+                ->make(true);
     }
 
     public function createTablePJLP(Request $request)
     {
-        $d = DB::table('data_pegawai')->where('golongan','PJLP')->get();
+        $d = DB::table('data_pegawai as dp')->join('jabatan as j','dp.jabatan','=','j.no')
+            ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
+            ->where('golongan','=','PJLP')->get([
+                'dp.nip',
+                'dp.nama',
+                'dp.golongan',
+                'dp.pendidikan',
+                'p.penempatan',
+                'dp.kompi',
+                'j.jabatan',
+                'dp.mas_ker'
+            ]);
         
-        if($request->ajax())
-        {
-            error_log("Permintaan PJLP : " . $request);
             return DataTables::of($d)
                 ->addIndexColumn()
+                ->addColumn('grup', function($data){
+                    $dat = (array)$data;
+                    return $this->tampilKompi($dat['kompi']);
+                })
+                ->addColumn('tindakan', function(){
+                    return '<b>Tindakan</b>';
+                })
+                ->rawColumns(['tindakan'])
                 ->make(true);
-        }
-        return view('dashboard/kepegawaian');
-        //return $d;
     }
 
-    public function createTablePegawaiASN(Request $request)
+    public function createTableJabatan(Request $request)
     {
-        
+        $query = DB::table('jabatan')->get();
+
+        return DataTables::of($query)
+        ->addIndexColumn()
+        ->addColumn('tindakan', function(){
+            return '<b>Tindakan</b>';
+        })
+        ->rawColumns(['tindakan'])
+        ->make(true);
     }
 
-    public function createTablePegawaiPJLP(Request $request)
+    public function createTablePenempatan(Request $request)
     {
+        $query = DB::table('penempatan')->get();
 
+        return DataTables::of($query)
+        ->addIndexColumn()
+        ->addColumn('tindakan', function(){
+            return '<b>Tindakan</b>';
+        })
+        ->rawColumns(['tindakan'])
+        ->make(true);
+    }
+
+    public function createTablePLT(Request $request)
+    {
+        $query = DB::table('plt as pt')->join('data_pegawai as dp','pt.nip_pelaksana','=','dp.nip')
+                ->leftJoin('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
+                ->join('jabatan as j','pt.kode_jabatan','=','j.no')
+                ->get([
+                    'pt.nip_pelaksana as nip',
+                    'pt.kode_jabatan',
+                    'pt.keterangan',
+                    'j.jabatan',
+                    'dp.nama',
+                    'p.penempatan'
+                ]);
+
+        return DataTables::of($query)
+        ->addIndexColumn()
+        ->addColumn('tindakan', function(){
+            return '<b>Tindakan</b>';
+        })
+        ->rawColumns(['tindakan'])
+        ->make(true);
     }
 
     public function createTableAssignmentASN(Request $request)
@@ -689,6 +800,7 @@ class TabelController extends Controller
 
     public function createTablePLTAssignmentASN(Request $request)
     {
+        $jabatanController = new JabatanController();
         $list_jabatan = Auth::user()->jabatan_plt;
 
         if(is_string($list_jabatan))
@@ -707,32 +819,31 @@ class TabelController extends Controller
             
             
             $get_columns = [    
-                                'dp.nip',
-                                'dp.nrk',
-                                'dp.nama',
-                                'p.penempatan',
-                                'a.no_cuti',
-                                'a.kasie',
-                                'a.ket_kasie',
-                                'a.tu',
-                                'a.ket_tu',
-                                'd.jenis_cuti',
-                                'd.alasan',
-                                'd.tlpn',
-                                'd.alamat',
-                                'd.tgl_awal',
-                                'd.tgl_akhir',
-                                'd.total_cuti',
-                                'd.tgl_pengajuan'
+                'dp.nip',
+                'dp.nama',
+                'p.penempatan',
+                'a.no_cuti',
+                'a.kasie',
+                'a.ket_kasie',
+                'a.kasubagtu',
+                'a.ket_tu',
+                'd.jenis_cuti',
+                'd.alasan',
+                'd.tlpn',
+                'd.alamat',
+                'd.tgl_awal',
+                'd.tgl_akhir',
+                'd.total_cuti',
+                'd.tgl_pengajuan'
             ];
 
             $f_kasie = false;
             $f_tu = false;
 
             // fetch data kasie
-            if($this->jabatanController->is_user_plt_kasie())
+            if($jabatanController->is_user_plt_kasie())
             {
-                $list_j_kasie = $this->jabatanController->getJabatanPltKasie();
+                $list_j_kasie = $jabatanController->getJabatanPltKasie();
                 $query_kasie = $base_query;
 
                 if(count($list_j_kasie) == 1)
@@ -750,19 +861,18 @@ class TabelController extends Controller
                 }
 
 
-                if(!$query_kasie->isEmpty())
+                if($query_kasie->count() != 0)
                     $f_kasie = true;
             }
 
             // fetch data tu
-            if($this->jabatanController->is_user_plt_tu())
+            if($jabatanController->is_user_plt_tu())
             {
-                $j_tu = $this->jabatanController->j_tu;
                 $query_tu = $base_query;
 
                 $query_tu = $query_tu->where('a.kasie','=','s')->get($get_columns);
 
-                if(!$query_tu->isEmpty())
+                if($query_tu->count() != 0)
                     $f_tu = true;
             }
 
@@ -802,6 +912,139 @@ class TabelController extends Controller
                             })
                     ->rawColumns(['tindakan','p_kasie','k_kasie','p_tu','k_tu'])
                     ->make(true);
+        }
+        catch(Throwable $e)
+        {
+            report('Failed to load PLT asigment table ASN on '.$e);
+            error_log('Failed to load PLT asigment table ASN on '.$e);
+            //return "fail_plt_try_caught";
+        }
+
+    }
+
+    public function createTablePLTAssignmentPJLP(Request $request)
+    {
+        $list_jabatan = Auth::user()->jabatan_plt;
+        $jabatanController = new JabatanController();
+
+        if(is_string($list_jabatan))
+        {
+            error_log("Fetch PLT Assignment PJLP data failure with message : ".$list_jabatan);
+            report("Fetch PLT Assignment PJLP data failure with message : ".$list_jabatan);
+            return null;
+        }
+
+        try{
+
+            
+
+            $base_query = DB::table("asigment_pjlp as a")->join('daftar_cuti_pjlp as d','a.no_cuti','=','d.id')
+                        ->join('cuti_tahunan_pjlp as ct','d.nip','=','ct.nip')
+                        ->join('data_pegawai as dp','d.nip','=','dp.nip')
+                        ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil');
+            
+            
+            $get_columns = [    
+                                'dp.nip',
+                                'dp.nama',
+                                'p.penempatan',
+                                'a.no_cuti',
+                                'a.kasie',
+                                'a.ket_kasie',
+                                'a.kasubagtu',
+                                'a.ket_tu',
+                                'd.jenis_cuti',
+                                'd.alasan',
+                                'd.tlpn',
+                                'd.alamat',
+                                'd.tgl_awal',
+                                'd.tgl_akhir',
+                                'd.total_cuti',
+                                'd.tgl_pengajuan'
+            ];
+
+            $f_kasie = false;
+            $f_tu = false;
+            error_log(' start fetch data kasie plt with val : '.$jabatanController->is_user_plt_kasie());
+
+            // fetch data kasie
+            if($jabatanController->is_user_plt_kasie())
+            {
+                $list_j_kasie = $jabatanController->getJabatanPltKasie();
+                $query_kasie = $base_query;
+
+                error_log('fetch data kasie plt, value : '.implode('||',$list_j_kasie));
+                if(count($list_j_kasie) == 1)
+                {
+                    $query_kasie = $query_kasie->where('dp.kasie','=',implode('||',$list_j_kasie))->get($get_columns);
+                error_log('fetch data kasie plt (single) , val : '.implode('||',$list_j_kasie));
+                }
+                else{
+                    error_log('test multi list j kasie, pre pop val : '.implode('|',$list_j_kasie));
+                    $test = array_pop($list_j_kasie);
+                    error_log('test multi list j kasie, post pop val : '.implode('|',$list_j_kasie).' popped val : '.$test);
+                    $query_kasie = $query_kasie->where('dp.kasie','=',$test);
+
+                    foreach($list_j_kasie as $jk)
+                        $query_kasie = $query_kasie->orWhere('dp.kasie','=',$jk);
+                    
+                error_log('fetch data kasie plt (multi)');
+                $query_kasie->get($get_columns);
+                error_log('query : '.$query_kasie->toSql());
+                }
+
+
+                if($query_kasie->count() != 0)
+                    $f_kasie = true;
+            }
+
+            // fetch data tu
+            if($jabatanController->is_user_plt_tu())
+            {
+                $query_tu = $base_query;
+
+                $query_tu = $query_tu->where('a.kasie','=','s')->get($get_columns);
+
+                if($query_tu->count() != 0)
+                    $f_tu = true;
+            }
+
+            // create final query
+            if($f_kasie)
+                $final_query = $query_kasie;
+            else if($f_tu)
+                $final_query = $query_tu;
+            else if($f_kasie && $f_tu)
+                $final_query = $query_kasie->union($query_tu);
+            else
+                $final_query = $base_query->where('dp.nip','=')->get($get_columns); // dummy query
+
+            // create table for datatables
+            return DataTables::of($final_query)
+                    ->addIndexColumn()
+                    ->addColumn('tindakan',function($row){
+                        return '<p>';
+                    })
+                    ->addColumn('p_kasie',function($data){
+                        $dat = (array) $data;
+                        return $this->approvalAtasan($dat['kasie']);
+                    })
+                    ->addColumn('k_kasie',function($data)
+                            {
+                                $dat = (array) $data;
+                                return "<i id='ket'>".$dat['ket_kasie']."</i>";
+                            })
+                    ->addColumn('p_tu',function($data){
+                        $dat = (array) $data;
+                        return $this->approvalAtasan($dat['kasubagtu']);
+                    })
+                    ->addColumn('k_tu',function($data)
+                            {
+                                $dat = (array) $data;
+                                return "<i id='ket'>".$dat['ket_tu']."</i>";
+                            })
+                    ->rawColumns(['tindakan','p_kasie','k_kasie','p_tu','k_tu'])
+                    ->make();
         }
         catch(Throwable $e)
         {

@@ -2,6 +2,7 @@
     "/js/eventbus.js": "/js/eventbus.js",
     "/js/formCuti.js": "/js/formCuti.js",
     "/js/formUser.js": "/js/formUser.js",
+    "/js/formPegawai.js": "/js/formPegawai.js",
     "/js/fullCalendar.js": "/js/fullCalendar.js",
     "/js/datatables/admin-asn.js": "/js/datatables/admin-asn.js",
     "/js/datatables/admin-pjlp.js": "/js/datatables/admin-pjlp.js",
@@ -14,7 +15,15 @@
     "/js/datatables/ppk-pjlp.js": "/js/datatables/ppk-pjlp.js",
     "/js/datatables/self-pjlp.js": "/js/datatables/self-pjlp.js",
     "/js/datatables/self-asn.js": "/js/datatables/self-asn.js",
+    "/js/datatables/plt-pjlp.js": "/js/datatables/plt-pjlp.js",
+    "/js/datatables/plt-asn.js": "/js/datatables/plt-asn.js",
     "/js/datatables/user-list.js": "/js/datatables/user-list.js",
+    "/js/datatables/pegawai-master.js": "/js/datatables/pegawai-master.js",
+    "/js/datatables/pegawai-asn.js": "/js/datatables/pegawai-asn.js",
+    "/js/datatables/pegawai-pjlp.js": "/js/datatables/pegawai-pjlp.js",
+    "/js/datatables/pegawai-jabatan.js": "/js/datatables/pegawai-jabatan.js",
+    "/js/datatables/pegawai-penempatan.js": "/js/datatables/pegawai-penempatan.js",
+    "/js/datatables/pegawai-plt.js": "/js/datatables/pegawai-plt.js",
     "/js/dataTable.js": "/js/dataTable.js",
     "/css/app.css": "/css/app.css"
 }
