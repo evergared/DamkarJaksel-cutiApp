@@ -28,12 +28,13 @@
 </template>
 
 <script>
-import formPegawai from '../FormPegawai.vue'
 import bootstrap from 'bootstrap-vue'
 import eventbus from '../../eventbus'
 import 'bootstrap-vue'
 
 Vue.use(bootstrap);
+Vue.directive('b-modal',bootstrap);
+import formPegawai from '../FormPegawai.vue'
 
 export default{
         props:[

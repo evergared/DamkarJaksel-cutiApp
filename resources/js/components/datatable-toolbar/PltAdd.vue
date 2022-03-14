@@ -12,10 +12,26 @@
              label="NIP Pegawai : "
              label-for="input-nip"
              description="NIP pegawai yang akan menjadi Pelaksana Tugas">
-                <b-form-input
-                 id="input-nip"
-                 v-model="form.nip"
-                 required></b-form-input>
+
+                <b-input-group>
+                    <b-form-input
+                    id="input-nip"
+                    v-model="form.nip"
+                    :state='inputNipState'
+                    @change="nipState"
+                    aria-describedby="input-nip-feedback"
+                    required></b-form-input>
+
+                    <b-input-group-append>
+                        <b-button  variant="outline-primary" @click="cekNip()">Cek</b-button>
+                    </b-input-group-append>
+
+                    <b-form-invalid-feedback id="input-nip-feedback">
+                            Nip tidak ditemukan!
+                    </b-form-invalid-feedback>
+
+                </b-input-group>
+
             </b-form-group>
 
             <b-form-group 
@@ -34,6 +50,19 @@
             <button type="button" class="btn btn-secondary" @click="hideWindow()">Batal</button>
         </template>
     </b-modal>
+
+        <b-modal ref="cekDataWindow" size="sm" hide-backdrop hide-footer hide-header>
+
+            <h2>Cek Data Pegawai</h2>
+
+            <strong>NIP : </strong>{{cekData.nip}} <br>
+            <strong>NAMA : </strong>{{cekData.nama}} <br>
+            <strong>GOLONGAN : </strong>{{cekData.golongan}} <br>
+            <strong>JABATAN : </strong>{{cekData.jabatan}} <br>
+            <strong>PENEMPATAN : </strong>{{cekData.penempatan}} <br>
+            <strong>KETERANGAN JABATAN : </strong>{{cekData.keteranganJabatan}} <br>
+
+        </b-modal>
 
 </div>
 </template>
@@ -64,10 +93,61 @@ export default {
                 nip : '',
                 kode_jabatan : null
             },
-            opsiJabatan:[]
+            cekData:{
+                nip:'',
+                nama:'',
+                golongan:'',
+                jabatan:'',
+                penempatan:'',
+                keteranganJabatan:'',
+            },
+            opsiJabatan:[],
+            inputNipState :null,
+            tempNipState:null
         }
     },
+    computed:{
+        nipState()
+            {
+                    axios.post('admin/action/verify-nip',{assignedNip : this.form.nip})
+                    .then(r => {
+                        if(this.form.nip.length<1)
+                            this.makeNipStateNull();
+                        else{
+
+                            if(r.data == 1)
+                                this.makeNipStateTrue();
+                            else
+                                this.makeNipStateFalse();
+                        }
+                    })
+                    .catch(e =>{
+                        this.makeNipStateNull();
+                    });
+                
+            },
+    },
     methods:{
+
+        makeNipStateTrue(){
+            this.inputNipState = true;
+        },
+
+        makeNipStateFalse(){
+            this.inputNipState = false;
+        },
+        makeNipStateNull(){
+            this.inputNipState = null;
+        },
+
+        makeTempNipStateTrue(){
+            this.tempNipState = true;
+        },
+
+        makeTempNipStateFalse(){
+            this.tempNipState = false;
+        },
+
         showWindow(){
             this.$refs['pltWindow'].show();
         },        
@@ -75,6 +155,57 @@ export default {
             this.resetForm();
             this.$refs['pltWindow'].hide();
         },
+
+        cekNip(){
+
+            if(this.form.nip.length < 1)
+            {
+                alert('NIP Masih Kosong!');
+                return;
+            }
+
+            axios.post('admin/action/verify-nip',{assignedNip : this.form.nip})
+            .then(r => {
+
+                    if(r.data == 1)
+                        this.makeTempNipStateTrue();
+                    else
+                        this.makeTempNipStateFalse();
+
+                    if(this.tempNipState)
+                    {
+                        this.openCekDataWindow()
+                        
+                    }
+                    else
+                        alert('NIP Tidak ditemukan!')
+                
+            })
+            .catch(e =>{
+                this.makeTempNipStateFalse();
+            });
+        },
+
+        openCekDataWindow(){
+            
+            axios.post('/admin/action/f' ,{assignedNip : this.form.nip})
+            .then(r => {
+
+                this.cekData.nip = r.data[0].nip;
+                this.cekData.nama = r.data[0].nama;
+                this.cekData.golongan = r.data[0].golongan;
+                this.cekData.jabatan = r.data[0].jabatan;
+                this.cekData.penempatan = r.data[0].penempatan;
+                this.cekData.keteranganJabatan = r.data[0].jabket;
+
+                this.$refs['cekDataWindow'].show();
+
+            })
+            .catch(e =>{
+                alert('terjadi error : '+e);
+            });
+        },
+
         submitPlt(){
             axios.post('/admin/action/add-plt',this.form)
             .then(resp=>{

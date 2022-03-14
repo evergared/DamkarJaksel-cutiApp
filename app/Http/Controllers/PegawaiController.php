@@ -66,12 +66,21 @@ class PegawaiController extends Controller
         }
     }
 
-    function modifyPegawai($data)
+    function updatePegawai($data)
     {
+        error_log('got into update');
         if($data['mas_ker'] === 'today')
             $data['mas_ker'] = Carbon::now()->toDateString();
 
-        $old_golongan = DB::table('data_pegawai')->where('nip','=',$data['nip'])->value('golongan');
+        error_log('nip : '.$data['oldNip']);
+
+
+            error_log('nip contains tags, nip : '.$data['oldNip']);
+            $data['oldNip'] = html_entity_decode($data['oldNip'],ENT_QUOTES);
+            error_log('nip : '.$data['oldNip']);
+
+
+        $old_golongan = DB::table('data_pegawai')->where('nip','=',$data['oldNip'])->value('golongan');
 
         if($data['golongan'] !== $old_golongan)
         {
@@ -95,7 +104,7 @@ class PegawaiController extends Controller
 
         $diubah = Carbon::now()->toDateTimeString();
 
-        DB::table('data_pegawai')->where('nip','=',$data['nip'])->update([
+        DB::table('data_pegawai')->where('nip','=',$data['oldNip'])->update([
             'nip' => $data['nip'],
             'nrk' => $data['nrk'],
             'nama' => $data['nama'],
@@ -111,6 +120,7 @@ class PegawaiController extends Controller
             'mas_ker' => $data['mas_ker'],
             'updated_at' => $diubah
         ]);
+        error_log('pass modified');
     }
 
     function deletePegawai($nip)
@@ -286,16 +296,9 @@ class PegawaiController extends Controller
         }
     }
 
-    public function modifySinglePegawai(Request $r)
+    public function updateSinglePegawai(Request $r)
     {
         try{
-
-            $nip = $r->input('nip');
-
-            if(!DB::table('data_pegawai')->where('nip','=',$nip)->exists())
-            {
-                $nip = $r->input('oldNip');
-            }
 
             $mas_ker = $r->input('mas_ker');
 
@@ -305,7 +308,8 @@ class PegawaiController extends Controller
             $k = new JabatanController();
 
             $data = [
-                'nip' => $nip,
+                'nip' => $r->input('nip'),
+                'oldNip' => $r->input('oldNip'),
                 'nrk' => $r->input('nrk'),
                 'nama' => $r->input('nama'),
                 'golongan' => $r->input('golongan'),
@@ -321,15 +325,15 @@ class PegawaiController extends Controller
 
             ];
             
-            $this->modifyPegawai($data);
-            return 'success_modify_pegawai';
+            $this->updatePegawai($data);
+            return 'success_update_pegawai';
 
         }
         catch(Throwable $e)
         {
-            error_log('Failed to modify pegawai with nip '.$nip.' error : '.$e);
-            report('Failed to modify pegawai with nip '.$nip.' error : '.$e);
-            return "fail_modify_pegawai_try_caught";
+            error_log('Failed to update pegawai with nip '.$nip.' error : '.$e);
+            report('Failed to update pegawai with nip '.$nip.' error : '.$e);
+            return "fail_update_pegawai_try_caught";
         }
     }
 

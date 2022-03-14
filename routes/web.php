@@ -97,7 +97,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('admin/action/f',[App\Http\Controllers\PegawaiController::class,'fetchByNip']);
 	Route::post('admin/action/fn',[App\Http\Controllers\PegawaiController::class,'fetchByNrk']);
 	Route::post('/admin/action/add-pegawai',[App\Http\Controllers\PegawaiController::class,'addSinglePegawai']);
-	Route::post('/admin/action/update-pegawai',[App\Http\Controllers\PegawaiController::class,'modifySinglePegawai']);
+	Route::post('/admin/action/update-pegawai',[App\Http\Controllers\PegawaiController::class,'updateSinglePegawai']);
 	Route::post('/admin/action/delete-pegawai',[App\Http\Controllers\PegawaiController::class,'deleteSinglePegawai']);
 
 	Route::patch('/user/action/change-password',[App\Http\Controllers\UserController::class,'changePassword']);
