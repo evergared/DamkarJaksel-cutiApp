@@ -10,10 +10,10 @@
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-body px-lg-5 py-lg-5">
 
-                    @if(session()->has('registerErrorNip'))
+                    @if(session()->has('registerError'))
                     <div class="alert alert-warning alert-dismissible fade show focus" role="alert">
                         <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
-                        <span class="alert-inner--text">{{ session('registerErrorNip') }}</span>
+                        <span class="alert-inner--text">{{ session('registerError') }}</span>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

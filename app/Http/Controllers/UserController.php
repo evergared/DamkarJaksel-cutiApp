@@ -137,6 +137,19 @@ class UserController extends Controller
         }
     }
 
+    public function updateUser(Request $request)
+    {
+        try{
+
+        }
+        catch(Throwable $e)
+        {
+            report('update user error : '.$e);
+            error_log('Update user error : '.$e);
+            return 'fail_update_user_try_caught';
+        }
+    }
+
     public function changePassword(Request $request)
     {
         try{
@@ -190,26 +203,33 @@ class UserController extends Controller
 
     public function getJabatanKasieFromPenempatan($kode_penempatan)
     {
+        // TODO : remade this for the new db
         switch($kode_penempatan)
         {
-            case 411: return 1;break;
-            case 412: return 2;break;
-            case 413: return 3;break;
-            case 414: return 4;break;
-            case 415: return 5;break;
-            case 416: return 6;break;
-            case 417: return 7;break;
-            case 418: return 8;break;
-            case 419: return 9;break;
-            case 420: return 10;break;
+            case 411: return '01';break;
+            case 412: return '02';break;
+            case 413: return '03';break;
+            case 414: return '04';break;
+            case 415: return '05';break;
+            case 416: return '06';break;
+            case 417: return '07';break;
+            case 418: return '08';break;
+            case 419: return '09';break;
+            case 420: return '10';break;
             default : return 1;break;
         }
     }
 
     function getRoles($nip)
     {
-        $pjlp = [16,17,18,19];
-        $kasie = [1,2,3,4,5,6,7,8,9,10,12];
+        $jc = new JabatanController();
+        $pjlp = $jc->j_pjlp;
+        $kasie = $jc->j_kasie;
+        $tu = $jc->j_tu;
+        $ppk = $jc->j_ppk;
+        $pptk = $jc->j_pptk;
+        $kasudin = $jc->j_kasudin;
+        
         $person = DB::table('data_pegawai')->where('nip',$nip)->first();
 
         if(in_array($person->jabatan,$pjlp))
@@ -221,23 +241,28 @@ class UserController extends Controller
         if(in_array("Admin",$ket))
         $this->addRoles($roles,"ADMIN");
 
-        if((25 <= $person->jabatan) && ($person->jabatan <= 54))
-            $this->addRoles($roles,"KATON");
-        elseif($person->jabatan === 21)
-            $this->addRoles($roles,"KARU");
+        // if((25 <= $person->jabatan) && ($person->jabatan <= 54))
+        //     $this->addRoles($roles,"KATON");
+        // elseif($person->jabatan === 21)
+        //     $this->addRoles($roles,"KARU");
 
         if(in_array($person->jabatan,$kasie))
             $this->addRoles($roles,"KASIE");
-        elseif($person->jabatan == 11)
+        elseif($person->jabatan === $tu)
             $this->addRoles($roles, "KASUBAGTU");
-        elseif($person->jabatan == 15)
+        elseif($person->jabatan === $kasudin)
             $this->addRoles($roles,"KASUDIN");
 
-        if($person->nip === DB::table('jabatan')->where('no',14)->first()->keterangan)
+        if(
+            $person->nip === DB::table('jabatan')->where('no',$ppk)->first()->keterangan ||
+            $person->nip === DB::table('jabatan')->where('no',$pptk)->first()->keterangan ||
+            $person->jabatan === $ppk || 
+            $person->jabatan === $pptk 
+            )
             $this->addRoles($roles,"PPK");
 
-        if($person->nip === DB::table('jabatan')->where('no',23)->first()->keterangan)
-            $this->addRoles($roles,"KASIE.PENCEGAHAN");
+        // if($person->nip === DB::table('jabatan')->where('no',23)->first()->keterangan)
+        //     $this->addRoles($roles,"KASIE.PENCEGAHAN");
 
         return $roles;
     }

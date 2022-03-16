@@ -31,14 +31,21 @@ class CalendarController extends Controller
 
     public function fetchJson()
     {
-        $dc = new DisableCuti();
-        $ec = new EnableCuti();
+        try{
+            $dc = new DisableCuti();
+            $ec = new EnableCuti();
+    
+    
+            $dateData = $dc->extractDatesAsJsonFeed();
+            $dateData = array_merge($dateData,$ec->extractDatesAsJsonFeed());
+            
+            return $dateData;
+        }
+        catch(Throwable $e){
+            error_log("fetch Json error : ".$e);
+            report("fetch Json error : ".$e);    
+        }
 
-
-        $dateData = $dc->extractDatesAsJsonFeed();
-        $dateData = array_merge($dateData,$ec->extractDatesAsJsonFeed());
-        
-        return $dateData;
     }
 
     // dipisah agar bisa di aktifan/nonaktifkan lewat fullcalendar

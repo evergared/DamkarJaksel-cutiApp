@@ -1,5 +1,5 @@
 <div id="dt-ppk-pjlp">
-    <data-table :columns="columns" :ajax="ajax"></data-table>
+    <data-table :columns="columns" ajax="{{route('report.pjlp')}}"></data-table>
 </div>
 
 @push('js')

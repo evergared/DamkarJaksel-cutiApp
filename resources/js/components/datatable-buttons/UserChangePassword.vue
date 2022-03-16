@@ -53,6 +53,7 @@ export default{
     },
     methods:{
         callWindow(){
+            console.log('clicked');
             this.$refs['window'].show();
         },
         closeWindow(){

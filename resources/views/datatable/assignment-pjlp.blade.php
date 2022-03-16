@@ -1,15 +1,19 @@
-@if(in_array('KASIE',auth()->user()->roles))
-    @include('datatable.report.kasie-pjlp')
+@if(auth()->user()->is_kasie)
+    @if(auth()->user()->is_ppk)
+        @include('datatable.report.kasieppk-pjlp')
+    @else
+        @include('datatable.report.kasie-pjlp')
+    @endif
 
 
-@elseif(in_array('KASUBAGTU',auth()->user()->roles))
+@elseif(auth()->user()->is_kasubag_tu)
     @include('datatable.report.tu-pjlp')
 
     
-@elseif(in_array('KASUDIN',auth()->user()->roles))
+@elseif(auth()->user()->is_kasudin)
     @include('datatable.report.kasudin-pjlp')
 
-@elseif(in_array('PPK',auth()->user()->roles))
+@elseif(auth()->user()->is_ppk)
     @include('datatable.report.ppk-pjlp')
 
 @elseif(auth()->user()->is_admin)

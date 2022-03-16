@@ -25,8 +25,8 @@
                 <div class="tab-content mx-3">
                     <div role="tabpanel" class="tab-pane fade show active" id="user-list">
                         <h2>List User</h2>
-                        <div class="table-responsive" id="dt-user-list">
-                            <data-table :columns="columns" :ajax="ajax"></data-table>
+                        <div id="dt-user-list">
+                            <data-table :columns="columns" ajax="{{route('list.user')}}"></data-table>
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="form-user">

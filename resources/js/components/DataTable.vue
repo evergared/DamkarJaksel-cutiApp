@@ -51,10 +51,17 @@
                 return window.$.extend({
                         serverSide: true,
                         processing: true,
-                        dom: '<"mb-1"B><"row align-items-center"<"col text-left"l><"col text-right"f>>r<"table table-responsive"t><"row justify-content-center"p>',
+                        dom: '<"mb-1"B><"row align-items-center"<"col text-left"l><"col text-right"f>>r<"table table-responsive"t><"btn-group flex-wrap blocks tBawah"><"row justify-content-center"p>',
                         buttons:this.buttons,
                         lengthMenu:[[10,25,50,-1],["10","25","50","Semua"]],
-                        fixedHeader:true
+                        height:"600",
+                        scrollY:'500px',
+                        scrollX:true,
+                        rowReorder: true,
+                        fixedColumns:{
+                            leftColumns:1,
+                            rightColumns:1
+                        },
                    }, {
                    columns:this.columns,
                    ajax:this.ajax,
@@ -109,14 +116,11 @@
             columns: { type: Array },
             ajax: { default: '' },
             options: { },
-            buttons:{ default:[]}
+            buttons:{ default:[]},
+            tBawah:{default:''}
         },
         mounted() {
            this.dataTable = window.$(this.$el).DataTable(this.parameters);
-
-        //    this.dataTable.buttons().container()
-        //     .appendTo( $('.dt-buttons', this.dataTable.table().container()))
-
            eventbus.$on('draw' , (payload)=>{
                console.log("Event Triggered Message : "+payload.message);
                this.dataTable.draw(false);
