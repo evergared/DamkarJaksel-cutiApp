@@ -232,8 +232,10 @@
                         <td style="width: 69.05pt;border-right: 1pt solid windowtext;border-bottom: 1pt solid windowtext;border-left: 1pt solid windowtext;border-image: initial;border-top: none;padding: 0cm 5.4pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;'><span style="font-size: 11px;">N</span></p>
                         </td>
+
                         <td style="width: 69.5pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">{{ $a['sis'] }}</span></p>
+
                         </td>
                         <td style="width: 69.15pt;border-top: none;border-left: none;border-bottom: 1pt solid windowtext;border-right: 1pt solid windowtext;padding: 0cm 5.4pt;vertical-align: top;">
                             <p style='margin:0cm;margin-bottom:.0001pt;font-size:11px;font-family:"Arial",sans-serif;text-align:center;'><span style="font-size: 11px;">&nbsp;</span></p>
