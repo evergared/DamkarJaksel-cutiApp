@@ -331,8 +331,8 @@ class PegawaiController extends Controller
         }
         catch(Throwable $e)
         {
-            error_log('Failed to update pegawai with nip '.$nip.' error : '.$e);
-            report('Failed to update pegawai with nip '.$nip.' error : '.$e);
+            error_log('Failed to update pegawai with nip '.$r->input('nip').' error : '.$e);
+            report('Failed to update pegawai with nip '.$r->input('nip').' error : '.$e);
             return "fail_update_pegawai_try_caught";
         }
     }
@@ -355,6 +355,19 @@ class PegawaiController extends Controller
             error_log('Failed to delete pegawai with nip '.$nip.' error : '.$e);
             report('Failed to delete pegawai with nip '.$nip.' error : '.$e);
             return "fail_delete_pegawai_try_caught";
+        }
+    }
+
+    public function exportDataPegawaiToXlsx(Request $r)
+    {
+        try{
+
+        }
+        catch(Throwable $e)
+        {
+            error_log("Failed to Export Data Pegawai to Xlsx, error : ".$e);
+            report("Failed to Export Data Pegawai to Xlsx, error : ".$e);
+            return 'fail_export_try_caught';
         }
     }
 }
