@@ -120,14 +120,16 @@ class FormCutiController extends Controller
                     'alamat' => $alamatCuti,
                     'tanggal' => $listTanggal
                 ]);}
+
+            $j = new JabatanController();
             $test= Auth::user()->kasie;
             // check jika user staff TU
 
-            if(Auth::user()->kasie === '11')
+            if(Auth::user()->kasie === $j->j_tu)
                 $asigment -> insert([
                     'no_cuti' => $id,
                     'kasie' =>'s'
-                ]);}
+                ]);
 
             // untuk pegawai non TU
             else {
