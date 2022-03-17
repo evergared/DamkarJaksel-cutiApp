@@ -16,7 +16,7 @@ class JabatanController extends Controller{
     public $j_ppk = '14';
     public $j_pptk = '14A';
     public $j_tu = '11';
-    public $j_pjlp = ['16','17','18',';19'];
+    public $j_pjlp = ['16','17','18','19'];
 
     public function is_user_plt_kasie()
     {

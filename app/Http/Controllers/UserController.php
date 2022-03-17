@@ -25,6 +25,9 @@ class UserController extends Controller
     public function addUser(Request $request)
     {
         try{
+
+            $j = new JabatanController();
+
             $nip = $request->input('nip');
             $password = $request->input('password');
             $email = $request->input('email');
@@ -62,7 +65,7 @@ class UserController extends Controller
                     if(in_array('PJLP',$peran))
                     {
                         $golongan = "PJLP";
-                        $Jabatan = 16;
+                        $Jabatan = $j->j_pjlp[0];
                     }
                     else if(in_array('ASN',$peran))
                     {
@@ -71,16 +74,16 @@ class UserController extends Controller
                             $Jabatan = $this->getJabatanKasieFromPenempatan($penempatan);
                         }
                         else if(in_array('KASIE.PENCEGAHAN',$peran)){
-                            $Jabatan = 12;
+                            $Jabatan = "15";
                         }
                         else if(in_array('KASUBAGTU',$peran)){
-                            $Jabatan = 11;
+                            $Jabatan = "11";
                         }
                         else if(in_array('KASUDIN',$peran)){
-                            $Jabatan = 15;
+                            $Jabatan = "00";
                         }
                         else
-                            $Jabatan = 22;
+                            $Jabatan = "22";
                     }
                     if(!DB::table('data_pegawai')->where('nip','=',$nip)->exists())
                     DB::table('data_pegawai')->insert([

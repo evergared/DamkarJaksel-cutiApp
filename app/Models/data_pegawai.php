@@ -21,7 +21,10 @@ class data_pegawai extends Model
         'atasan',
         'pendidikan',
         'kode_penempatan',
-        'keterangan'
+        'kompi',
+        'keterangan',
+        'jabket',
+        'masker'
     ];
 
     public function daftar_cuti_asn()

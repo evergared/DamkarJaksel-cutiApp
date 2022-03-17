@@ -2362,7 +2362,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
       this.dataCuti.lama = this.form.jumlahHari;
       this.$refs['modal1'].hide(); // some bootstrap spinner while waiting would be nice
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default().post("form/create", this.dataCuti).then(function (resp) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post('/form/create', this.dataCuti).then(function (resp) {
         var m;
 
         switch (resp.data) {
@@ -2425,7 +2425,7 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
     handleUpdateRequest: function handleUpdateRequest() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default().patch("form/update", this.dataCuti).then(function (resp) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().patch('/form/update', this.dataCuti).then(function (resp) {
         var m;
 
         switch (resp.data) {

@@ -323,7 +323,7 @@ export default{
 
             // some bootstrap spinner while waiting would be nice
 
-            axios.post(`form/create`,this.dataCuti)
+            axios.post('/form/create',this.dataCuti)
             .then(resp => {
                 var m;
 
@@ -383,7 +383,7 @@ export default{
             
         },
         handleUpdateRequest(){
-                axios.patch(`form/update`,this.dataCuti)
+                axios.patch('/form/update',this.dataCuti)
                 .then(resp => {
 
                   var m;
