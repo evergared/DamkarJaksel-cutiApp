@@ -59,12 +59,14 @@ class FormCutiController extends Controller
             $asigment = DB::table('asigment_pjlp');
             $daftar = DB::table('daftar_cuti_pjlp');
             $tahunan = DB::table('cuti_tahunan_pjlp');
+            $pegawai = DB::table('data_pegawai');
         }
         elseif(Auth::user()->is_asn)
         {
             $asigment = DB::table('asigment_asn');
             $daftar = DB::table('daftar_cuti_asn');
             $tahunan = DB::table('cuti_tahunan_asn');
+            $pegawai = DB::table('data_pegawai');
         }
         else
         {
@@ -91,7 +93,7 @@ class FormCutiController extends Controller
                 $field = 'na';
 
 
-            if(Auth::user()->is_asn)
+            if(Auth::user()->is_asn){
                 $id = $daftar->insertGetId([
                     'nip' => $nip,
                     'tgl_awal' => $tglMulai,
@@ -104,8 +106,8 @@ class FormCutiController extends Controller
                     'alamat' => $alamatCuti,
                     'tlpn' => $telpon,
                     'tanggal' => $listTanggal
-                ]);
-            else
+                ]);}
+            else {
                 $id = $daftar->insertGetId([
                     'nip' => $nip,
                     'tgl_awal' => $tglMulai,
@@ -117,20 +119,23 @@ class FormCutiController extends Controller
                     'tlpn' => $telpon,
                     'alamat' => $alamatCuti,
                     'tanggal' => $listTanggal
-                ]);
-
+                ]);}
+            $test= Auth::user()->kasie;
             // check jika user staff TU
+
             if(Auth::user()->kasie === '11')
                 $asigment -> insert([
                     'no_cuti' => $id,
                     'kasie' =>'s'
-                ]);
+                ]);}
 
             // untuk pegawai non TU
-            else
+            else {
                 $asigment -> insert([
                     'no_cuti' => $id
                 ]);
+                error_log("kasie : ".$test);
+            }
 
             CutiSubmitEvent::dispatch($nip,$id);
 
@@ -454,26 +459,38 @@ class FormCutiController extends Controller
                 
             $asigment['ppk'] = $this->approvalAtasan($asigment['ppk']);
 
+            
+            $years = Carbon::parse($pegawai['mas_ker'])->diff(Carbon::now())->format('%y Tahun, %m Bulan and %d hari');
+            $masa = array("masa"=>$years);
+            $cuti1= DB::table('daftar_cuti_asn')->where('id','=',$no_cuti)->first();
+            $cuti3= DB::table('cuti_tahunan_asn')->where('nip','=',$nip)->first();
+            $ncob=$cuti1->na;
+            $ncoa=$cuti3->sisa;
+            $ncob1=$ncoa-$ncob;
+            $ncoa1= array("sis"=>$ncob1);
+            // $ncob2= array("nacob"=>$ncob1);
             $check = array_merge($asigment,$cuti,$ks,$jaket);
             $check = array_merge($check,$pegawai);
             $check = array_merge($check,$jabatan);
             $check = array_merge($check,$penempatan);
             $check = array_merge($check,$kasek,$kasekn);
+
             
             
             $start = Carbon::parse($check['tgl_awal'])->locale('id')->isoFormat('DD MMMM YYYY');
             $end = Carbon::parse($check['tgl_akhir'])->locale('id')->isoFormat('DD MMMM YYYY');
             $pd =  Carbon::parse(Carbon::now())->locale('id')->isoFormat('DD MMMM YYYY');
-            $masakerja= Carbon::parse($pegawai['mas_ker'])->locale('id')->isoFormat('DD MM YYYY');
+            // $masakerja= Carbon::parse($pegawai['mas_ker'])->locale('id')->isoFormat('DD MM YYYY');
             $date = array("start"=>$start, "end" => $end, "print_date" => $pd);
-    
             $a =  array_merge($check,$date);
                 $pdf = PDF::loadView('doc/print',compact('a'))->setPaper('a4','portrait');
                 CutiPrintEvent::dispatch($request->input('nip'),$no_cuti);
-                
+                error_log('array key : '.implode('|',array_keys($a)));
+                error_log('array value : '.implode('|',$a));
                 return $pdf->download();
             }
             else{
+
                 $years = Carbon::parse($pegawai['mas_ker'])->diff(Carbon::now())->format('%y Tahun, %m Bulan and %d hari');
                 $masa = array("masa"=>$years);
             
@@ -538,6 +555,7 @@ class FormCutiController extends Controller
                     error_log('array value : '.implode('|',$a));
                     return $pdf->download();
                 }
+
             }
         
         }
@@ -618,6 +636,7 @@ class FormCutiController extends Controller
                     $n1 = $item->n1;
                     $n2 = $item->n2;
 
+
                     // if($n2 === 6 && $n1===6 && $sisa === 12)
                     // {
                     //     $sisa1=$sisa;
@@ -634,6 +653,7 @@ class FormCutiController extends Controller
                     //     $nn1=$n1;
                     //     $sisa1=$sisa-$totalHari;
                     // }
+
 
                     $terpakai=$item->terpakai;
                     $sisa1=$sisa-$totalHari;

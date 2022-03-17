@@ -91,7 +91,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return data_pegawai::where('nip',$this->nip)->value('atasan');
     }
-    
+
     public function getKasieAttribute()
     {
         return data_pegawai::where('nip',$this->nip)->value('kasie');
