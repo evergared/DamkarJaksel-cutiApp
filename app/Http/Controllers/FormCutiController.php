@@ -163,9 +163,6 @@ class FormCutiController extends Controller
             $nip = $request->input('nip');
             $no_cuti = $request->input('no_cuti');
 
-            // $nip = $test1;
-            // $no_cuti = $test2;
-
 
             $check = DB::table('data_pegawai')->where('nip','=',$nip)->value('golongan');
             // error_log("test golongan : ".$check['golongan']);
@@ -240,17 +237,16 @@ class FormCutiController extends Controller
             
             if($check === "PJLP")
             {
-                    error_log("hit pjlp");
                 $assignment = DB::table('asigment_pjlp'); 
-                if(Auth::user()->is_kasie || $jc->is_user_plt_kasie())
+                if(Auth::user()->is_kasie)
                 {
-                    if(Auth::user()->is_ppk || ($jc->is_user_plt_ppk() || $jc->is_user_plt_pptk()) )
+                    if(Auth::user()->is_ppk)
                     {
                         $assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('status'),'ket_ppk'=>$request->input('keterangan')]);
                         
                         $cek_kasie = DB::table('data_pegawai')->where('nip','=',$nip)->value('kasie'); // if current user is also employee's kasie
                         
-                        if((Auth::user()->jabatan === $cek_kasie) || (in_array($cek_kasie,$jc->getJabatanPltKasie())) )
+                        if((Auth::user()->jabatan === $cek_kasie)  )
                         {
                             $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);          
                         }
@@ -268,11 +264,11 @@ class FormCutiController extends Controller
                     $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);
                     }
                 }
-                elseif(Auth::user()->is_kasubag_tu || $jc->is_user_plt_tu() )
+                elseif(Auth::user()->is_kasubag_tu  )
                 {
                     $assignment->where('no_cuti',$no_cuti)->update(['kasubagtu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan')]);
                 }
-                elseif(Auth::user()->is_ppk || ($jc->is_user_plt_ppk() || $jc->is_user_plt_pptk()) )
+                elseif(Auth::user()->is_ppk)
                 {
                     $assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('status'),'ket_ppk'=>$request->input('keterangan')]);
                 }
@@ -281,7 +277,6 @@ class FormCutiController extends Controller
                 return 'approval_update_success';
             }
             else {
-                error_log('hit asn');
                     $assignment = DB::table('asigment_asn');
                     if(Auth::user()->is_kasie)
                     {
@@ -305,6 +300,130 @@ class FormCutiController extends Controller
             return 'approval_update_try_caught';
         }
     }
+
+    // start PLT
+    public function approvalStatusPLT(Request $request)
+    {
+        try{
+            $nip = $request->input('nip');
+            $no_cuti = $request->input('no_cuti');
+
+            $j = new JabatanController();
+
+
+            $check = DB::table('data_pegawai')->where('nip','=',$nip)->value('golongan');
+            if($check === "PJLP")
+            {
+                $asigment = DB::table('asigment_pjlp');
+            }
+            else
+            {
+                $asigment = DB::table('asigment_asn');
+            }
+
+            $data = [
+                'a_kasie' => '',
+                'k_kasie' => '',
+                's_kasie' => false,
+                'a_tu' => '',
+                'k_tu' => '',                
+                's_tu' => false,                
+                'a_ppk' => '',
+                'k_ppk' => '',   
+                's_ppk' => false,   
+            ];
+            $asigment = (array) $asigment->where('no_cuti','=',$no_cuti)->first();
+            $error = true;
+
+            if($j->is_user_plt_kasie())
+            {
+                $data = ['a_kasie' => $asigment['kasie'],'k_kasie'=>$asigment['ket_kasie'], 's_kasie'=>1];
+                $error = false;                    
+            }
+            if($j->is_user_plt_tu())
+            {
+                $data = ['a_tu' => $asigment['kasubagtu'],'k_tu'=>$asigment['ket_tu'], 's_tu'=>1];
+                $error = false;
+                error_log('hit tu');
+            }
+            if(($j->is_user_plt_ppk() || $j->is_user_plt_pptk()) && $check === 'PJLP')
+            {
+                $data = ['a_ppk' => $asigment['ppk'],'k_ppk'=>$asigment['ket_ppk'], 's_ppk' => 1];
+                $error = false;
+            }
+
+            if($error)
+            {
+                return 'approval_fetch_fail';
+            }
+
+             return $data;
+
+        }
+
+        catch(Throwable $e){
+            error_log('Fetch data approval PLT on '.$nip.' no cuti '.$no_cuti.' error : '.$e);
+            report('Fetch data approval PLT on '.$nip.' no cuti '.$no_cuti.' error : '.$e);
+            return 'approval_fetch_try_caught';
+        }
+    }
+
+    public function approvalActionPLT (Request $request)
+    {
+        try
+        {
+            $nip = $request->input('nip');
+            $no_cuti = $request->input('no_cuti');
+
+            $j = new JabatanController();
+            
+            $check = DB::table('data_pegawai')->where('nip','=',$nip)->value('golongan');
+            
+            if($check === "PJLP")
+            {
+                $assignment = DB::table('asigment_pjlp'); 
+                if($j->is_user_plt_kasie())
+                {
+                    $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);
+                }
+                if($j->is_user_plt_tu())
+                {
+                    $assignment->where('no_cuti',$no_cuti)->update(['kasubagtu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan')]);
+                }
+                if($j->is_user_plt_ppk() || $j->is_user_plt_pptk())
+                {
+                    $assignment->where('no_cuti',$no_cuti)->update(['ppk'=>$request->input('status'),'ket_ppk'=>$request->input('keterangan')]);
+                }
+                // TODO : jika semua sudah approve, tembak event
+
+                return 'approval_update_success';
+            }
+            else {
+                    $assignment = DB::table('asigment_asn');
+                    if($j->is_user_plt_kasie())
+                    {
+                        $assignment->where('no_cuti',$no_cuti)->update(['kasie'=>$request->input('status'),'ket_kasie'=>$request->input('keterangan')]);
+                    }
+                    if($j->is_user_plt_tu())
+                    {
+                        $assignment->where('no_cuti',$no_cuti)
+                        ->update(['kasubagtu'=>$request->input('status'),'ket_tu'=>$request->input('keterangan')]);
+                    }
+                    // TODO : jika semua sudah approve, tembak event
+
+                    return 'approval_update_success';
+            }
+            
+        }
+        catch(Throwable $e)
+        {
+            error_log('PLT approval update error on '.$nip.' no cuti '.$no_cuti.' error : '.$e);
+            report('PLT approval update error on '.$nip.' no cuti '.$no_cuti.' error : '.$e);
+            return 'approval_update_try_caught';
+        }
+    }
+    // End PLT
+
     
 
     public function cancelCuti (Request $request)

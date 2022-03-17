@@ -282,6 +282,8 @@ class JabatanController extends Controller{
                 'kode_jabatan' => $jabatan
             ]);
 
+            DB::table('user')->where('nip','=',$nip)->update(['is_plt' => true]);
+
             return 'success_add_plt';
         }
         catch(Throwable $e)
@@ -362,6 +364,10 @@ class JabatanController extends Controller{
             if($table->where('nip_pelaksana','=',$nip)->where('kode_jabatan','=',$kj)->exists())
             {
                 $table->where('nip_pelaksana','=',$nip)->where('kode_jabatan','=',$kj)->delete();
+
+                if(!DB::table('plt')->where('nip_pelaksana','=',$nip)->exists())
+                    DB::table('user')->where('nip','=',$nip)->update(['is_plt' => false]);
+                        
                 return 'success_delete_plt';
             }
             else

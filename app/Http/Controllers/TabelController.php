@@ -816,10 +816,13 @@ class TabelController extends Controller
                         ->join('cuti_tahunan_asn as ct','d.nip','=','ct.nip')
                         ->join('data_pegawai as dp','d.nip','=','dp.nip')
                         ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil');
+ 
+            $base_query_raw = "asigment_asn as a inner join daftar_cuti_asn as d on a.no_cuti = d.id inner join cuti_tahunan_pjlp as ct on d.nip = ct. nip inner join data_pegawai as dp on d.nip = dp.nip inner join penempatan as p on dp.kode_penempatan = p.kode_panggil";
             
             
             $get_columns = [    
                 'dp.nip',
+                'dp.nrk',
                 'dp.nama',
                 'p.penempatan',
                 'a.no_cuti',
@@ -850,18 +853,25 @@ class TabelController extends Controller
                 {
                     $query_kasie = $query_kasie->where('dp.kasie','=',array_pop($list_j_kasie))->get($get_columns);
                 }
-                else{
+                else
+                {
+                    // multi
+                    $query = "select ".implode(',',$get_columns)." from ".$base_query_raw;
 
-                    $query_kasie = $query_kasie->where('dp.kasie','=',array_pop($list_j_kasie));
+                    $w = ' dp.kasie = '.array_pop($list_j_kasie);
 
-                    foreach($list_j_kasie as $jk)
-                        $query_kasie = $query_kasie->orWhere('dp.kasie','=',$jk);
-                    
-                    $query_kasie->get($get_columns);
+                    foreach($list_j_kasie as $jk){
+                        error_log('jk is '.$jk);
+                        $w = $w.' or dp.kasie = '.$jk;
+                    }
+                    $query = $query .' where '. $w;
+
+                    $query_kasie = DB::select($query);
+                    // error_log($query_kasie);
                 }
 
 
-                if($query_kasie->count() != 0)
+                if(count($query_kasie) > 0)
                     $f_kasie = true;
             }
 
@@ -877,12 +887,12 @@ class TabelController extends Controller
             }
 
             // create final query
-            if($f_kasie)
+            if($f_kasie && $f_tu)
+                $final_query = $query_kasie->merge($query_tu);
+            else if($f_kasie)
                 $final_query = $query_kasie;
             else if($f_tu)
                 $final_query = $query_tu;
-            else if($f_kasie && $f_tu)
-                $final_query = $query_kasie->union($query_tu);
             else
                 $final_query = $base_query->where('dp.nip','=')->get($get_columns); // dummy query
 
@@ -910,7 +920,47 @@ class TabelController extends Controller
                                 $dat = (array) $data;
                                 return "<i id='ket'>".$dat['ket_tu']."</i>";
                             })
-                    ->rawColumns(['tindakan','p_kasie','k_kasie','p_tu','k_tu'])
+                    ->addColumn('persetujuan',function($data) use($f_kasie,$f_tu)
+                            {
+                                $dat = (array) $data;
+                                if($f_kasie && $f_tu)
+                                {
+                                    return "<ul>
+                                    <li><small><strong>Kasie : </strong>".$this->approvalAtasan($dat['kasie'])."</small></li>
+                                    <li><small><strong>Kasubag TU : </strong>".$this->approvalAtasan($dat['kasubagtu'])."</small></li>
+                                    </ul>";                                   
+                                }
+                                else if($f_kasie)
+                                    return $this->approvalAtasan($dat['kasie']);
+                                else if ($f_tu)
+                                    return $this->approvalAtasan($dat['kasubagtu']);
+                                else
+                                    {
+                                        return "-";
+                                    }
+
+                            })
+                    ->addColumn('keterangan',function($data) use($f_kasie,$f_tu)
+                            {
+                                $dat = (array) $data;
+                                if($f_kasie && $f_tu)
+                                {
+                                    return "<ul>
+                                    <li><small><strong>Kasie : </strong>".$dat['ket_kasie']."</small></li>
+                                    <li><small><strong>Kasubag TU : </strong>".$dat['ket_tu']."</small></li>
+                                    </ul>";                                   
+                                }
+                                else if($f_kasie)
+                                    return $dat['ket_kasie'];
+                                else if ($f_tu)
+                                    return $dat['ket_tu'];
+                                else
+                                    {
+                                        return "-";
+                                    }
+
+                            })
+                    ->rawColumns(['tindakan','p_kasie','k_kasie','p_tu','k_tu','persetujuan','keterangan'])
                     ->make(true);
         }
         catch(Throwable $e)
@@ -942,6 +992,8 @@ class TabelController extends Controller
                         ->join('cuti_tahunan_pjlp as ct','d.nip','=','ct.nip')
                         ->join('data_pegawai as dp','d.nip','=','dp.nip')
                         ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil');
+
+            $base_query_raw = "asigment_pjlp as a inner join daftar_cuti_pjlp as d on a.no_cuti = d.id inner join cuti_tahunan_pjlp as ct on d.nip = ct. nip inner join data_pegawai as dp on d.nip = dp.nip inner join penempatan as p on dp.kode_penempatan = p.kode_panggil";
             
             
             $get_columns = [    
@@ -953,6 +1005,8 @@ class TabelController extends Controller
                                 'a.ket_kasie',
                                 'a.kasubagtu',
                                 'a.ket_tu',
+                                'a.ppk',
+                                'a.ket_ppk',
                                 'd.jenis_cuti',
                                 'd.alasan',
                                 'd.tlpn',
@@ -963,40 +1017,49 @@ class TabelController extends Controller
                                 'd.tgl_pengajuan'
             ];
 
+            // flag
             $f_kasie = false;
             $f_tu = false;
+            $f_ppk = false;
             error_log(' start fetch data kasie plt with val : '.$jabatanController->is_user_plt_kasie());
 
             // fetch data kasie
             if($jabatanController->is_user_plt_kasie())
             {
+
                 $list_j_kasie = $jabatanController->getJabatanPltKasie();
                 $query_kasie = $base_query;
 
                 error_log('fetch data kasie plt, value : '.implode('||',$list_j_kasie));
                 if(count($list_j_kasie) == 1)
-                {
+                {   
+                    // single
                     $query_kasie = $query_kasie->where('dp.kasie','=',implode('||',$list_j_kasie))->get($get_columns);
-                error_log('fetch data kasie plt (single) , val : '.implode('||',$list_j_kasie));
+                    error_log('fetch data kasie plt (single) , val : '.implode('||',$list_j_kasie));
                 }
-                else{
-                    error_log('test multi list j kasie, pre pop val : '.implode('|',$list_j_kasie));
-                    $test = array_pop($list_j_kasie);
-                    error_log('test multi list j kasie, post pop val : '.implode('|',$list_j_kasie).' popped val : '.$test);
-                    $query_kasie = $query_kasie->where('dp.kasie','=',$test);
+                else
+                {
+                    // multi
+                    $query = "select ".implode(',',$get_columns)." from ".$base_query_raw;
 
-                    foreach($list_j_kasie as $jk)
-                        $query_kasie = $query_kasie->orWhere('dp.kasie','=',$jk);
-                    
-                error_log('fetch data kasie plt (multi)');
-                $query_kasie->get($get_columns);
-                error_log('query : '.$query_kasie->toSql());
+                    $w = ' dp.kasie = '.array_pop($list_j_kasie);
+
+                    foreach($list_j_kasie as $jk){
+                        error_log('jk is '.$jk);
+                        $w = $w.' or dp.kasie = '.$jk;
+                    }
+                    $query = $query .' where '. $w;
+
+                    $query_kasie = DB::select($query);
+                    // error_log($query_kasie);
                 }
 
 
-                if($query_kasie->count() != 0)
+                if(count($query_kasie) > 0)
                     $f_kasie = true;
             }
+
+
 
             // fetch data tu
             if($jabatanController->is_user_plt_tu())
@@ -1009,13 +1072,38 @@ class TabelController extends Controller
                     $f_tu = true;
             }
 
+            // fetch data ppk
+            if($jabatanController->is_user_plt_ppk() || $jabatanController->is_user_plt_pptk())
+            {
+                $query_ppk = $base_query;
+
+                $query_ppk = $query_ppk->get($get_columns);
+
+                if($query_ppk->count() != 0)
+                    $f_ppk = true;
+            }
+
             // create final query
-            if($f_kasie)
+            if($f_kasie && $f_tu && $f_ppk)
+            {
+                $fn_query = $query_tu->merge($query_kasie);
+                $final_query = $fn_query->merge($query_ppk);
+            }
+            else if($f_kasie && $f_tu)
+                $final_query = $query_tu->merge($query_kasie);
+            else if($f_kasie && $f_ppk)
+                $final_query = $query_ppk->merge($query_kasie);
+            else if($f_ppk && $f_tu)
+                $final_query = $query_tu->merge($query_ppk);
+            else if($f_kasie)
                 $final_query = $query_kasie;
             else if($f_tu)
                 $final_query = $query_tu;
-            else if($f_kasie && $f_tu)
-                $final_query = $query_kasie->union($query_tu);
+            else if($f_ppk)
+                $final_query = $query_ppk;
+
+
+
             else
                 $final_query = $base_query->where('dp.nip','=')->get($get_columns); // dummy query
 
@@ -1043,13 +1131,103 @@ class TabelController extends Controller
                                 $dat = (array) $data;
                                 return "<i id='ket'>".$dat['ket_tu']."</i>";
                             })
-                    ->rawColumns(['tindakan','p_kasie','k_kasie','p_tu','k_tu'])
+                    ->addColumn('persetujuan',function($data) use($f_kasie,$f_tu,$f_ppk)
+                            {
+                                $dat = (array) $data;
+
+                                if($f_kasie && $f_tu && $f_ppk)
+                                {
+                                    return "<ul>
+                                    <li><small><strong>Kasie : </strong>".$this->approvalAtasan($dat['kasie'])."</small></li>
+                                    <li><small><strong>PPK : </strong>".$this->approvalAtasan($dat['ppk'])."</small></li>
+                                    <li><small><strong>Kasubag TU : </strong>".$this->approvalAtasan($dat['kasubagtu'])."</small></li>
+                                    </ul>";
+                                }
+                                else if($f_kasie && $f_tu)
+                                {
+                                    return "<ul>
+                                    <li><small><strong>Kasie : </strong>".$this->approvalAtasan($dat['kasie'])."</small></li>
+                                    <li><small><strong>Kasubag TU : </strong>".$this->approvalAtasan($dat['kasubagtu'])."</small></li>
+                                    </ul>";                                   
+                                }
+                                else if($f_kasie && $f_ppk)
+                                {
+                                    return "<ul>
+                                    <li><small><strong>Kasie : </strong>".$this->approvalAtasan($dat['kasie'])."</small></li>
+                                    <li><small><strong>PPK : </strong>".$this->approvalAtasan($dat['ppk'])."</small></li>
+                                    </ul>";                                    
+                                }
+                                else if($f_tu && $f_ppk)
+                                {
+                                    return "<ul>
+                                    <li><small><strong>PPK : </strong>".$this->approvalAtasan($dat['ppk'])."</small></li>
+                                    <li><small><strong>Kasubag TU : </strong>".$this->approvalAtasan($dat['kasubagtu'])."</small></li>
+                                    </ul>";
+                                }
+                                else if($f_kasie)
+                                    return $this->approvalAtasan($dat['kasie']);
+                                else if ($f_ppk)
+                                    return $this->approvalAtasan($dat['ppk']);
+                                else if ($f_tu)
+                                    return $this->approvalAtasan($dat['kasubagtu']);
+                                else
+                                    {
+                                        return "-";
+                                    }
+
+                            })
+                    ->addColumn('keterangan',function($data) use($f_kasie,$f_tu,$f_ppk)
+                    {
+                        $dat = (array) $data;
+
+                            if($f_kasie && $f_tu && $f_ppk)
+                            {
+                                return "<ul>
+                                <li><small><strong>Kasie : </strong>".$dat['ket_kasie']."</small></li>
+                                <li><small><strong>Kasubag TU : </strong>".$dat['ket_tu']."</small></li>
+                                <li><small><strong>PPK : </strong>".$dat['ket_ppk']."</small></li>
+                                </ul>";
+                            }
+                            else if($f_kasie && $f_tu)
+                            {
+                                return "<ul>
+                                <li><small><strong>Kasie : </strong>".$dat['ket_kasie']."</small></li>
+                                <li><small><strong>Kasubag TU : </strong>".$dat['ket_tu']."</small></li>
+                                </ul>";                                   
+                            }
+                            else if($f_kasie && $f_ppk)
+                            {
+                                return "<ul>
+                                <li><small><strong>Kasie : </strong>".$dat['ket_kasie']."</small></li>
+                                <li><small><strong>PPK : </strong>".$dat['ket_ppk']."</small></li>
+                                </ul>";                                    
+                            }
+                            else if($f_tu && $f_ppk)
+                            {
+                                return "<ul>
+                                <li><small><strong>Kasubag TU : </strong>".$dat['ket_tu']."</small></li>
+                                <li><small><strong>PPK : </strong>".$dat['ket_ppk']."</small></li>
+                                </ul>";
+                            }
+                            else if($f_kasie)
+                                return $dat['ket_kasie'];
+                            else if ($f_ppk)
+                                return $dat['ket_ppk'];
+                            else if ($f_tu)
+                                return $dat['ket_tu'];
+                            else
+                                {
+                                    return "-";
+                                }
+
+                    })
+                    ->rawColumns(['tindakan','p_kasie','k_kasie','p_tu','k_tu','persetujuan','keterangan'])
                     ->make();
         }
         catch(Throwable $e)
         {
-            report('Failed to load PLT asigment table ASN on '.$e);
-            error_log('Failed to load PLT asigment table ASN on '.$e);
+            report('Failed to load PLT asigment table PJLP on '.$e);
+            error_log('Failed to load PLT asigment table PJLP on '.$e);
             //return "fail_plt_try_caught";
         }
 

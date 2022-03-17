@@ -71,10 +71,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/report/table/pjlp/application/{nip}/{no_cuti}',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('report.pjlp.app');
 	Route::get('/report/table/asn/approval',[App\Http\Controllers\FormCutiController::class,'approvalAction'])->name('report.asn.approval');
 	Route::get('/report/table/pjlp/approval',[App\Http\Controllers\FormCutiController::class,'approvalAction'])->name('report.pjlp.approval');
+	Route::get('/report/table/plt/approval',[App\Http\Controllers\FormCutiController::class,'approvalActionPLT'])->name('report.plt.approval');
 	
 	Route::post('/data-cuti/delete','App\Http\Controllers\FormCutiController@cancelCuti')->name('delete-cuti');
 	Route::post('/data-cuti/approval/fetch','App\Http\Controllers\FormCutiController@approvalStatus')->name('get-approval');
+	Route::post('/data-cuti/approval/fetch-plt','App\Http\Controllers\FormCutiController@approvalStatusPLT')->name('get-approval-plt');
 	Route::post('/data-cuti/approval/action',[App\Http\Controllers\FormCutiController::class,'approvalAction'])->name('action-approval');
+	Route::post('/data-cuti/approval/plt-action',[App\Http\Controllers\FormCutiController::class,'approvalActionPLT'])->name('action-approval-plt');
 	Route::post('/form/print',[App\Http\Controllers\FormCutiController::class,'getCutiApplication'])->name('form.print');
 	Route::get('/print',[App\Http\Controllers\FormCutiController::class,'testDocument']);
 	

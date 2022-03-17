@@ -19,14 +19,14 @@ const app = new Vue({
                 {data: 'tgl_akhir', title:'Tanggal Akhir'},
                 {data: 'total_cuti', title:'Lama Hari'},
                 {data: 'tgl_pengajuan', title:'Tanggal Diajukan'},
-                {data: 'p_tu', title:'Persetujuan Anda'},
-                {data: 'k_tu',title:'Keterangan'},
+                {data: 'persetujuan', title:'Persetujuan Anda'},
+                {data: 'keterangan',title:'Keterangan'},
                 {
                     data: 'tindakan',
                     orderable: false,
                     searchable: false,
                     createdCell(cell,cellData,rowData){
-                        let approvalComponent = Vue.extend(require('../components/datatable-buttons/ApprovalCuti').default);
+                        let approvalComponent = Vue.extend(require('../components/datatable-buttons/ApprovalCutiPLT').default);
 
                         let approvalButton = new approvalComponent({
                             propsData: rowData,
