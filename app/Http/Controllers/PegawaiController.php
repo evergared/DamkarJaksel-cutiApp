@@ -81,15 +81,16 @@ class PegawaiController extends Controller
 
 
         $old_golongan = DB::table('data_pegawai')->where('nip','=',$data['oldNip'])->value('golongan');
+        $old_kasie = DB::table('data_pegawai')->where('nip','=',$data['oldNip'])->value('kasie');
 
         if($data['golongan'] !== $old_golongan)
         {
             if($old_golongan === "PJLP")
             {
-                if(DB::table('cuti_tahunan_pjlp')->where('nip','=',$data['nip'])->exists())
-                    DB::table('cuti_tahunan_pjlp')->where('nip','=',$data['nip'])->delete();
+                if(DB::table('cuti_tahunan_pjlp')->where('nip','=',$data['oldNip'])->exists())
+                    DB::table('cuti_tahunan_pjlp')->where('nip','=',$data['oldNip'])->delete();
 
-                if(!DB::table('cuti_tahunan_asn')->where('nip','=',$data['nip'])->exists())
+                if(!DB::table('cuti_tahunan_asn')->where('nip','=',$data['oldNip'])->exists())
                     DB::table('cuti_tahunan_asn')->insert([
                         'nip' => $data['nip'],
                         'kuota' => 12,
@@ -99,6 +100,30 @@ class PegawaiController extends Controller
                         'n2' => 0,
                         'tahun' => date('Y')
                     ]);
+            }
+        }
+
+        if($data['kasie'] !== $old_kasie)
+        {
+            if($old_golongan === "PJLP")
+            {
+                DB::table('asigment_pjlp')->where('nip','=',$data['oldNip'])->where('selesai','=','0')
+                ->update([
+                    'kasie' => '-', 
+                    'ket_kasie' => '',
+                    'kasubagtu' => '-', 
+                    'ket_tu' => '',
+                    'ppk' => '-',
+                    'ket_ppk'=> '']);
+            }
+            else
+            {
+                DB::table('asigment_asn')->where('nip','=',$data['oldNip'])->where('selesai','=','0')
+                ->update([
+                    'kasie' => '-', 
+                    'ket_kasie' => '',
+                    'kasubagtu' => '-', 
+                    'ket_tu' => '']);
             }
         }
 
