@@ -377,7 +377,7 @@ class TabelController extends Controller
         // TODO : buat tampil tabel assignment pjlp untuk katon
 
         try{
-            if(Auth::user()->is_kasie )
+            if(Auth::user()->is_kasie)
             {
                 $query_kasie = $query->join('data_pegawai as dp','d.nip','=','dp.nip')
                     ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil')
@@ -817,7 +817,7 @@ class TabelController extends Controller
                         ->join('data_pegawai as dp','d.nip','=','dp.nip')
                         ->join('penempatan as p','dp.kode_penempatan','=','p.kode_panggil');
  
-            $base_query_raw = "asigment_asn as a inner join daftar_cuti_asn as d on a.no_cuti = d.id inner join cuti_tahunan_pjlp as ct on d.nip = ct. nip inner join data_pegawai as dp on d.nip = dp.nip inner join penempatan as p on dp.kode_penempatan = p.kode_panggil";
+            $base_query_raw = "asigment_asn as a inner join daftar_cuti_asn as d on a.no_cuti = d.id inner join cuti_tahunan_asn as ct on d.nip = ct. nip inner join data_pegawai as dp on d.nip = dp.nip inner join penempatan as p on dp.kode_penempatan = p.kode_panggil";
             
             
             $get_columns = [    
@@ -1075,11 +1075,12 @@ class TabelController extends Controller
             // fetch data ppk
             if($jabatanController->is_user_plt_ppk() || $jabatanController->is_user_plt_pptk())
             {
-                $query_ppk = $base_query;
+                error_log('Hit ppk pptk');
+                $query_ppk = "select ".implode(',',$get_columns)." from ".$base_query_raw;
 
-                $query_ppk = $query_ppk->get($get_columns);
+                $query_ppk = DB::select($query_ppk);
 
-                if($query_ppk->count() != 0)
+                if(count($query_ppk) > 0)
                     $f_ppk = true;
             }
 

@@ -109,7 +109,6 @@ export default{
                     this.data_persetujuan.k_ppk = resp.data.k_ppk;
                     this.data_persetujuan.s_ppk = resp.data.s_ppk;
 
-                    console.log(this.data_persetujuan);
                     this.$refs['approval-window'].show();
                 })
                 .catch(err => {

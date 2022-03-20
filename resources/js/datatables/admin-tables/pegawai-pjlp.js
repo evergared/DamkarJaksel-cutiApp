@@ -44,6 +44,7 @@ const app = new Vue({
                     }
                 }
             ],
+            buttons:[]
         }
     }
 })
