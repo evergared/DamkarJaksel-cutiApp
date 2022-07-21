@@ -30,7 +30,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/report-plt','App\Http\Controllers\DashboardController@loadPltReport')->name('plt');
 	Route::get('/form','App\Http\Controllers\DashboardController@loadForm')->name('form');
 	Route::get('/pengguna','App\Http\Controllers\DashboardController@loadUser')->name('pengguna');
+	Route::get('/pengumuman/create','App\Http\Controllers\DashboardController@createPengumuman')->name('pengumuman.create');
+	Route::get('/pengumuman/list','App\Http\Controllers\DashboardController@listPengumuman')->name('pengumuman.list');
 
+
+	// Pengumuman Routes
+	Route::post('/pengumuman/action/add-new-pengumuman',[App\Http\Controllers\PengumumanController::class,'addPengumuman'])->name('add-pengumuman');
 
 
 	// Calendar Routes
@@ -104,6 +109,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/admin/action/delete-pegawai',[App\Http\Controllers\PegawaiController::class,'deleteSinglePegawai']);
 
 	Route::patch('/user/action/change-password',[App\Http\Controllers\UserController::class,'changePassword']);
+
   });
 
 

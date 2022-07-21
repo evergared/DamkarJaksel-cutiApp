@@ -53,6 +53,17 @@ class DashboardController extends Controller
 
     return view('dashboard/form')->with("dd_jcuti",$cuti);
   }
+
+  public function createPengumuman(Request $request)
+  {
+    return view('dashboard/admin/pengumuman-create');
+  }
+
+  public function listPengumuman(Request $request)
+  {
+    return view('dashboard/admin/pengumuman-list');
+  }
+
 }
 
 ?>

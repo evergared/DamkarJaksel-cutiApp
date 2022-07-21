@@ -72,6 +72,15 @@
       @if(auth()->user()->is_admin)
       Admin
       <ul class="navbar-nav ">
+        <li class="nav-item">
+            <a class="nav-link active collapsed"  data-target="#navbar-pengumuman" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-pengumuman"><i class="fa fa-newspaper text-blue"></i><span class="nav-link-text">{{ __('Pengumuman')}}</span></a>
+            <div class="collapse" id="navbar-pengumuman">
+                <ul class="nav nav-sm flex-column">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('pengumuman.create')}}">Buat Posting Baru</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('pengumuman.list')}}">Daftar Posting</a></li>
+                </ul>
+            </div>
+        </li>
         <li class="nav-item"><a class="nav-link" href="{{ route('kepegawaian') }}"><i class="ni ni-briefcase-24 text-orange"></i><span class="nav-link-text">{{ __('Kepegawaian')}}</span></a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('pengguna') }}"><i class="fas fa-user text-success"></i><span class="nav-link-text">{{ __('User')}}</span></a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('calendar') }}"><i class="fas fa-calendar text-blue"></i><span class="nav-link-text">{{ __('Kalender')}}</span></a></li>
